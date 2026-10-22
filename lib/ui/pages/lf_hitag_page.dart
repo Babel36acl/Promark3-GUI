@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfHitagPage extends StatefulWidget {
   const LfHitagPage({super.key});
@@ -53,38 +54,38 @@ class _LfHitagPageState extends State<LfHitagPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取',
-              subtitle: '读取 Hitag 卡片',
+              title: context.l10n.messageRead,
+              subtitle: context.l10n.messageReadAHitagCard,
               icon: Icons.nfc,
               onTap: () => _execute(LfHitagCmd.reader())),
           ActionCard(
-              title: '信息',
-              subtitle: '获取标签详情',
+              title: context.l10n.messageInformation,
+              subtitle: context.l10n.messageGetTagDetails,
               icon: Icons.info_outline,
               onTap: () => _execute(LfHitagCmd.info())),
           ActionCard(
-              title: '转储',
-              subtitle: '转储全部数据',
+              title: context.l10n.messageDump,
+              subtitle: context.l10n.messageDumpAllData,
               icon: Icons.download,
               onTap: () => _execute(LfHitagCmd.dump())),
           ActionCard(
-              title: '嗅探',
-              subtitle: '捕获通信数据',
+              title: context.l10n.messageSniff,
+              subtitle: context.l10n.messageCaptureCommunicationData,
               icon: Icons.hearing,
               onTap: () => _execute(LfHitagCmd.sniff())),
           ActionCard(
-              title: '检查密钥',
-              subtitle: '检查常用密钥',
+              title: context.l10n.messageCheckKeys,
+              subtitle: context.l10n.messageCheckCommonKeys,
               icon: Icons.security,
               onTap: () => _execute(LfHitagCmd.chk())),
           ActionCard(
-              title: '破解',
-              subtitle: '密钥恢复攻击',
+              title: context.l10n.messageKeyRecovery,
+              subtitle: context.l10n.messageKeyRecoveryAttack,
               icon: Icons.bolt,
               onTap: () => _execute(LfHitagCmd.crack())),
           ActionCard(
-              title: '模拟',
-              subtitle: '模拟 Hitag 标签',
+              title: context.l10n.messageSimulate,
+              subtitle: context.l10n.messageSimulateAHitagTag,
               icon: Icons.play_arrow,
               onTap: () => _execute(LfHitagCmd.sim())),
         ],

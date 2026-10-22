@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class TracePage extends StatefulWidget {
   const TracePage({super.key});
@@ -75,14 +76,15 @@ class _TracePageState extends State<TracePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('列表/解码',
+                      Text(context.l10n.messageListDecode,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         initialValue: _protocol,
-                        decoration: const InputDecoration(
-                            labelText: '协议类型', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageProtocolType,
+                            isDense: true),
                         items: _protocols
                             .map((p) =>
                                 DropdownMenuItem(value: p, child: Text(p)))
@@ -95,12 +97,12 @@ class _TracePageState extends State<TracePage> {
                           onPressed: () =>
                               _execute(TraceCmd.list(type: _protocol)),
                           icon: const Icon(Icons.list_alt, size: 18),
-                          label: const Text('解码列表')),
+                          label: Text(context.l10n.messageDecodeList2)),
                     ],
                   ))),
           ActionCard(
-              title: '提取',
-              subtitle: '提取 Trace 数据',
+              title: context.l10n.messageExtract,
+              subtitle: context.l10n.messageExtractTraceData,
               icon: Icons.filter_alt,
               onTap: () => _execute(TraceCmd.extract())),
           const SizedBox(height: 8),
@@ -110,13 +112,14 @@ class _TracePageState extends State<TracePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('文件操作',
+                      Text(context.l10n.messageFileOperations,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: '文件路径', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageFilePath,
+                            isDense: true),
                         onChanged: (v) => _file = v,
                       ),
                       const SizedBox(height: 8),
@@ -126,13 +129,13 @@ class _TracePageState extends State<TracePage> {
                                 ? () => _execute(TraceCmd.save(_file))
                                 : null,
                             icon: const Icon(Icons.save, size: 18),
-                            label: const Text('保存')),
+                            label: Text(context.l10n.messageSave)),
                         OutlinedButton.icon(
                             onPressed: _file.isNotEmpty
                                 ? () => _execute(TraceCmd.load(_file))
                                 : null,
                             icon: const Icon(Icons.upload, size: 18),
-                            label: const Text('加载')),
+                            label: Text(context.l10n.messageLoad)),
                       ]),
                     ],
                   ))),

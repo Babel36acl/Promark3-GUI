@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfEmvPage extends StatefulWidget {
   const HfEmvPage({super.key});
@@ -53,23 +54,23 @@ class _HfEmvPageState extends State<HfEmvPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '搜索',
-              subtitle: '搜索 EMV 卡片',
+              title: context.l10n.messageSearch,
+              subtitle: context.l10n.messageSearchForEmvCards,
               icon: Icons.search,
               onTap: () => _execute(HfEmvCmd.search())),
           ActionCard(
               title: 'PPSE',
-              subtitle: '选择 PPSE 应用',
+              subtitle: context.l10n.messageSelectPpseApplication,
               icon: Icons.payment,
               onTap: () => _execute(HfEmvCmd.ppse())),
           ActionCard(
-              title: '执行交易',
-              subtitle: '模拟 EMV 交易流程',
+              title: context.l10n.messageExecuteTransaction,
+              subtitle: context.l10n.messageSimulateTheEmvTransactionFlow,
               icon: Icons.receipt_long,
               onTap: () => _execute(HfEmvCmd.exec())),
           ActionCard(
-              title: '测试',
-              subtitle: 'EMV 自检',
+              title: context.l10n.messageTest,
+              subtitle: context.l10n.messageEmvSelfTest,
               icon: Icons.check_circle,
               onTap: () => _execute(HfEmvCmd.test())),
         ],

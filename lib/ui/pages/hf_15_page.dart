@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class Hf15Page extends StatefulWidget {
   const Hf15Page({super.key});
@@ -64,10 +65,10 @@ class _Hf15PageState extends State<Hf15Page>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '信息'),
-        Tab(text: '读写'),
-        Tab(text: '工具'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageInformation),
+        Tab(text: context.l10n.messageReadWrite),
+        Tab(text: context.l10n.navTools),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -84,26 +85,28 @@ class _Hf15PageState extends State<Hf15Page>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取器',
-              subtitle: '自动读取 ISO15693',
+              title: context.l10n.messageReader,
+              subtitle: context.l10n.messageAutomaticallyReadIso15693,
               icon: Icons.nfc,
               onTap: () => _execute(Hf15Cmd.reader())),
           ActionCard(
-              title: '标签信息',
-              subtitle: '读取标签基本信息',
+              title: context.l10n.messageTagInformation,
+              subtitle: context.l10n.messageReadBasicTagInformation,
               icon: Icons.info_outline,
               onTap: () => _execute(Hf15Cmd.info())),
           ActionCard(
-              title: '转储卡片',
-              subtitle: '读取全部数据',
+              title: context.l10n.messageDumpCard,
+              subtitle: context.l10n.messageReadAllData,
               icon: Icons.download,
               onTap: () => _execute(Hf15Cmd.dump())),
           ActionCard(
-              title: '擦除卡片',
-              subtitle: '清空卡片数据',
+              title: context.l10n.messageEraseCard,
+              subtitle: context.l10n.messageClearCardData,
               icon: Icons.delete_forever,
-              onTap: () =>
-                  _confirmThenExecute('确认擦除', '此操作不可恢复！', Hf15Cmd.wipe())),
+              onTap: () => _confirmThenExecute(
+                  context.l10n.messageConfirmErase,
+                  context.l10n.messageThisOperationCannotBeUndone,
+                  Hf15Cmd.wipe())),
         ],
       ),
       main: ResultDisplay(
@@ -127,11 +130,12 @@ class _Hf15PageState extends State<Hf15Page>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('块操作',
+                    Text(context.l10n.messageBlockOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(labelText: '块号'),
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageBlockNumber),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       onChanged: (v) => _blockNumber = int.tryParse(v) ?? 0,
@@ -142,11 +146,11 @@ class _Hf15PageState extends State<Hf15Page>
                       child: ElevatedButton.icon(
                           onPressed: () => _execute(Hf15Cmd.rdbl(_blockNumber)),
                           icon: const Icon(Icons.visibility, size: 18),
-                          label: const Text('读取块')),
+                          label: Text(context.l10n.messageReadBlock)),
                     ),
                     const SizedBox(height: 12),
                     HexInputField(
-                        label: '写入数据 (4 字节 hex)',
+                        label: context.l10n.messageWriteData4ByteHex,
                         byteLength: 4,
                         onChanged: (v) => _blockData = v),
                     const SizedBox(height: 8),
@@ -156,7 +160,7 @@ class _Hf15PageState extends State<Hf15Page>
                                 _execute(Hf15Cmd.wrbl(_blockNumber, _blockData))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入块')),
+                        label: Text(context.l10n.messageWriteBlock)),
                   ],
                 ))),
       ]),
@@ -176,18 +180,18 @@ class _Hf15PageState extends State<Hf15Page>
       sideWidth: 320,
       side: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         ActionCard(
-            title: '查找 AFI',
-            subtitle: '扫描应用族标识符',
+            title: context.l10n.messageFindAfi,
+            subtitle: context.l10n.messageScanApplicationFamilyIdentifiers,
             icon: Icons.search,
             onTap: () => _execute(Hf15Cmd.findafi())),
         ActionCard(
-            title: '模拟卡片',
-            subtitle: '模拟 ISO15693 标签',
+            title: context.l10n.messageSimulateCard,
+            subtitle: context.l10n.messageSimulateAnIso15693Tag,
             icon: Icons.play_arrow,
             onTap: () => _execute(Hf15Cmd.sim())),
         ActionCard(
-            title: '嗅探通信',
-            subtitle: '捕获读卡器通信',
+            title: context.l10n.messageSniffCommunication,
+            subtitle: context.l10n.messageCaptureReaderCommunication,
             icon: Icons.hearing,
             onTap: () => _execute(Hf15Cmd.sniff())),
         const Divider(),
@@ -197,11 +201,11 @@ class _Hf15PageState extends State<Hf15Page>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('设置 UID',
+                    Text(context.l10n.messageSetUid,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: 'UID (8 字节 hex)',
+                        label: context.l10n.messageUid8ByteHex,
                         byteLength: 8,
                         onChanged: (v) => _uid = v,
                         prefixIcon: Icons.credit_card),
@@ -211,7 +215,7 @@ class _Hf15PageState extends State<Hf15Page>
                             ? () => _execute(Hf15Cmd.csetuid(_uid))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('设置 UID')),
+                        label: Text(context.l10n.messageSetUid)),
                   ],
                 ))),
       ]),
@@ -235,13 +239,13 @@ class _Hf15PageState extends State<Hf15Page>
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('取消')),
+                    child: Text(context.l10n.messageCancel)),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                       _execute(cmd);
                     },
-                    child: const Text('确认')),
+                    child: Text(context.l10n.messageConfirm)),
               ],
             ));
   }

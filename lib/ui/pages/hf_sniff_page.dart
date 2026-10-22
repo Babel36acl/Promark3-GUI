@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfSniffPage extends StatefulWidget {
   const HfSniffPage({super.key});
@@ -64,18 +65,18 @@ class _HfSniffPageState extends State<HfSniffPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: 'HF 搜索',
-              subtitle: '搜索高频标签',
+              title: context.l10n.messageHfSearch,
+              subtitle: context.l10n.messageSearchForHighFrequencyTags,
               icon: Icons.search,
               onTap: () => _execute(HfCmd.search())),
           ActionCard(
-              title: 'HF 嗅探',
-              subtitle: '捕获高频通信',
+              title: context.l10n.messageHfSniff,
+              subtitle: context.l10n.messageCaptureHighFrequencyCommunication,
               icon: Icons.hearing,
               onTap: () => _execute(HfCmd.sniff())),
           ActionCard(
-              title: 'HF 调谐',
-              subtitle: '调谐高频天线',
+              title: context.l10n.messageHfTuning,
+              subtitle: context.l10n.messageTuneTheHfAntenna,
               icon: Icons.tune,
               onTap: () => _execute(HfCmd.tune())),
           const SizedBox(height: 8),
@@ -85,14 +86,15 @@ class _HfSniffPageState extends State<HfSniffPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('协议列表',
+                      Text(context.l10n.messageProtocolList,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         initialValue: _listProtocol,
-                        decoration: const InputDecoration(
-                            labelText: '协议', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageProtocol,
+                            isDense: true),
                         items: _protocols
                             .map((p) =>
                                 DropdownMenuItem(value: p, child: Text(p)))
@@ -104,7 +106,7 @@ class _HfSniffPageState extends State<HfSniffPage> {
                       ElevatedButton.icon(
                           onPressed: () => _execute(HfCmd.list(_listProtocol)),
                           icon: const Icon(Icons.list, size: 18),
-                          label: const Text('列表解码')),
+                          label: Text(context.l10n.messageDecodeList)),
                     ],
                   ))),
         ],

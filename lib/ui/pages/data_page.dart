@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class DataPage extends StatefulWidget {
   const DataPage({super.key});
@@ -64,10 +65,10 @@ class _DataPageState extends State<DataPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '基础'),
-        Tab(text: '分析'),
-        Tab(text: '比较'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageBasic),
+        Tab(text: context.l10n.messageAnalysis),
+        Tab(text: context.l10n.messageCompare),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -84,18 +85,18 @@ class _DataPageState extends State<DataPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '绘图',
-              subtitle: '显示数据图表',
+              title: context.l10n.messagePlot,
+              subtitle: context.l10n.messageDisplayTheDataGraph,
               icon: Icons.show_chart,
               onTap: () => _execute(DataCmd.plot())),
           ActionCard(
-              title: '清除',
-              subtitle: '清除绘图缓冲区',
+              title: context.l10n.messageClear,
+              subtitle: context.l10n.messageClearTheGraphBuffer,
               icon: Icons.clear_all,
               onTap: () => _execute(DataCmd.clear())),
           ActionCard(
-              title: '检测时钟',
-              subtitle: '自动检测时钟速率',
+              title: context.l10n.messageDetectClock,
+              subtitle: context.l10n.messageAutomaticallyDetectTheClockRate,
               icon: Icons.timer,
               onTap: () => _execute(DataCmd.detectclock())),
           Card(
@@ -104,13 +105,14 @@ class _DataPageState extends State<DataPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('采样',
+                      Text(context.l10n.messageSampling,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: '采样数', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageSampleCount,
+                            isDense: true),
                         initialValue: _sampleCount,
                         onChanged: (v) => _sampleCount = v,
                       ),
@@ -119,7 +121,7 @@ class _DataPageState extends State<DataPage>
                           onPressed: () => _execute(DataCmd.samples(
                               count: int.tryParse(_sampleCount) ?? 20000)),
                           icon: const Icon(Icons.memory, size: 18),
-                          label: const Text('读取采样')),
+                          label: Text(context.l10n.messageReadSamples)),
                     ],
                   ))),
         ],
@@ -145,12 +147,13 @@ class _DataPageState extends State<DataPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('文件操作',
+                    Text(context.l10n.messageFileOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: '文件路径', isDense: true),
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageFilePath,
+                          isDense: true),
                       onChanged: (v) => _file = v,
                     ),
                     const SizedBox(height: 8),
@@ -160,13 +163,13 @@ class _DataPageState extends State<DataPage>
                               ? () => _execute(DataCmd.save(_file))
                               : null,
                           icon: const Icon(Icons.save, size: 18),
-                          label: const Text('保存')),
+                          label: Text(context.l10n.messageSave)),
                       OutlinedButton.icon(
                           onPressed: _file.isNotEmpty
                               ? () => _execute(DataCmd.load(_file))
                               : null,
                           icon: const Icon(Icons.upload, size: 18),
-                          label: const Text('加载')),
+                          label: Text(context.l10n.messageLoad)),
                     ]),
                   ],
                 ))),
@@ -177,18 +180,19 @@ class _DataPageState extends State<DataPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('ASN.1 解码',
+                    Text(context.l10n.messageAsn1Decoding,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: 'Hex 数据', onChanged: (v) => _hexData = v),
+                        label: context.l10n.messageHexData,
+                        onChanged: (v) => _hexData = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _hexData.isNotEmpty
                             ? () => _execute(DataCmd.asn1(_hexData))
                             : null,
                         icon: const Icon(Icons.code, size: 18),
-                        label: const Text('解码')),
+                        label: Text(context.l10n.messageDecode)),
                   ],
                 ))),
       ]),
@@ -212,18 +216,18 @@ class _DataPageState extends State<DataPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('文件比较',
+                  Text(context.l10n.messageFileComparison,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   TextFormField(
-                    decoration:
-                        const InputDecoration(labelText: '文件 A', isDense: true),
+                    decoration: InputDecoration(
+                        labelText: context.l10n.messageFileA, isDense: true),
                     onChanged: (v) => _fileA = v,
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    decoration:
-                        const InputDecoration(labelText: '文件 B', isDense: true),
+                    decoration: InputDecoration(
+                        labelText: context.l10n.messageFileB, isDense: true),
                     onChanged: (v) => _fileB = v,
                   ),
                   const SizedBox(height: 12),
@@ -232,7 +236,7 @@ class _DataPageState extends State<DataPage>
                           ? () => _execute(DataCmd.diff(_fileA, _fileB))
                           : null,
                       icon: const Icon(Icons.compare, size: 18),
-                      label: const Text('比较')),
+                      label: Text(context.l10n.messageCompare)),
                 ],
               ))),
       main: ResultDisplay(

@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HexInputField extends StatelessWidget {
   final String label;
@@ -34,9 +35,12 @@ class HexInputField extends StatelessWidget {
         labelText: label,
         hintText: hint.isNotEmpty
             ? hint
-            : (byteLength != null ? '${byteLength! * 2} 位 hex' : 'hex'),
+            : (byteLength != null
+                ? context.l10n.hexDigits(byteLength! * 2)
+                : 'hex'),
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 18) : null,
-        counterText: maxChars != null ? '最大 $maxChars 字符' : null,
+        counterText:
+            maxChars != null ? context.l10n.maxCharacters(maxChars) : null,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'[0-9a-fA-F]')),

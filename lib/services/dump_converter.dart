@@ -16,21 +16,31 @@ import 'package:pm3gui/parsers/bin_parser.dart';
 import 'package:pm3gui/parsers/eml_parser.dart';
 import 'package:pm3gui/parsers/json_dump_parser.dart';
 import 'package:pm3gui/parsers/key_parser.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 /// Supported file formats for conversion.
 enum DumpFormat {
-  bin('bin', '二进制转储 (.bin)', true),
-  eml('eml', '文本转储 (.eml)', true),
-  json('json', 'PM3 JSON (.json)', true),
-  keyBin('key.bin', '二进制密钥 (.key.bin)', false),
-  dic('dic', '密钥字典 (.dic)', false),
-  keyTxt('keys.txt', '密钥列表 (.keys.txt)', false);
+  bin('bin', true),
+  eml('eml', true),
+  json('json', true),
+  keyBin('key.bin', false),
+  dic('dic', false),
+  keyTxt('keys.txt', false);
 
   final String ext;
-  final String label;
+  String get label => localizedLabel(defaultLocalizations);
   final bool isFullDump; // true = contains block data, false = keys only
 
-  const DumpFormat(this.ext, this.label, this.isFullDump);
+  const DumpFormat(this.ext, this.isFullDump);
+
+  String localizedLabel(AppLocalizations l10n) => switch (this) {
+        bin => l10n.messageBinaryDumpBin,
+        eml => l10n.messageTextDumpEml,
+        json => 'PM3 JSON (.json)',
+        keyBin => l10n.messageBinaryKeysKeyBin,
+        dic => l10n.messageKeyDictionaryDic,
+        keyTxt => l10n.messageKeyListKeysTxt,
+      };
 }
 
 /// Result of a conversion operation.
@@ -61,12 +71,16 @@ Future<ConvertResult> convertDumpFile({
   required String inputPath,
   required String outputPath,
   required DumpFormat targetFormat,
+  AppLocalizations? localizations,
 }) async {
+  final l10n = localizations ?? defaultLocalizations;
   try {
     // ---- Parse input ----
     final inputFile = File(inputPath);
     if (!await inputFile.exists()) {
-      return ConvertResult(success: false, error: '文件不存在: $inputPath');
+      return ConvertResult(
+          success: false,
+          error: l10n.messageFileNotFound((inputPath).toString()));
     }
 
     final ext = inputPath.split('.').last.toLowerCase();
@@ -108,47 +122,50 @@ Future<ConvertResult> convertDumpFile({
     switch (targetFormat) {
       case DumpFormat.bin:
         if (card == null) {
-          return ConvertResult(success: false, error: '密钥文件无法转换为完整dump（缺少数据块）');
+          return ConvertResult(
+              success: false, error: l10n.messageAKeyFileCannotBeConvertedTo);
         }
         await outFile.writeAsBytes(exportToBin(card));
 
       case DumpFormat.eml:
         if (card == null) {
-          return ConvertResult(success: false, error: '密钥文件无法转换为EML（缺少数据块）');
+          return ConvertResult(
+              success: false, error: l10n.messageAKeyFileCannotBeConvertedTo2);
         }
         await outFile.writeAsString(exportToEml(card));
 
       case DumpFormat.json:
         if (card == null) {
-          return ConvertResult(success: false, error: '密钥文件无法转换为JSON（缺少数据块）');
+          return ConvertResult(
+              success: false, error: l10n.messageAKeyFileCannotBeConvertedTo3);
         }
         await outFile.writeAsString(exportToJson(card));
 
       case DumpFormat.keyBin:
         final keys = card?.sectorKeys ?? keysOnly;
         if (keys == null || keys.isEmpty) {
-          return ConvertResult(success: false, error: '无密钥数据');
+          return ConvertResult(success: false, error: l10n.messageNoKeyData);
         }
         await outFile.writeAsBytes(exportKeysToBin(keys));
 
       case DumpFormat.dic:
         final keys = card?.sectorKeys ?? keysOnly;
         if (keys == null || keys.isEmpty) {
-          return ConvertResult(success: false, error: '无密钥数据');
+          return ConvertResult(success: false, error: l10n.messageNoKeyData);
         }
         await outFile.writeAsString(exportToDic(keys));
 
       case DumpFormat.keyTxt:
         final keys = card?.sectorKeys ?? keysOnly;
         if (keys == null || keys.isEmpty) {
-          return ConvertResult(success: false, error: '无密钥数据');
+          return ConvertResult(success: false, error: l10n.messageNoKeyData);
         }
         await outFile.writeAsString(exportKeysAsText(keys));
     }
 
     // Build key summary
     final keys = card?.sectorKeys ?? keysOnly;
-    final summary = keys != null ? _buildKeySummary(keys) : null;
+    final summary = keys != null ? _buildKeySummary(keys, l10n) : null;
 
     return ConvertResult(
       success: true,
@@ -156,16 +173,21 @@ Future<ConvertResult> convertDumpFile({
       keySummary: summary,
     );
   } catch (e) {
-    return ConvertResult(success: false, error: '转换失败: $e');
+    return ConvertResult(
+        success: false, error: l10n.messageConversionFailed((e).toString()));
   }
 }
 
 /// Extract keys from any supported dump file.
 ///
 /// Returns (sectorKeys, keySummaryText) or throws on error.
-Future<(List<SectorKey>, String)> extractKeysFromFile(String path) async {
+Future<(List<SectorKey>, String)> extractKeysFromFile(String path,
+    {AppLocalizations? localizations}) async {
+  final l10n = localizations ?? defaultLocalizations;
   final file = File(path);
-  if (!await file.exists()) throw Exception('文件不存在: $path');
+  if (!await file.exists()) {
+    throw Exception(l10n.messageFileNotFound((path).toString()));
+  }
 
   final ext = path.split('.').last.toLowerCase();
 
@@ -175,7 +197,7 @@ Future<(List<SectorKey>, String)> extractKeysFromFile(String path) async {
     final data = Uint8List.fromList(bytes);
     if (_isKeyBinSize(data.length)) {
       final keys = parseKeyBinBytes(data);
-      return (keys, _buildKeySummary(keys));
+      return (keys, _buildKeySummary(keys, l10n));
     }
   }
 
@@ -184,19 +206,20 @@ Future<(List<SectorKey>, String)> extractKeysFromFile(String path) async {
     final text = await file.readAsString();
     final dictKeys = parseDicString(text);
     final keys = _dictKeysToSectorKeys(dictKeys);
-    return (keys, '${dictKeys.length} 个唯一密钥');
+    return (keys, l10n.messageUniqueKeys((dictKeys.length).toString()));
   }
 
   // Full dump — parse and extract
   final result = await parseDumpFile(path);
   if (!result.isSuccess) throw Exception(result.error);
   final keys = result.card.sectorKeys;
-  return (keys, _buildKeySummary(keys));
+  return (keys, _buildKeySummary(keys, l10n));
 }
 
 /// Write keys to a file in the requested format.
-Future<void> saveKeysToFile(
-    List<SectorKey> keys, String path, DumpFormat fmt) async {
+Future<void> saveKeysToFile(List<SectorKey> keys, String path, DumpFormat fmt,
+    {AppLocalizations? localizations}) async {
+  final l10n = localizations ?? defaultLocalizations;
   switch (fmt) {
     case DumpFormat.keyBin:
       await File(path).writeAsBytes(exportKeysToBin(keys));
@@ -205,7 +228,8 @@ Future<void> saveKeysToFile(
     case DumpFormat.keyTxt:
       await File(path).writeAsString(exportKeysAsText(keys));
     default:
-      throw ArgumentError('不支持的密钥导出格式: ${fmt.label}');
+      throw ArgumentError(
+          l10n.messageUnsupportedKeyExportFormat(fmt.localizedLabel(l10n)));
   }
 }
 
@@ -249,12 +273,13 @@ List<SectorKey> _dictKeysToSectorKeys(List<String> dictKeys) {
   return List.generate(16, (_) => SectorKey(keyA: kA, keyB: kB));
 }
 
-String _buildKeySummary(List<SectorKey> keys) {
+String _buildKeySummary(List<SectorKey> keys, AppLocalizations l10n) {
   final uniqueA = keys.map((k) => k.keyA.toUpperCase()).toSet();
   final uniqueB = keys.map((k) => k.keyB.toUpperCase()).toSet();
   final allKeys = {...uniqueA, ...uniqueB};
-  return '${keys.length} 扇区, '
-      '${uniqueA.length} 种 KeyA, '
-      '${uniqueB.length} 种 KeyB, '
-      '共 ${allKeys.length} 种唯一密钥';
+  return l10n.messageSectorsUniqueKeyAUniqueKeyB(
+      (keys.length).toString(),
+      (uniqueA.length).toString(),
+      (uniqueB.length).toString(),
+      (allKeys.length).toString());
 }

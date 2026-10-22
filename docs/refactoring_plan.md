@@ -8,7 +8,7 @@
 - Linux x64 是 1.0 的正式支持平台。
 - Android、iOS、Web 和 macOS 不属于 1.0 的支持范围。
 - PM3 GUI 不打包固件或客户端二进制文件。Windows 使用官方发行包根目录的 `pm3.bat`，Linux 使用用户安装的 `proxmark3`。
-- 当前有限实机证据来自 Windows x64：使用用户提供、对应 RRG commit `da509461` 的发行包和 PM3EASY512K（客户端识别为 `PM3 GENERIC / AT91SAM7S512 / 512K`），已完成 BAT 链路连接、真实提示符识别、只读 `hw version` 和断开。该结果不能外推到 Linux、其他设备、完整固件交互或真实卡片操作。
+- 既有有限实机记录来自 Windows x64：使用对应 RRG commit `da509461` 的发行包和 PM3EASY512K（`PM3 GENERIC / AT91SAM7S512 / 512K`），完成 BAT 连接、提示符识别、只读 `hw version`、断开及 2026-09-05 的 Mifare 页面只读检测。它不是 PR #27 新增的实机验证，不能外推到 Linux、其他设备、写卡/擦除或完整固件交互。
 
 ## 当前架构
 
@@ -31,7 +31,17 @@ Pm3Process（内部进程适配器）
 官方 Proxmark3 client
 ```
 
-`Pm3Backend` 是桌面实现与上层状态/UI 之间的契约，`DesktopCliBackend` 负责把官方客户端进程映射为连接、事件和命令结果。`Pm3Process` 只在桌面 CLI 后端内部使用；`dart:io Process` 不向 Widget 或 Feature 泄漏。
+`Pm3Backend` 是桌面实现与上层状态/UI 之间的契约，`DesktopCliBackend` 负责把官方客户端进程映射为连接、事件和命令结果。`Pm3Process` 由后端与独立 Dart 帮助同步工具复用；`dart:io Process` 不向 Widget 或 Feature 泄漏。
+
+### PR #27：界面语言与工具边界
+
+界面使用 Flutter 的 ARB / `gen-l10n` 资源，提供简体中文、英语与跟随系统选项；不支持的系统语言回退为英语。`AppLocaleController` 管理当前选择、保存状态和错误，`MaterialApp` 使用生成的 delegates 与 supported locales。切换语言不重新创建连接、页面草稿或文本控制器。
+
+`AppLocalizations` 只进入 Flutter 侧。`DesktopCliBackend` 将其适配为纯 Dart 的 `Pm3ProcessMessages`，进程层和 `tools/sync_command_catalog.dart` 不依赖 `dart:ui`；独立工具保留中文诊断默认值。运行时不翻译命令、十六进制数据或原始客户端输出。
+
+语言偏好独立保存在应用支持目录的 `language.json` 中，`language` 为 `en`、`zh` 或 `null`（跟随系统）。写入排队、使用同目录临时文件替换，退出等待队列完成。目录查找/读写错误显示于设置页，初始化仍可完成；修复目录问题后的新选择可以重试保存，不会回退到工作目录。
+
+导入草稿或卡片时，验证用的临时 `CommandCard` 继承当前语言，失败时不覆盖原数据。Dump 分析缓存包含语言标识；终端命令帮助随语言重新加载并丢弃过期异步结果。新增文案和语言的维护契约见 [Localization](localization.md)。
 
 ### 客户端设置
 
@@ -64,7 +74,7 @@ Pm3Process（内部进程适配器）
 
 GUI 专用页面只覆盖高频、稳定且能从结构化交互中获益的工作流。低频协议、诊断命令和官方客户端新增命令继续通过 Terminal 页面执行，以保留完整命令能力，避免为每个协议维护重复页面和不完整的参数封装。
 
-当前导航按通用功能、高频（HF）、低频（LF）和工具分组；已有页面和命令映射以 `lib/ui/pages/`、`lib/services/pm3_commands.dart` 及 `docs/pm3_commands*.{yaml,csv}` 为准。协议页面数量不是 1.0 的覆盖率指标。
+当前导航按通用功能、高频（HF）、低频（LF）和工具分组；已有页面和命令映射以 `lib/ui/pages/`、`lib/services/pm3_commands.dart`、`docs/pm3_commands*.yaml` 和 `docs/pm3_commands_client.json` 为准。协议页面数量不是 1.0 的覆盖率指标。
 
 ## 下一阶段
 
@@ -79,4 +89,6 @@ GUI 专用页面只覆盖高频、稳定且能从结构化交互中获益的工�
 
 在 Windows x64 工作站上执行 Dart 格式检查、Flutter 静态分析、完整 Flutter 测试和 Windows debug 构建，是桌面基础层的代码级验证。仓库的 CI 工作流还声明了 Linux x64 构建路径，但本机运行结果不能替代 Linux runner 的实际构建。
 
-硬件验证目前仅覆盖用户提供、对应 RRG commit `da509461` 的 Windows 发行包与一台 PM3EASY512K（`PM3 GENERIC / AT91SAM7S512 / 512K`）：根目录 `pm3.bat` 链路能够连接、输出真实提示符、执行只读 `hw version` 并断开。Linux、其他设备、完整固件交互和真实卡片操作仍未验证。
+PR #27 的 CI 在 Windows/Linux 都生成并检查本地化资源，静态分析与完整测试在 Linux job 执行。语言、存储恢复、导入和界面回归测试的具体文件与限制见 [Localization](localization.md)；对先前实机记录的引用不表示本次本地化改动已重新执行全部硬件验收。
+
+既有硬件记录仅覆盖对应 RRG commit `da509461` 的 Windows 发行包与一台 PM3EASY512K（`PM3 GENERIC / AT91SAM7S512 / 512K`）：根目录 `pm3.bat` 能够连接、输出真实提示符、执行只读 `hw version` 并断开；2026-09-05 记录还包含 Mifare 页面“检测卡片”显示 ATQA/SAK。Linux、其他设备、写卡/擦除与完整固件交互仍没有这里可引用的验收证据。

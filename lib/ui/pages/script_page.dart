@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class ScriptPage extends StatefulWidget {
   const ScriptPage({super.key});
@@ -55,8 +56,8 @@ class _ScriptPageState extends State<ScriptPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '列表',
-              subtitle: '列出可用脚本',
+              title: context.l10n.messageList,
+              subtitle: context.l10n.messageListAvailableScripts,
               icon: Icons.list,
               onTap: () => _execute(ScriptCmd.list())),
           const SizedBox(height: 8),
@@ -66,14 +67,14 @@ class _ScriptPageState extends State<ScriptPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('运行脚本',
+                      Text(context.l10n.messageRunScript,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: '脚本名称',
-                          hintText: '例如: hf_mf_autopwn',
+                        decoration: InputDecoration(
+                          labelText: context.l10n.messageScriptName,
+                          hintText: context.l10n.messageForExampleHfMfAutopwn,
                           isDense: true,
                         ),
                         onChanged: (v) => _scriptName = v,
@@ -84,7 +85,7 @@ class _ScriptPageState extends State<ScriptPage> {
                               ? () => _execute(ScriptCmd.run(_scriptName))
                               : null,
                           icon: const Icon(Icons.play_arrow, size: 18),
-                          label: const Text('运行')),
+                          label: Text(context.l10n.messageRun)),
                     ],
                   ))),
         ],

@@ -8,6 +8,7 @@ import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/state/connection_state.dart' as pm3;
 import 'package:pm3gui/ui/pages/settings_page.dart';
 import 'package:provider/provider.dart';
+import '../support/localized_test_app.dart';
 
 void main() {
   testWidgets('settings page shows a consumed save error', (tester) async {
@@ -25,7 +26,7 @@ void main() {
     await tester.pumpWidget(
       ChangeNotifierProvider.value(
         value: state,
-        child: const MaterialApp(home: Scaffold(body: SettingsPage())),
+        child: const LocalizedTestApp(home: Scaffold(body: SettingsPage())),
       ),
     );
 

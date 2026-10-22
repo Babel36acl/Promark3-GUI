@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class NfcPage extends StatefulWidget {
   const NfcPage({super.key});
@@ -80,19 +81,20 @@ class _NfcPageState extends State<NfcPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('NDEF 解码',
+                      Text(context.l10n.messageNdefDecoding,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       HexInputField(
-                          label: 'Hex 数据', onChanged: (v) => _hexData = v),
+                          label: context.l10n.messageHexData,
+                          onChanged: (v) => _hexData = v),
                       const SizedBox(height: 8),
                       ElevatedButton.icon(
                           onPressed: _hexData.isNotEmpty
                               ? () => _execute(NfcCmd.decode(_hexData))
                               : null,
                           icon: const Icon(Icons.code, size: 18),
-                          label: const Text('解码')),
+                          label: Text(context.l10n.messageDecode)),
                     ],
                   ))),
         ],

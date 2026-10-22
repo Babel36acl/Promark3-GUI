@@ -8,6 +8,7 @@ import 'package:file_selector/file_selector.dart' as fs;
 import 'package:pm3gui/models/mifare_card.dart';
 import 'package:pm3gui/parsers/dump_parser.dart';
 import 'package:pm3gui/services/file_dialog_service.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class DumpComparePage extends StatefulWidget {
   const DumpComparePage({super.key});
@@ -70,7 +71,7 @@ class _DumpComparePageState extends State<DumpComparePage> {
             ElevatedButton.icon(
               onPressed: () => _loadCard(true),
               icon: const Icon(Icons.file_open, size: 18),
-              label: const Text('打开文件 A'),
+              label: Text(context.l10n.messageOpenFileA),
             ),
             if (_pathA != null) ...[
               const SizedBox(width: 8),
@@ -89,7 +90,7 @@ class _DumpComparePageState extends State<DumpComparePage> {
             ElevatedButton.icon(
               onPressed: () => _loadCard(false),
               icon: const Icon(Icons.file_open, size: 18),
-              label: const Text('打开文件 B'),
+              label: Text(context.l10n.messageOpenFileB),
             ),
             if (_pathB != null) ...[
               const SizedBox(width: 8),
@@ -104,30 +105,33 @@ class _DumpComparePageState extends State<DumpComparePage> {
               const Spacer(),
             const SizedBox(width: 16),
             FilterChip(
-              label: const Text('仅差异', style: TextStyle(fontSize: 12)),
+              label: Text(context.l10n.messageDifferencesOnly,
+                  style: TextStyle(fontSize: 12)),
               selected: _onlyDiffs,
               onSelected: (v) => setState(() => _onlyDiffs = v),
             ),
           ]),
         ),
         // 错误信息
-        if (_errorA != null) _errorBar('文件 A 错误: $_errorA'),
-        if (_errorB != null) _errorBar('文件 B 错误: $_errorB'),
+        if (_errorA != null)
+          _errorBar(context.l10n.messageFileAError((_errorA).toString())),
+        if (_errorB != null)
+          _errorBar(context.l10n.messageFileBError((_errorB).toString())),
         const Divider(height: 1),
 
         // 对比内容
         if (_cardA != null && _cardB != null)
           Expanded(child: _buildCompareView())
         else
-          const Expanded(
+          Expanded(
             child: Center(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 Icon(Icons.compare_arrows, size: 64, color: Colors.grey),
                 SizedBox(height: 16),
-                Text('分别打开两个转储文件进行对比',
+                Text(context.l10n.messageOpenTwoDumpFilesToCompareThem,
                     style: TextStyle(color: Colors.grey, fontSize: 16)),
                 SizedBox(height: 8),
-                Text('支持 .eml / .bin / .json / .dump',
+                Text(context.l10n.messageSupportsEmlBinJsonDump,
                     style: TextStyle(color: Colors.grey)),
               ]),
             ),
@@ -181,15 +185,16 @@ class _DumpComparePageState extends State<DumpComparePage> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           child: Row(children: [
-            _statChip('总块数', '$maxBlocks'),
+            _statChip(context.l10n.messageTotalBlocks, '$maxBlocks'),
             const SizedBox(width: 8),
-            _statChip('数据差异', '$diffCount 块',
+            _statChip(context.l10n.messageDataDifferences,
+                context.l10n.messageBlocks((diffCount).toString()),
                 color: diffCount > 0 ? Colors.orange : Colors.green),
             const SizedBox(width: 8),
-            _statChip('Key A 差异', '$diffKeyA',
+            _statChip(context.l10n.messageKeyADifferences, '$diffKeyA',
                 color: diffKeyA > 0 ? Colors.orange : Colors.green),
             const SizedBox(width: 8),
-            _statChip('Key B 差异', '$diffKeyB',
+            _statChip(context.l10n.messageKeyBDifferences, '$diffKeyB',
                 color: diffKeyB > 0 ? Colors.orange : Colors.green),
             const Spacer(),
             Chip(
@@ -208,10 +213,12 @@ class _DumpComparePageState extends State<DumpComparePage> {
             padding: const EdgeInsets.all(8),
             itemCount: maxBlocks,
             itemBuilder: (context, block) {
-              final a =
-                  block < _cardA!.blocks.length ? _cardA!.blocks[block] : '(无)';
-              final b =
-                  block < _cardB!.blocks.length ? _cardB!.blocks[block] : '(无)';
+              final a = block < _cardA!.blocks.length
+                  ? _cardA!.blocks[block]
+                  : context.l10n.messageNone;
+              final b = block < _cardB!.blocks.length
+                  ? _cardB!.blocks[block]
+                  : context.l10n.messageNone;
               final isDiff = a.toUpperCase() != b.toUpperCase();
 
               if (_onlyDiffs && !isDiff) return const SizedBox.shrink();
@@ -249,11 +256,11 @@ class _DumpComparePageState extends State<DumpComparePage> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12)),
                           if (isBlock0)
-                            const Text('制造商',
+                            Text(context.l10n.messageManufacturer,
                                 style:
                                     TextStyle(fontSize: 9, color: Colors.blue)),
                           if (isTrailerA)
-                            const Text('尾块',
+                            Text(context.l10n.messageTrailer,
                                 style: TextStyle(
                                     fontSize: 9, color: Colors.orange)),
                         ],

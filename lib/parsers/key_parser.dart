@@ -14,6 +14,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:pm3gui/models/mifare_card.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 // ---------------------------------------------------------------------------
 //  Binary key file (.bin)  —  sectorCount × 12 bytes
@@ -130,23 +131,26 @@ String exportKeysAsText(List<SectorKey> keys) {
 }
 
 /// Read the indexed text format emitted by exportKeysAsText, without inventing missing sectors.
-List<SectorKey> parseKeyText(String text) {
+List<SectorKey> parseKeyText(String text, {AppLocalizations? localizations}) {
+  final l10n = localizations ?? defaultLocalizations;
   final rows = <int, SectorKey>{};
   for (final raw in text.split('\n')) {
     final line = raw.trim();
     if (line.isEmpty || line.startsWith('#')) continue;
     final match = RegExp(r'^(\d+)\s+([0-9a-fA-F]{12})\s+([0-9a-fA-F]{12})$')
         .firstMatch(line);
-    if (match == null) throw const FormatException('密钥文本格式错误');
+    if (match == null) throw FormatException(l10n.messageInvalidKeyTextFormat);
     final sector = int.parse(match.group(1)!);
-    if (rows.containsKey(sector)) throw FormatException('扇区 $sector 重复');
+    if (rows.containsKey(sector)) {
+      throw FormatException(l10n.messageDuplicateSector((sector).toString()));
+    }
     rows[sector] = SectorKey(
         keyA: match.group(2)!.toUpperCase(),
         keyB: match.group(3)!.toUpperCase());
   }
   if (![5, 16, 32, 40].contains(rows.length) ||
       List.generate(rows.length, (i) => i).any((i) => !rows.containsKey(i))) {
-    throw const FormatException('密钥文本缺少扇区');
+    throw FormatException(l10n.messageKeyTextIsMissingSectors);
   }
   return List.generate(rows.length, (i) => rows[i]!);
 }

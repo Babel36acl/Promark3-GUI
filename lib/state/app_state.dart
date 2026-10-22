@@ -9,6 +9,7 @@ import 'package:pm3gui/state/connection_state.dart';
 import 'package:pm3gui/state/terminal_state.dart';
 import 'package:pm3gui/state/file_state.dart';
 import 'package:pm3gui/state/hardware_state.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 enum AppPage {
   connection,
@@ -57,13 +58,15 @@ class NavigationIntent {
   });
 }
 
+enum WriteStatus { idle, writing, finished, cancelled, connectionLost }
+
 class WriteProgress {
   final int total;
   int completed;
   int succeeded;
   int failed;
-  bool cancelled;
-  String currentStatus;
+  WriteStatus status;
+  int currentBlock;
   final List<WriteBlockResult> results;
 
   WriteProgress({
@@ -71,27 +74,42 @@ class WriteProgress {
     this.completed = 0,
     this.succeeded = 0,
     this.failed = 0,
-    this.cancelled = false,
-    this.currentStatus = '',
+    this.status = WriteStatus.idle,
+    this.currentBlock = 0,
     List<WriteBlockResult>? results,
   }) : results = results ?? [];
 
   double get progress => total > 0 ? completed / total : 0;
+  bool get cancelled =>
+      status == WriteStatus.cancelled || status == WriteStatus.connectionLost;
   bool get isRunning => !cancelled && completed < total;
+
+  String localizedStatus(AppLocalizations l10n) => switch (status) {
+        WriteStatus.idle => '',
+        WriteStatus.writing =>
+          l10n.messageWritingBlock(currentBlock.toString()),
+        WriteStatus.finished => l10n.messageFinishedSucceededFailed(
+            succeeded.toString(), failed.toString()),
+        WriteStatus.cancelled => l10n.messageCancelled,
+        WriteStatus.connectionLost =>
+          l10n.messageConnectionLostOperationAborted,
+      };
 }
 
 class WriteBlockResult {
   final int block;
   final bool success;
-  final String message;
   const WriteBlockResult({
     required this.block,
     required this.success,
-    required this.message,
   });
+
+  String localizedMessage(AppLocalizations l10n) => success
+      ? l10n.messageWriteSuccessful
+      : l10n.messageAuthenticationOrWritingFailed;
 }
 
-class AppState extends ChangeNotifier {
+class AppState extends ChangeNotifier with LocalizedMessages {
   late final ConnectionState connectionState;
   late final TerminalState terminalState;
   late final FileState fileState;
@@ -115,6 +133,15 @@ class AppState extends ChangeNotifier {
 
   MifareCard currentCard = MifareCard();
   final commandCard = CommandCard();
+
+  @override
+  void updateLocalizations(AppLocalizations value) {
+    super.updateLocalizations(value);
+    connectionState.updateLocalizations(value);
+    fileState.updateLocalizations(value);
+    hardwareState.updateLocalizations(value);
+    commandCard.updateLocalizations(value);
+  }
 
   WriteProgress? writeProgress;
 
@@ -288,7 +315,7 @@ class AppState extends ChangeNotifier {
     try {
       await connectionState.sendCommand(cmd);
     } catch (error) {
-      terminalState.addOutput('[错误] $error');
+      terminalState.addOutput(l10n.messageError((error).toString()));
     }
   }
 
@@ -303,13 +330,14 @@ class AppState extends ChangeNotifier {
     for (final (block, cmd) in commands) {
       if (progress.cancelled) break;
       if (!isConnected) {
-        progress.currentStatus = '连接断开，操作中止';
-        progress.cancelled = true;
+        progress.status = WriteStatus.connectionLost;
         notifyListeners();
         break;
       }
 
-      progress.currentStatus = '正在写入 块 $block ...';
+      progress
+        ..status = WriteStatus.writing
+        ..currentBlock = block;
       notifyListeners();
 
       await sendCommand(cmd);
@@ -327,14 +355,12 @@ class AppState extends ChangeNotifier {
         progress.results.add(WriteBlockResult(
           block: block,
           success: false,
-          message: '认证失败或写入失败',
         ));
       } else {
         progress.succeeded++;
         progress.results.add(WriteBlockResult(
           block: block,
           success: true,
-          message: '写入成功',
         ));
       }
       progress.completed++;
@@ -342,8 +368,7 @@ class AppState extends ChangeNotifier {
     }
 
     if (!progress.cancelled) {
-      progress.currentStatus =
-          '完成: ${progress.succeeded} 成功, ${progress.failed} 失败';
+      progress.status = WriteStatus.finished;
     }
     notifyListeners();
     return progress;
@@ -351,8 +376,7 @@ class AppState extends ChangeNotifier {
 
   void cancelWriteSequence() {
     if (writeProgress != null && writeProgress!.isRunning) {
-      writeProgress!.cancelled = true;
-      writeProgress!.currentStatus = '已取消';
+      writeProgress!.status = WriteStatus.cancelled;
       notifyListeners();
     }
   }

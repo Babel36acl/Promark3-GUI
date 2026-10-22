@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/core/pm3/pm3_argument_codec.dart';
 import 'package:pm3gui/services/file_dialog_service.dart';
 import 'package:pm3gui/state/app_state.dart';
+import 'package:pm3gui/l10n/l10n.dart';
+import 'package:pm3gui/l10n/app_locale_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -41,6 +43,8 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
+    final language = context.watch<AppLocaleController>();
+    final l10n = context.l10n;
     _syncController(_pm3PathController, appState.pm3Path);
     if (!_argumentsFocusNode.hasFocus) {
       _syncController(
@@ -58,11 +62,58 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '设置',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          Text(
+            l10n.navSettings,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.language),
+                    title: Text(l10n.language),
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  DropdownButtonFormField<String>(
+                    key: ValueKey(
+                        'language-${language.locale?.languageCode ?? 'system'}'),
+                    initialValue: language.locale?.languageCode ?? 'system',
+                    decoration: InputDecoration(labelText: l10n.language),
+                    items: [
+                      DropdownMenuItem(
+                          value: 'system', child: Text(l10n.languageSystem)),
+                      const DropdownMenuItem(value: 'zh', child: Text('简体中文')),
+                      const DropdownMenuItem(
+                          value: 'en', child: Text('English')),
+                    ],
+                    onChanged: (value) {
+                      if (value == null) return;
+                      language
+                          .setLocale(value == 'system' ? null : Locale(value));
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  Text(l10n.languageHelp),
+                  if (language.isSaving) ...[
+                    const SizedBox(height: 8),
+                    const LinearProgressIndicator(),
+                  ],
+                  if (language.error case final error?) ...[
+                    const SizedBox(height: 8),
+                    Text(l10n.languagePreferenceError(error.toString()),
+                        key: const ValueKey('language-error'),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.error)),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
 
           // PM3 Configuration
           Card(
@@ -71,24 +122,24 @@ class _SettingsPageState extends State<SettingsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.terminal),
-                    title: Text('PM3 配置'),
+                  ListTile(
+                    leading: const Icon(Icons.terminal),
+                    title: Text(l10n.settingsPm3Configuration),
                     contentPadding: EdgeInsets.zero,
                   ),
                   TextFormField(
                     controller: _pm3PathController,
                     decoration: InputDecoration(
-                      labelText: 'PM3 程序路径',
+                      labelText: l10n.settingsPm3Path,
                       hintText: Platform.isWindows
-                          ? r'官方发行包根目录\pm3.bat'
+                          ? l10n.settingsWindowsPathHint
                           : '/usr/bin/proxmark3',
                       helperText: Platform.isWindows
-                          ? 'Windows 推荐选择发行包根目录的 pm3.bat'
+                          ? l10n.settingsWindowsPathHelp
                           : null,
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.folder_open),
-                        tooltip: '选择 PM3 程序',
+                        tooltip: l10n.settingsPickPm3,
                         onPressed: () async {
                           final path =
                               await FileDialogService.pickSingleFilePath();
@@ -103,12 +154,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     controller: _argumentsController,
                     focusNode: _argumentsFocusNode,
                     decoration: InputDecoration(
-                      labelText: 'PM3 启动参数',
+                      labelText: l10n.settingsArguments,
                       hintText: '--flush\n--example=value with spaces',
                       helperText: Platform.isWindows
-                          ? '选择 pm3.bat 时由脚本自行初始化并自动检测设备，'
-                              '此处参数不会传给脚本。每行一个参数；空格、引号和反斜杠按原样保留'
-                          : '每行一个参数；空格、引号和反斜杠按原样保留',
+                          ? l10n.settingsWindowsArgumentsHelp
+                          : l10n.settingsArgumentsHelp,
                     ),
                     minLines: 2,
                     maxLines: 6,
@@ -119,22 +169,22 @@ class _SettingsPageState extends State<SettingsPage> {
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _workingDirectoryController,
-                    decoration: const InputDecoration(
-                      labelText: 'PM3 工作目录（可选）',
+                    decoration: InputDecoration(
+                      labelText: l10n.settingsWorkingDirectory,
                     ),
                     onChanged: appState.setPm3WorkingDirectory,
                   ),
                   if (appState.isSavingSettings) ...[
                     const SizedBox(height: 12),
-                    const Row(
-                      key: ValueKey('settings-saving'),
+                    Row(
+                      key: const ValueKey('settings-saving'),
                       children: [
-                        SizedBox.square(
+                        const SizedBox.square(
                           dimension: 16,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         ),
-                        SizedBox(width: 8),
-                        Text('正在保存设置…'),
+                        const SizedBox(width: 8),
+                        Text(l10n.settingsSaving),
                       ],
                     ),
                   ],
@@ -157,26 +207,26 @@ class _SettingsPageState extends State<SettingsPage> {
           Card(
             child: Column(
               children: [
-                const ListTile(
-                  leading: Icon(Icons.info_outline),
-                  title: Text('关于 PM3 GUI'),
-                  subtitle: Text('基于 Flutter 的 Proxmark3 图形界面'),
+                ListTile(
+                  leading: const Icon(Icons.info_outline),
+                  title: Text(l10n.settingsAbout),
+                  subtitle: Text(l10n.settingsDescription),
                 ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.code),
-                  title: const Text('平台'),
+                  title: Text(l10n.settingsPlatform),
                   subtitle: Text(Platform.operatingSystem),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.architecture),
-                  title: Text('架构'),
-                  subtitle: Text('CLI Wrapper (兼容未来更新)'),
+                ListTile(
+                  leading: const Icon(Icons.architecture),
+                  title: Text(l10n.settingsArchitecture),
+                  subtitle: Text(l10n.settingsArchitectureDescription),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.layers),
-                  title: Text('支持格式'),
-                  subtitle: Text('.eml, .bin/.dump, .json (PM3 Jansson)'),
+                ListTile(
+                  leading: const Icon(Icons.layers),
+                  title: Text(l10n.settingsSupportedFormats),
+                  subtitle: const Text('.eml, .bin/.dump, .json (PM3 Jansson)'),
                 ),
               ],
             ),
@@ -184,9 +234,9 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 24),
 
           // Quick actions
-          const Text(
-            '维护',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Text(
+            l10n.settingsMaintenance,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -196,19 +246,19 @@ class _SettingsPageState extends State<SettingsPage> {
               OutlinedButton.icon(
                 onPressed: () => appState.clearTerminal(),
                 icon: const Icon(Icons.delete_sweep),
-                label: const Text('清除终端'),
+                label: Text(l10n.terminalClear),
               ),
               if (appState.isConnected)
                 OutlinedButton.icon(
                   onPressed: () => appState.sendCommand('hw version'),
                   icon: const Icon(Icons.info),
-                  label: const Text('硬件版本'),
+                  label: Text(l10n.hardwareVersion),
                 ),
               if (appState.isConnected)
                 OutlinedButton.icon(
                   onPressed: () => appState.sendCommand('hw tune'),
                   icon: const Icon(Icons.tune),
-                  label: const Text('天线调谐'),
+                  label: Text(l10n.antennaTune),
                 ),
             ],
           ),

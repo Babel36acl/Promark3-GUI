@@ -1,0 +1,360 @@
+<meta charset="utf-8">
+<h1 id="pm3gui-new-feature-page-development-checklist">PM3GUI New Feature Page Development Checklist</h1>
+<blockquote>
+<p>The Phase checklists and their original checked states below are retained as design records from before PR #27. They do not represent current implementation progress,
+SDK requirements, or supported platforms. For current development entry points, see the <a href="README.md">documentation index</a> and
+<a href="localization.md">Localization</a>; do not directly copy the hardcoded Chinese text in the old examples.</p>
+</blockquote>
+<h2 id="localization-acceptance-for-newly-added-pages-pr-27">Localization Acceptance for Newly Added Pages (PR #27)</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> English and Chinese ARB resources are complete; sentences use named placeholders, and different meanings such as nouns/actions use different keys.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Labels, tooltips, validation, confirmation/danger messages, empty states, and errors all use the current interface language.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Temporary validation models inherit the current language; failed imports do not alter the original data.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Raw PM3 commands, hexadecimal data, protocol identifiers, and persisted fields are not translated.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Standalone Dart tools do not introduce Flutter runtime dependencies, and the actual <code>dart run</code> entry points have regression coverage.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Failures to locate/save the language directory are visible on the settings page; initialization can still complete, and subsequent saves can be retried.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> English and Chinese pages and dialogs have been specifically checked in default/smaller desktop windows and with text scaling.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> After changes, run <code>flutter gen-l10n</code>, resource integrity checks, static analysis, and relevant tests.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Synchronize Markdown/HTML documentation, and clearly distinguish code tests, Linux builds, and real-device validation.</li>
+</ul>
+<h2 id="pre-development-checks">Pre-development Checks</h2>
+<h3 id="environment-preparation">Environment Preparation</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Flutter SDK 3.24+ is installed</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Project dependencies are updated (<code>flutter pub get</code>)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Existing code has no compilation errors (<code>flutter analyze</code>)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> The application starts and runs normally</li>
+</ul>
+<h3 id="code-review">Code Review</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Read <a href="../lib/services/pm3_commands.dart">pm3_commands.dart</a> to understand available commands</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Read <a href="../lib/ui/pages/mifare_page.dart">mifare_page.dart</a> to understand code patterns</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Read <a href="../lib/ui/home_page.dart">home_page.dart</a> to understand the navigation structure</li>
+</ul>
+<hr />
+<h2 id="phase-1-basic-preparation">Phase 1: Basic Preparation</h2>
+<h3 id="task-1.1-update-the-navigation-structure">Task 1.1: Update the Navigation Structure</h3>
+<p><strong>File</strong>: <code>lib/ui/home_page.dart</code></p>
+<h4 id="import-statements">Import Statements</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the <code>hf_mfu_page.dart</code> import</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the <code>hf_iclass_page.dart</code> import</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the <code>hf_15_page.dart</code> import</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the <code>hf_mfdes_page.dart</code> import</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the <code>lf_hid_page.dart</code> import</li>
+</ul>
+<h4 id="pages-list-update">_pages List Update</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add <code>HfMfuPage()</code> after <code>MifarePage()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add <code>HfIclassPage()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add <code>Hf15Page()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add <code>LfHidPage()</code> after <code>LfPage()</code></li>
+</ul>
+<h4 id="navitems-list-update">_navItems List Update</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the NTAG navigation item (Icons.memory)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the iCLASS navigation item (Icons.badge)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the ISO15693 navigation item (Icons.contactless)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add the HID navigation item (Icons.door_front_door_outlined)</li>
+</ul>
+<h4 id="verification">Verification</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>flutter analyze</code> reports no errors</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The application compiles normally</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The sidebar displays all new navigation items</li>
+</ul>
+<hr />
+<h2 id="phase-2-mifare-ultralightntag-page">Phase 2: Mifare Ultralight/NTAG Page</h2>
+<h3 id="file-libuipageshf_mfu_page.dart">File: <code>lib/ui/pages/hf_mfu_page.dart</code></h3>
+<h4 id="basic-structure">Basic Structure</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The file header contains a <code>library;</code> declaration</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> All necessary imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>HfMfuPage</code> StatefulWidget class</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>_HfMfuPageState</code> state class</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>SingleTickerProviderStateMixin</code> mixin</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController initialization and disposal</li>
+</ul>
+<h4 id="tab-structure-5-tabs">Tab Structure (5 Tabs)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabBar contains 5 Tabs</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabBarView contains 5 corresponding pages</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Tabs: Info, Read/Write, NDEF, Emulator, Tools</li>
+</ul>
+<h4 id="info-tab">&quot;Info&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Get Info] button -&gt; <code>HfMfuCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Dump Card] button -&gt; <code>HfMfuCmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Wipe Card] button -&gt; <code>HfMfuCmd.wipe()</code> (with a confirmation dialog)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Result display area</li>
+</ul>
+<h4 id="readwrite-tab">&quot;Read/Write&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Block number input (0-255)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read Block] button -&gt; <code>HfMfuCmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Data input (16-character hex validation)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Write Block] button -&gt; <code>HfMfuCmd.wrbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Password input (8-character hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Authenticate] button -&gt; <code>HfMfuCmd.cauth()</code></li>
+</ul>
+<h4 id="ndef-tab">&quot;NDEF&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read NDEF] button -&gt; <code>HfMfuCmd.ndefRead()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> NDEF result display area</li>
+</ul>
+<h4 id="emulator-tab">&quot;Emulator&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> File selection functionality</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Load into Emulator] -&gt; <code>HfMfuCmd.eload()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Save Emulator] -&gt; <code>HfMfuCmd.esave()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [View Emulator] -&gt; <code>HfMfuCmd.eview()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Simulate Card] -&gt; <code>HfMfuCmd.sim()</code></li>
+</ul>
+<h4 id="tools-tab">&quot;Tools&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Generate Keys] -&gt; <code>HfMfuCmd.keygen()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> UID input (optional)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Generate Password] -&gt; <code>HfMfuCmd.pwdgen()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Set UID] -&gt; <code>HfMfuCmd.setuid()</code></li>
+</ul>
+<h4 id="common-functionality">Common Functionality</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The <code>_execute()</code> method checks the connection state</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Show a SnackBar message when disconnected</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Use a monospace font to display hex data</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Dangerous operations have confirmation dialogs</li>
+</ul>
+<hr />
+<h2 id="phase-3-iclasspicopass-page">Phase 3: iCLASS/Picopass Page</h2>
+<h3 id="file-libuipageshf_iclass_page.dart">File: <code>lib/ui/pages/hf_iclass_page.dart</code></h3>
+<h4 id="basic-structure-1">Basic Structure</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Correct imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget structure</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (4 tabs)</li>
+</ul>
+<h4 id="tab-structure-4-tabs">Tab Structure (4 Tabs)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Tabs: Info, Read/Write, Cracking, Emulator</li>
+</ul>
+<h4 id="info-tab-1">&quot;Info&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Get Info] -&gt; <code>HfIclassCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read Card] -&gt; <code>HfIclassCmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Dump Card] -&gt; <code>HfIclassCmd.dump()</code></li>
+</ul>
+<h4 id="readwrite-tab-1">&quot;Read/Write&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Block number selector (0-31)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Key input (16-character hex, optional)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read Block] -&gt; <code>HfIclassCmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Data input (16-character hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Write Block] -&gt; <code>HfIclassCmd.wrbl()</code></li>
+</ul>
+<h4 id="cracking-tab">&quot;Cracking&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Check Keys] -&gt; <code>HfIclassCmd.chk()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Loclass Attack] -&gt; <code>HfIclassCmd.loclass()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Sniff Communication] -&gt; <code>HfIclassCmd.sniff()</code></li>
+</ul>
+<h4 id="emulator-tab-1">&quot;Emulator&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Load File] -&gt; <code>HfIclassCmd.eload()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Save File] -&gt; <code>HfIclassCmd.esave()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [View] -&gt; <code>HfIclassCmd.eview()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Simulate Card] -&gt; <code>HfIclassCmd.sim()</code></li>
+</ul>
+<hr />
+<h2 id="phase-4-iso15693-page">Phase 4: ISO15693 Page</h2>
+<h3 id="file-libuipageshf_15_page.dart">File: <code>lib/ui/pages/hf_15_page.dart</code></h3>
+<h4 id="basic-structure-2">Basic Structure</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Correct imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget structure</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (3 tabs)</li>
+</ul>
+<h4 id="tab-structure-3-tabs">Tab Structure (3 Tabs)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Tabs: Info, Read/Write, Tools</li>
+</ul>
+<h4 id="info-tab-2">&quot;Info&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Reader] -&gt; <code>Hf15Cmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Tag Info] -&gt; <code>Hf15Cmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Dump Card] -&gt; <code>Hf15Cmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Wipe Card] -&gt; <code>Hf15Cmd.wipe()</code></li>
+</ul>
+<h4 id="readwrite-tab-2">&quot;Read/Write&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Block number input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read Block] -&gt; <code>Hf15Cmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Data input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Write Block] -&gt; <code>Hf15Cmd.wrbl()</code></li>
+</ul>
+<h4 id="tools-tab-1">&quot;Tools&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Find AFI] -&gt; <code>Hf15Cmd.findafi()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> UID input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Set UID] -&gt; <code>Hf15Cmd.csetuid()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Simulate Card] -&gt; <code>Hf15Cmd.sim()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Sniff] -&gt; <code>Hf15Cmd.sniff()</code></li>
+</ul>
+<hr />
+<h2 id="phase-5-mifare-desfire-page">Phase 5: Mifare DESFire Page</h2>
+<h3 id="file-libuipageshf_mfdes_page.dart">File: <code>lib/ui/pages/hf_mfdes_page.dart</code></h3>
+<h4 id="basic-structure-3">Basic Structure</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Correct imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget structure</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (4 tabs)</li>
+</ul>
+<h4 id="tab-structure-4-tabs-1">Tab Structure (4 Tabs)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Tabs: Info, Applications, Files, Management</li>
+</ul>
+<h4 id="info-tab-3">&quot;Info&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Detect] -&gt; <code>HfMfdesCmd.detect()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Info] -&gt; <code>HfMfdesCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Get UID] -&gt; <code>HfMfdesCmd.getuid()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Free Memory] -&gt; <code>HfMfdesCmd.freemem()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Check Keys] -&gt; <code>HfMfdesCmd.chk()</code></li>
+</ul>
+<h4 id="applications-tab">&quot;Applications&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [List AIDs] -&gt; <code>HfMfdesCmd.getaids()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [List Applications] -&gt; <code>HfMfdesCmd.lsapp()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> AID input (6-character hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Select Application] -&gt; <code>HfMfdesCmd.selectapp()</code></li>
+</ul>
+<h4 id="files-tab">&quot;Files&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [List Files] -&gt; <code>HfMfdesCmd.getfileids()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> FID input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read File] -&gt; <code>HfMfdesCmd.read()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Data input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Write File] -&gt; <code>HfMfdesCmd.write()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Dump Application] -&gt; <code>HfMfdesCmd.dump()</code></li>
+</ul>
+<h4 id="management-tab">&quot;Management&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Key number input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Key input</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Algorithm selection (AES/DES)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Authenticate] -&gt; <code>HfMfdesCmd.auth()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Format PICC] button (with confirmation) -&gt; <code>HfMfdesCmd.formatpicc()</code></li>
+</ul>
+<hr />
+<h2 id="phase-6-hid-prox-page">Phase 6: HID Prox Page</h2>
+<h3 id="file-libuipageslf_hid_page.dart">File: <code>lib/ui/pages/lf_hid_page.dart</code></h3>
+<h4 id="basic-structure-4">Basic Structure</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Correct imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget structure</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (3 tabs)</li>
+</ul>
+<h4 id="tab-structure-3-tabs-1">Tab Structure (3 Tabs)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Tabs: Read, Clone/Simulate, Cracking</li>
+</ul>
+<h4 id="read-tab">&quot;Read&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Read HID Card] -&gt; <code>LfHidCmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Demodulate Signal] -&gt; <code>LfHidCmd.demod()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Result display area (parse FC/CN)</li>
+</ul>
+<h4 id="clonesimulate-tab">&quot;Clone/Simulate&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Card number data input (Wiegand format)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Clone to T55xx] -&gt; <code>LfHidCmd.clone()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Simulate Card] -&gt; <code>LfHidCmd.sim()</code></li>
+</ul>
+<h4 id="cracking-tab-1">&quot;Cracking&quot; Tab</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> FC input (optional)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Brute Force] -&gt; <code>LfHidCmd.brute()</code></li>
+</ul>
+<hr />
+<h2 id="phase-7-testing-and-optimization">Phase 7: Testing and Optimization</h2>
+<h3 id="task-7.1-unit-tests">Task 7.1: Unit Tests</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test tab switching on each page</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test that all buttons trigger the correct commands</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test input validation (hex format, length)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test messages when no device is connected</li>
+</ul>
+<h3 id="task-7.2-integration-tests">Task 7.2: Integration Tests</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test that sidebar navigation switches pages correctly</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test that theme switching works normally</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test that there are no conflicts with existing pages</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test application startup and runtime performance</li>
+</ul>
+<h3 id="task-7.3-code-optimization">Task 7.3: Code Optimization</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Extract shared components (ActionCard, ResultDisplay, etc.)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Optimize duplicate code</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add necessary comments</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Run <code>flutter analyze</code> to check for issues</li>
+</ul>
+<hr />
+<h2 id="color-scheme-change-checklist">Color Scheme Change Checklist</h2>
+<h3 id="completed-changes">Completed Changes</h3>
+<h4 id="theme-file-update-libuitheme.dart">1. Theme File Update (<code>lib/ui/theme.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Switch to a single-mode theme</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Use a dark blue dashboard color scheme</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove the lightTheme() method</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Rename darkTheme() to theme()</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Update all color references</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Fix the deprecated <code>withOpacity</code> method</li>
+</ul>
+<h4 id="application-state-update-libstateapp_state.dart">2. Application State Update (<code>lib/state/app_state.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove the <code>isDarkMode</code> state</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove the <code>toggleTheme()</code> method</li>
+</ul>
+<h4 id="main-application-update-libmain.dart">3. Main Application Update (<code>lib/main.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Update the theme reference to <code>AppTheme.theme()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove theme mode switching logic</li>
+</ul>
+<h4 id="home-page-update-libuihome_page.dart">4. Home Page Update (<code>lib/ui/home_page.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove the theme toggle button</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Clean up related code</li>
+</ul>
+<h4 id="settings-page-update-libuisettings_page.dart">5. Settings Page Update (<code>lib/ui/settings_page.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Remove the theme settings option</li>
+</ul>
+<h4 id="connection-page-update-libuipagesconnection_page.dart">6. Connection Page Update (<code>lib/ui/pages/connection_page.dart</code>)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Import the new theme file</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Replace all Morandi color references</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Use the new blue theme colors</li>
+</ul>
+<h4 id="compilation-verification">7. Compilation Verification</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <code>flutter analyze</code> reports no errors</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> The application compiles normally</li>
+</ul>
+<h3 id="color-scheme">Color Scheme</h3>
+<ul>
+<li><strong>Dark blue background</strong>: <code>#0F172A</code></li>
+<li><strong>Card color</strong>: <code>#1E293B</code></li>
+<li><strong>Highlight blue</strong>: <code>#38BDF8</code></li>
+<li><strong>Secondary gray text</strong>: <code>#94A3B8</code></li>
+<li><strong>Divider</strong>: <code>#334155</code></li>
+<li><strong>Error color</strong>: <code>#F87171</code></li>
+</ul>
+<h3 id="verification-results">Verification Results</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> The application starts normally</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> All pages display correctly</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Consistent color styling</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> No compilation errors</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>The color scheme changes are complete, and the application now uses a single-theme mode with a dark blue dashboard style. All related files have been updated, and compilation verification has passed. Development of the new feature pages can begin next.</p>

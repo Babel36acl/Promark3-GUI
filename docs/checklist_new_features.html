@@ -1,328 +1,345 @@
-<span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;dark&quot;,&quot;lightModeTheme&quot;:&quot;default&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
-                <h1 id="pm3gui-新功能页面开发检查清单">PM3GUI 新功能页面开发检查清单</h1>
-<h2 id="开发前检查">开发前检查</h2>
-<h3 id="环境准备">环境准备</h3>
+<meta charset="utf-8">
+<h1 id="pm3gui">PM3GUI 新功能页面开发检查清单</h1>
+<blockquote>
+<p>下文 Phase 清单与原有勾选状态保留为 PR #27 之前的设计记录，不代表当前实现进度、
+SDK 要求或受支持平台。当前开发入口见 <a href="README.md">文档索引</a> 和
+<a href="localization.md">Localization</a>；不要直接复制旧示例中的硬编码中文。</p>
+</blockquote>
+<h2 id="pr-27">当前新增页面的本地化验收（PR #27）</h2>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Flutter SDK 3.24+ 已安装</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 项目依赖已更新 (<code>flutter pub get</code>)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 现有代码无编译错误 (<code>flutter analyze</code>)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 应用能正常启动运行</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 中英文 ARB 资源齐全，句子使用具名占位符，名词/动作等不同含义使用不同键。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签、工具提示、校验、确认/危险提示、空状态和错误均使用当前界面语言。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 临时校验模型继承当前语言；失败导入不改变原数据。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 原始 PM3 命令、十六进制数据、协议标识和持久化字段不被翻译。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 独立 Dart 工具不引入 Flutter 运行时依赖，实际 <code>dart run</code> 入口有回归覆盖。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 语言目录查找/保存失败可在设置页看到，初始化仍可完成，后续保存可重试。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 中英文的页面、对话框、默认/较小桌面窗口与文本放大均经过针对性检查。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 修改后运行 <code>flutter gen-l10n</code>、资源完整性检查、静态分析和相关测试。</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 同步 Markdown/HTML 文档，并明确区分代码测试、Linux 构建和真实设备验证。</li>
 </ul>
-<h3 id="代码审查">代码审查</h3>
+<h2 id="section">开发前检查</h2>
+<h3 id="section-1">环境准备</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 已阅读 <a href="../lib/services/pm3_commands.dart">pm3_commands.dart</a> 了解可用命令</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 已阅读 <a href="../lib/ui/pages/mifare_page.dart">mifare_page.dart</a> 了解代码模式</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 已阅读 <a href="../lib/ui/home_page.dart">home_page.dart</a> 了解导航结构</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> Flutter SDK 3.24+ 已安装</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 项目依赖已更新 (<code>flutter pub get</code>)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 现有代码无编译错误 (<code>flutter analyze</code>)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 应用能正常启动运行</li>
 </ul>
-<hr>
-<h2 id="phase-1-基础准备">Phase 1: 基础准备</h2>
-<h3 id="任务-11-更新导航结构">任务 1.1: 更新导航结构</h3>
+<h3 id="section-2">代码审查</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 已阅读 <a href="../lib/services/pm3_commands.dart">pm3_commands.dart</a> 了解可用命令</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 已阅读 <a href="../lib/ui/pages/mifare_page.dart">mifare_page.dart</a> 了解代码模式</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 已阅读 <a href="../lib/ui/home_page.dart">home_page.dart</a> 了解导航结构</li>
+</ul>
+<hr />
+<h2 id="phase-1">Phase 1: 基础准备</h2>
+<h3 id="section-3">任务 1.1: 更新导航结构</h3>
 <p><strong>文件</strong>: <code>lib/ui/home_page.dart</code></p>
-<h4 id="导入语句">导入语句</h4>
+<h4 id="section-4">导入语句</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>hf_mfu_page.dart</code> 导入</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>hf_iclass_page.dart</code> 导入</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>hf_15_page.dart</code> 导入</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>hf_mfdes_page.dart</code> 导入</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>lf_hid_page.dart</code> 导入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>hf_mfu_page.dart</code> 导入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>hf_iclass_page.dart</code> 导入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>hf_15_page.dart</code> 导入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>hf_mfdes_page.dart</code> 导入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>lf_hid_page.dart</code> 导入</li>
 </ul>
-<h4 id="_pages-列表更新">_pages 列表更新</h4>
+<h4 id="pages">_pages 列表更新</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 在 <code>MifarePage()</code> 后添加 <code>HfMfuPage()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>HfIclassPage()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 <code>Hf15Page()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 在 <code>LfPage()</code> 后添加 <code>LfHidPage()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 在 <code>MifarePage()</code> 后添加 <code>HfMfuPage()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>HfIclassPage()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 <code>Hf15Page()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 在 <code>LfPage()</code> 后添加 <code>LfHidPage()</code></li>
 </ul>
-<h4 id="_navitems-列表更新">_navItems 列表更新</h4>
+<h4 id="navitems">_navItems 列表更新</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 NTAG 导航项 (Icons.memory)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 iCLASS 导航项 (Icons.badge)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 ISO15693 导航项 (Icons.contactless)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加 HID 导航项 (Icons.door_front_door_outlined)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 NTAG 导航项 (Icons.memory)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 iCLASS 导航项 (Icons.badge)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 ISO15693 导航项 (Icons.contactless)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加 HID 导航项 (Icons.door_front_door_outlined)</li>
 </ul>
-<h4 id="验证">验证</h4>
+<h4 id="section-5">验证</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <code>flutter analyze</code> 无错误</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 应用能正常编译</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 侧边栏显示所有新导航项</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>flutter analyze</code> 无错误</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 应用能正常编译</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 侧边栏显示所有新导航项</li>
 </ul>
-<hr>
-<h2 id="phase-2-mifare-ultralightntag-页面">Phase 2: Mifare Ultralight/NTAG 页面</h2>
-<h3 id="文件-libuipageshf_mfu_pagedart">文件: <code>lib/ui/pages/hf_mfu_page.dart</code></h3>
-<h4 id="基础结构">基础结构</h4>
+<hr />
+<h2 id="phase-2-mifare-ultralightntag">Phase 2: Mifare Ultralight/NTAG 页面</h2>
+<h3 id="libuipageshf_mfu_page.dart">文件: <code>lib/ui/pages/hf_mfu_page.dart</code></h3>
+<h4 id="section-6">基础结构</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 文件头部包含 <code>library;</code> 声明</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 所有必要的 imports</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <code>HfMfuPage</code> StatefulWidget 类</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <code>_HfMfuPageState</code> 状态类</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <code>SingleTickerProviderStateMixin</code> 混入</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabController 初始化和释放</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 文件头部包含 <code>library;</code> 声明</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 所有必要的 imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>HfMfuPage</code> StatefulWidget 类</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>_HfMfuPageState</code> 状态类</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>SingleTickerProviderStateMixin</code> 混入</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController 初始化和释放</li>
 </ul>
-<h4 id="tab-结构-5个标签">Tab 结构 (5个标签)</h4>
+<h4 id="tab-5">Tab 结构 (5个标签)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabBar 包含5个 Tab</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabBarView 包含5个对应页面</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 标签: 信息、读写、NDEF、模拟器、工具</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabBar 包含5个 Tab</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabBarView 包含5个对应页面</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签: 信息、读写、NDEF、模拟器、工具</li>
 </ul>
-<h4 id="信息标签">&quot;信息&quot;标签</h4>
+<h4 id="section-7">&quot;信息&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [获取信息] 按钮 -&gt; <code>HfMfuCmd.info()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [转储卡片] 按钮 -&gt; <code>HfMfuCmd.dump()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [擦除卡片] 按钮 -&gt; <code>HfMfuCmd.wipe()</code> (带确认对话框)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 结果显示区域</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [获取信息] 按钮 -&gt; <code>HfMfuCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [转储卡片] 按钮 -&gt; <code>HfMfuCmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [擦除卡片] 按钮 -&gt; <code>HfMfuCmd.wipe()</code> (带确认对话框)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 结果显示区域</li>
 </ul>
-<h4 id="读写标签">&quot;读写&quot;标签</h4>
+<h4 id="section-8">&quot;读写&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 块号输入框 (0-255)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取块] 按钮 -&gt; <code>HfMfuCmd.rdbl()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 数据输入框 (16字符hex验证)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [写入块] 按钮 -&gt; <code>HfMfuCmd.wrbl()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 密码输入框 (8字符hex)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [认证] 按钮 -&gt; <code>HfMfuCmd.cauth()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 块号输入框 (0-255)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取块] 按钮 -&gt; <code>HfMfuCmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 数据输入框 (16字符hex验证)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [写入块] 按钮 -&gt; <code>HfMfuCmd.wrbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 密码输入框 (8字符hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [认证] 按钮 -&gt; <code>HfMfuCmd.cauth()</code></li>
 </ul>
-<h4 id="ndef标签">&quot;NDEF&quot;标签</h4>
+<h4 id="ndef">&quot;NDEF&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取NDEF] 按钮 -&gt; <code>HfMfuCmd.ndefRead()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> NDEF结果显示区域</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取NDEF] 按钮 -&gt; <code>HfMfuCmd.ndefRead()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> NDEF结果显示区域</li>
 </ul>
-<h4 id="模拟器标签">&quot;模拟器&quot;标签</h4>
+<h4 id="section-9">&quot;模拟器&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 文件选择功能</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [加载到模拟器] -&gt; <code>HfMfuCmd.eload()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [保存模拟器] -&gt; <code>HfMfuCmd.esave()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [查看模拟器] -&gt; <code>HfMfuCmd.eview()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [模拟卡片] -&gt; <code>HfMfuCmd.sim()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 文件选择功能</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [加载到模拟器] -&gt; <code>HfMfuCmd.eload()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [保存模拟器] -&gt; <code>HfMfuCmd.esave()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [查看模拟器] -&gt; <code>HfMfuCmd.eview()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [模拟卡片] -&gt; <code>HfMfuCmd.sim()</code></li>
 </ul>
-<h4 id="工具标签">&quot;工具&quot;标签</h4>
+<h4 id="section-10">&quot;工具&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [生成密钥] -&gt; <code>HfMfuCmd.keygen()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> UID输入框 (可选)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [生成密码] -&gt; <code>HfMfuCmd.pwdgen()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [设置UID] -&gt; <code>HfMfuCmd.setuid()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [生成密钥] -&gt; <code>HfMfuCmd.keygen()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> UID输入框 (可选)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [生成密码] -&gt; <code>HfMfuCmd.pwdgen()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [设置UID] -&gt; <code>HfMfuCmd.setuid()</code></li>
 </ul>
-<h4 id="通用功能">通用功能</h4>
+<h4 id="section-11">通用功能</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <code>_execute()</code> 方法检查连接状态</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 未连接时显示 SnackBar 提示</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 使用等宽字体显示hex数据</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 危险操作有确认对话框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code>_execute()</code> 方法检查连接状态</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 未连接时显示 SnackBar 提示</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 使用等宽字体显示hex数据</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 危险操作有确认对话框</li>
 </ul>
-<hr>
-<h2 id="phase-3-iclasspicopass-页面">Phase 3: iCLASS/Picopass 页面</h2>
-<h3 id="文件-libuipageshf_iclass_pagedart">文件: <code>lib/ui/pages/hf_iclass_page.dart</code></h3>
-<h4 id="基础结构-1">基础结构</h4>
+<hr />
+<h2 id="phase-3-iclasspicopass">Phase 3: iCLASS/Picopass 页面</h2>
+<h3 id="libuipageshf_iclass_page.dart">文件: <code>lib/ui/pages/hf_iclass_page.dart</code></h3>
+<h4 id="section-12">基础结构</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 正确的 imports</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> StatefulWidget 结构</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabController (4个标签)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 正确的 imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget 结构</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (4个标签)</li>
 </ul>
-<h4 id="tab-结构-4个标签">Tab 结构 (4个标签)</h4>
+<h4 id="tab-4">Tab 结构 (4个标签)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 标签: 信息、读写、破解、模拟器</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签: 信息、读写、破解、模拟器</li>
 </ul>
-<h4 id="信息标签-1">&quot;信息&quot;标签</h4>
+<h4 id="section-13">&quot;信息&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [获取信息] -&gt; <code>HfIclassCmd.info()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取卡片] -&gt; <code>HfIclassCmd.reader()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [转储卡片] -&gt; <code>HfIclassCmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [获取信息] -&gt; <code>HfIclassCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取卡片] -&gt; <code>HfIclassCmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [转储卡片] -&gt; <code>HfIclassCmd.dump()</code></li>
 </ul>
-<h4 id="读写标签-1">&quot;读写&quot;标签</h4>
+<h4 id="section-14">&quot;读写&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 块号选择器 (0-31)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 密钥输入框 (16字符hex, 可选)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取块] -&gt; <code>HfIclassCmd.rdbl()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 数据输入框 (16字符hex)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [写入块] -&gt; <code>HfIclassCmd.wrbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 块号选择器 (0-31)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 密钥输入框 (16字符hex, 可选)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取块] -&gt; <code>HfIclassCmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 数据输入框 (16字符hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [写入块] -&gt; <code>HfIclassCmd.wrbl()</code></li>
 </ul>
-<h4 id="破解标签">&quot;破解&quot;标签</h4>
+<h4 id="section-15">&quot;破解&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [检查密钥] -&gt; <code>HfIclassCmd.chk()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [Loclass攻击] -&gt; <code>HfIclassCmd.loclass()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [嗅探通信] -&gt; <code>HfIclassCmd.sniff()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [检查密钥] -&gt; <code>HfIclassCmd.chk()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [Loclass攻击] -&gt; <code>HfIclassCmd.loclass()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [嗅探通信] -&gt; <code>HfIclassCmd.sniff()</code></li>
 </ul>
-<h4 id="模拟器标签-1">&quot;模拟器&quot;标签</h4>
+<h4 id="section-16">&quot;模拟器&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [加载文件] -&gt; <code>HfIclassCmd.eload()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [保存文件] -&gt; <code>HfIclassCmd.esave()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [查看] -&gt; <code>HfIclassCmd.eview()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [模拟卡片] -&gt; <code>HfIclassCmd.sim()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [加载文件] -&gt; <code>HfIclassCmd.eload()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [保存文件] -&gt; <code>HfIclassCmd.esave()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [查看] -&gt; <code>HfIclassCmd.eview()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [模拟卡片] -&gt; <code>HfIclassCmd.sim()</code></li>
 </ul>
-<hr>
-<h2 id="phase-4-iso15693-页面">Phase 4: ISO15693 页面</h2>
-<h3 id="文件-libuipageshf_15_pagedart">文件: <code>lib/ui/pages/hf_15_page.dart</code></h3>
-<h4 id="基础结构-2">基础结构</h4>
+<hr />
+<h2 id="phase-4-iso15693">Phase 4: ISO15693 页面</h2>
+<h3 id="libuipageshf_15_page.dart">文件: <code>lib/ui/pages/hf_15_page.dart</code></h3>
+<h4 id="section-17">基础结构</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 正确的 imports</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> StatefulWidget 结构</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabController (3个标签)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 正确的 imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget 结构</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (3个标签)</li>
 </ul>
-<h4 id="tab-结构-3个标签">Tab 结构 (3个标签)</h4>
+<h4 id="tab-3">Tab 结构 (3个标签)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 标签: 信息、读写、工具</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签: 信息、读写、工具</li>
 </ul>
-<h4 id="信息标签-2">&quot;信息&quot;标签</h4>
+<h4 id="section-18">&quot;信息&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取器] -&gt; <code>Hf15Cmd.reader()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [标签信息] -&gt; <code>Hf15Cmd.info()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [转储卡片] -&gt; <code>Hf15Cmd.dump()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [擦除卡片] -&gt; <code>Hf15Cmd.wipe()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取器] -&gt; <code>Hf15Cmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [标签信息] -&gt; <code>Hf15Cmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [转储卡片] -&gt; <code>Hf15Cmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [擦除卡片] -&gt; <code>Hf15Cmd.wipe()</code></li>
 </ul>
-<h4 id="读写标签-2">&quot;读写&quot;标签</h4>
+<h4 id="section-19">&quot;读写&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 块号输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取块] -&gt; <code>Hf15Cmd.rdbl()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 数据输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [写入块] -&gt; <code>Hf15Cmd.wrbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 块号输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取块] -&gt; <code>Hf15Cmd.rdbl()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 数据输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [写入块] -&gt; <code>Hf15Cmd.wrbl()</code></li>
 </ul>
-<h4 id="工具标签-1">&quot;工具&quot;标签</h4>
+<h4 id="section-20">&quot;工具&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [查找AFI] -&gt; <code>Hf15Cmd.findafi()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> UID输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [设置UID] -&gt; <code>Hf15Cmd.csetuid()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [模拟卡片] -&gt; <code>Hf15Cmd.sim()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [嗅探] -&gt; <code>Hf15Cmd.sniff()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [查找AFI] -&gt; <code>Hf15Cmd.findafi()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> UID输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [设置UID] -&gt; <code>Hf15Cmd.csetuid()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [模拟卡片] -&gt; <code>Hf15Cmd.sim()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [嗅探] -&gt; <code>Hf15Cmd.sniff()</code></li>
 </ul>
-<hr>
-<h2 id="phase-5-mifare-desfire-页面">Phase 5: Mifare DESFire 页面</h2>
-<h3 id="文件-libuipageshf_mfdes_pagedart">文件: <code>lib/ui/pages/hf_mfdes_page.dart</code></h3>
-<h4 id="基础结构-3">基础结构</h4>
+<hr />
+<h2 id="phase-5-mifare-desfire">Phase 5: Mifare DESFire 页面</h2>
+<h3 id="libuipageshf_mfdes_page.dart">文件: <code>lib/ui/pages/hf_mfdes_page.dart</code></h3>
+<h4 id="section-21">基础结构</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 正确的 imports</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> StatefulWidget 结构</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabController (4个标签)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 正确的 imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget 结构</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (4个标签)</li>
 </ul>
-<h4 id="tab-结构-4个标签-1">Tab 结构 (4个标签)</h4>
+<h4 id="tab-4-1">Tab 结构 (4个标签)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 标签: 信息、应用、文件、管理</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签: 信息、应用、文件、管理</li>
 </ul>
-<h4 id="信息标签-3">&quot;信息&quot;标签</h4>
+<h4 id="section-22">&quot;信息&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [检测] -&gt; <code>HfMfdesCmd.detect()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [信息] -&gt; <code>HfMfdesCmd.info()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [获取UID] -&gt; <code>HfMfdesCmd.getuid()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [空闲内存] -&gt; <code>HfMfdesCmd.freemem()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [检查密钥] -&gt; <code>HfMfdesCmd.chk()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [检测] -&gt; <code>HfMfdesCmd.detect()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [信息] -&gt; <code>HfMfdesCmd.info()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [获取UID] -&gt; <code>HfMfdesCmd.getuid()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [空闲内存] -&gt; <code>HfMfdesCmd.freemem()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [检查密钥] -&gt; <code>HfMfdesCmd.chk()</code></li>
 </ul>
-<h4 id="应用标签">&quot;应用&quot;标签</h4>
+<h4 id="section-23">&quot;应用&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [列出AID] -&gt; <code>HfMfdesCmd.getaids()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [列出应用] -&gt; <code>HfMfdesCmd.lsapp()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> AID输入框 (6字符hex)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [选择应用] -&gt; <code>HfMfdesCmd.selectapp()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [列出AID] -&gt; <code>HfMfdesCmd.getaids()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [列出应用] -&gt; <code>HfMfdesCmd.lsapp()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> AID输入框 (6字符hex)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [选择应用] -&gt; <code>HfMfdesCmd.selectapp()</code></li>
 </ul>
-<h4 id="文件标签">&quot;文件&quot;标签</h4>
+<h4 id="section-24">&quot;文件&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [列出文件] -&gt; <code>HfMfdesCmd.getfileids()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> FID输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取文件] -&gt; <code>HfMfdesCmd.read()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 数据输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [写入文件] -&gt; <code>HfMfdesCmd.write()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [转储应用] -&gt; <code>HfMfdesCmd.dump()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [列出文件] -&gt; <code>HfMfdesCmd.getfileids()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> FID输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取文件] -&gt; <code>HfMfdesCmd.read()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 数据输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [写入文件] -&gt; <code>HfMfdesCmd.write()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [转储应用] -&gt; <code>HfMfdesCmd.dump()</code></li>
 </ul>
-<h4 id="管理标签">&quot;管理&quot;标签</h4>
+<h4 id="section-25">&quot;管理&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 密钥号输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 密钥输入框</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 算法选择 (AES/DES)</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [认证] -&gt; <code>HfMfdesCmd.auth()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [格式化PICC] 按钮（带确认）-&gt; <code>HfMfdesCmd.formatpicc()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 密钥号输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 密钥输入框</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 算法选择 (AES/DES)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [认证] -&gt; <code>HfMfdesCmd.auth()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [格式化PICC] 按钮（带确认）-&gt; <code>HfMfdesCmd.formatpicc()</code></li>
 </ul>
-<hr>
-<h2 id="phase-6-hid-prox-页面">Phase 6: HID Prox 页面</h2>
-<h3 id="文件-libuipageslf_hid_pagedart">文件: <code>lib/ui/pages/lf_hid_page.dart</code></h3>
-<h4 id="基础结构-4">基础结构</h4>
+<hr />
+<h2 id="phase-6-hid-prox">Phase 6: HID Prox 页面</h2>
+<h3 id="libuipageslf_hid_page.dart">文件: <code>lib/ui/pages/lf_hid_page.dart</code></h3>
+<h4 id="section-26">基础结构</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 正确的 imports</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> StatefulWidget 结构</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> TabController (3个标签)</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 正确的 imports</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> StatefulWidget 结构</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> TabController (3个标签)</li>
 </ul>
-<h4 id="tab-结构-3个标签-1">Tab 结构 (3个标签)</h4>
+<h4 id="tab-3-1">Tab 结构 (3个标签)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 标签: 读取、克隆/模拟、破解</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 标签: 读取、克隆/模拟、破解</li>
 </ul>
-<h4 id="读取标签">&quot;读取&quot;标签</h4>
+<h4 id="section-27">&quot;读取&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [读取HID卡] -&gt; <code>LfHidCmd.reader()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [解调信号] -&gt; <code>LfHidCmd.demod()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 结果显示区域（解析FC/CN）</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [读取HID卡] -&gt; <code>LfHidCmd.reader()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [解调信号] -&gt; <code>LfHidCmd.demod()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 结果显示区域（解析FC/CN）</li>
 </ul>
-<h4 id="克隆模拟标签">&quot;克隆/模拟&quot;标签</h4>
+<h4 id="section-28">&quot;克隆/模拟&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 卡号数据输入框（Wiegand格式）</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [克隆到T55xx] -&gt; <code>LfHidCmd.clone()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [模拟卡片] -&gt; <code>LfHidCmd.sim()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 卡号数据输入框（Wiegand格式）</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [克隆到T55xx] -&gt; <code>LfHidCmd.clone()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [模拟卡片] -&gt; <code>LfHidCmd.sim()</code></li>
 </ul>
-<h4 id="破解标签-1">&quot;破解&quot;标签</h4>
+<h4 id="section-29">&quot;破解&quot;标签</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> FC输入框（可选）</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> [暴力破解] -&gt; <code>LfHidCmd.brute()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> FC输入框（可选）</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> [暴力破解] -&gt; <code>LfHidCmd.brute()</code></li>
 </ul>
-<hr>
-<h2 id="phase-7-测试与优化">Phase 7: 测试与优化</h2>
-<h3 id="任务-71-单元测试">任务 7.1: 单元测试</h3>
+<hr />
+<h2 id="phase-7">Phase 7: 测试与优化</h2>
+<h3 id="section-30">任务 7.1: 单元测试</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试每个页面的Tab切换</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试所有按钮触发正确的命令</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试输入验证（hex格式、长度）</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试未连接设备时的提示</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试每个页面的Tab切换</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试所有按钮触发正确的命令</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试输入验证（hex格式、长度）</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试未连接设备时的提示</li>
 </ul>
-<h3 id="任务-72-集成测试">任务 7.2: 集成测试</h3>
+<h3 id="section-31">任务 7.2: 集成测试</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试侧边栏导航正确切换页面</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试主题切换正常</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试与现有页面无冲突</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 测试应用启动和运行性能</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试侧边栏导航正确切换页面</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试主题切换正常</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试与现有页面无冲突</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 测试应用启动和运行性能</li>
 </ul>
-<h3 id="任务-73-代码优化">任务 7.3: 代码优化</h3>
+<h3 id="section-32">任务 7.3: 代码优化</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 提取公共组件（ActionCard, ResultDisplay等）</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 优化重复代码</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 添加必要的注释</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> 运行 <code>flutter analyze</code> 检查问题</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 提取公共组件（ActionCard, ResultDisplay等）</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 优化重复代码</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 添加必要的注释</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> 运行 <code>flutter analyze</code> 检查问题</li>
 </ul>
-<hr>
-<h2 id="配色更改检查清单">配色更改检查清单</h2>
-<h3 id="已完成的更改">已完成的更改</h3>
-<h4 id="1-主题文件更新-libuithemedart">1. 主题文件更新 (<code>lib/ui/theme.dart</code>)</h4>
+<hr />
+<h2 id="section-33">配色更改检查清单</h2>
+<h3 id="section-34">已完成的更改</h3>
+<h4 id="libuitheme.dart">1. 主题文件更新 (<code>lib/ui/theme.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 切换到单模式主题</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 使用深蓝色仪表盘配色方案</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除 lightTheme() 方法</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 重命名 darkTheme() 为 theme()</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 更新所有颜色引用</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 修复 deprecated <code>withOpacity</code> 方法</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 切换到单模式主题</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 使用深蓝色仪表盘配色方案</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除 lightTheme() 方法</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 重命名 darkTheme() 为 theme()</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 更新所有颜色引用</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 修复 deprecated <code>withOpacity</code> 方法</li>
 </ul>
-<h4 id="2-应用状态更新-libstateapp_statedart">2. 应用状态更新 (<code>lib/state/app_state.dart</code>)</h4>
+<h4 id="libstateapp_state.dart">2. 应用状态更新 (<code>lib/state/app_state.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除 <code>isDarkMode</code> 状态</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除 <code>toggleTheme()</code> 方法</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除 <code>isDarkMode</code> 状态</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除 <code>toggleTheme()</code> 方法</li>
 </ul>
-<h4 id="3-主应用更新-libmaindart">3. 主应用更新 (<code>lib/main.dart</code>)</h4>
+<h4 id="libmain.dart">3. 主应用更新 (<code>lib/main.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 更新主题引用为 <code>AppTheme.theme()</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除主题模式切换逻辑</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 更新主题引用为 <code>AppTheme.theme()</code></li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除主题模式切换逻辑</li>
 </ul>
-<h4 id="4-主页面更新-libuihome_pagedart">4. 主页面更新 (<code>lib/ui/home_page.dart</code>)</h4>
+<h4 id="libuihome_page.dart">4. 主页面更新 (<code>lib/ui/home_page.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除主题切换按钮</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 清理相关代码</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除主题切换按钮</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 清理相关代码</li>
 </ul>
-<h4 id="5-设置页面更新-libuisettings_pagedart">5. 设置页面更新 (<code>lib/ui/settings_page.dart</code>)</h4>
+<h4 id="libuisettings_page.dart">5. 设置页面更新 (<code>lib/ui/settings_page.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 移除主题设置选项</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 移除主题设置选项</li>
 </ul>
-<h4 id="6-连接页面更新-libuipagesconnection_pagedart">6. 连接页面更新 (<code>lib/ui/pages/connection_page.dart</code>)</h4>
+<h4 id="libuipagesconnection_page.dart">6. 连接页面更新 (<code>lib/ui/pages/connection_page.dart</code>)</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 导入新的主题文件</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 替换所有莫兰迪颜色引用</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 使用新的蓝色主题色彩</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 导入新的主题文件</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 替换所有莫兰迪颜色引用</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 使用新的蓝色主题色彩</li>
 </ul>
-<h4 id="7-编译验证">7. 编译验证</h4>
+<h4 id="section-35">7. 编译验证</h4>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> <code>flutter analyze</code> 无错误</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 应用能正常编译</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <code>flutter analyze</code> 无错误</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 应用能正常编译</li>
 </ul>
-<h3 id="配色方案">配色方案</h3>
+<h3 id="section-36">配色方案</h3>
 <ul>
 <li><strong>深蓝背景</strong>: <code>#0F172A</code></li>
 <li><strong>卡片色</strong>: <code>#1E293B</code></li>
@@ -331,13 +348,13 @@
 <li><strong>分隔线</strong>: <code>#334155</code></li>
 <li><strong>错误色</strong>: <code>#F87171</code></li>
 </ul>
-<h3 id="验证结果">验证结果</h3>
+<h3 id="section-37">验证结果</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 应用启动正常</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 所有页面显示正确</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 颜色风格统一</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> 无编译错误</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 应用启动正常</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 所有页面显示正确</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 颜色风格统一</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> 无编译错误</li>
 </ul>
-<hr>
-<h2 id="总结">总结</h2>
+<hr />
+<h2 id="section-38">总结</h2>
 <p>配色更改已完成，应用现在使用深蓝色仪表盘风格的单主题模式。所有相关文件已更新，编译验证通过。接下来可以开始实施新功能页面的开发。</p>

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class Hf14bPage extends StatefulWidget {
   const Hf14bPage({super.key});
@@ -64,10 +65,10 @@ class _Hf14bPageState extends State<Hf14bPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '信息'),
-        Tab(text: '读写'),
-        Tab(text: '工具'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageInformation),
+        Tab(text: context.l10n.messageReadWrite),
+        Tab(text: context.l10n.navTools),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -84,28 +85,28 @@ class _Hf14bPageState extends State<Hf14bPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取器',
-              subtitle: '读取 14443-B 卡片',
+              title: context.l10n.messageReader,
+              subtitle: context.l10n.messageReadA14443BCard,
               icon: Icons.nfc,
               onTap: () => _execute(Hf14bCmd.reader())),
           ActionCard(
-              title: '标签信息',
-              subtitle: '读取标签详情',
+              title: context.l10n.messageTagInformation,
+              subtitle: context.l10n.messageReadTagDetails,
               icon: Icons.info_outline,
               onTap: () => _execute(Hf14bCmd.info())),
           ActionCard(
-              title: '嗅探',
-              subtitle: '捕获 14443-B 通信',
+              title: context.l10n.messageSniff,
+              subtitle: context.l10n.messageCapture14443BCommunication,
               icon: Icons.hearing,
               onTap: () => _execute(Hf14bCmd.sniff())),
           ActionCard(
-              title: '转储',
-              subtitle: '读取全部数据',
+              title: context.l10n.messageDump,
+              subtitle: context.l10n.messageReadAllData,
               icon: Icons.download,
               onTap: () => _execute(Hf14bCmd.dump())),
           ActionCard(
               title: 'NDEF',
-              subtitle: '读取 NDEF 数据',
+              subtitle: context.l10n.messageReadNdefData,
               icon: Icons.article,
               onTap: () => _execute(Hf14bCmd.ndefRead())),
         ],
@@ -131,11 +132,12 @@ class _Hf14bPageState extends State<Hf14bPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('块操作',
+                    Text(context.l10n.messageBlockOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(labelText: '块号'),
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageBlockNumber),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       onChanged: (v) => _blockNumber = int.tryParse(v) ?? 0,
@@ -147,11 +149,11 @@ class _Hf14bPageState extends State<Hf14bPage>
                           onPressed: () =>
                               _execute(Hf14bCmd.rdbl(_blockNumber)),
                           icon: const Icon(Icons.visibility, size: 18),
-                          label: const Text('读取块')),
+                          label: Text(context.l10n.messageReadBlock)),
                     ),
                     const SizedBox(height: 12),
                     HexInputField(
-                        label: '写入数据 (hex)',
+                        label: context.l10n.messageWriteDataHex,
                         byteLength: 4,
                         onChanged: (v) => _blockData = v),
                     const SizedBox(height: 8),
@@ -161,7 +163,7 @@ class _Hf14bPageState extends State<Hf14bPage>
                                 Hf14bCmd.wrbl(_blockNumber, _blockData))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入块')),
+                        label: Text(context.l10n.messageWriteBlock)),
                   ],
                 ))),
         const SizedBox(height: 12),
@@ -171,18 +173,19 @@ class _Hf14bPageState extends State<Hf14bPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('裸命令',
+                    Text(context.l10n.messageRawCommand,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: '原始 hex 数据', onChanged: (v) => _rawHex = v),
+                        label: context.l10n.messageRawHexData,
+                        onChanged: (v) => _rawHex = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _rawHex.isNotEmpty
                             ? () => _execute(Hf14bCmd.raw(_rawHex))
                             : null,
                         icon: const Icon(Icons.send, size: 18),
-                        label: const Text('发送')),
+                        label: Text(context.l10n.terminalSend)),
                   ],
                 ))),
       ]),
@@ -202,8 +205,8 @@ class _Hf14bPageState extends State<Hf14bPage>
       sideWidth: 280,
       side: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         ActionCard(
-            title: '模拟卡片',
-            subtitle: '模拟 14443-B 标签',
+            title: context.l10n.messageSimulateCard,
+            subtitle: context.l10n.messageSimulateA14443BTag,
             icon: Icons.play_arrow,
             onTap: () => _execute(Hf14bCmd.sim())),
       ]),

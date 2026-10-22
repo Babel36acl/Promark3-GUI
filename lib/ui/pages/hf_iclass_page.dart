@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfIclassPage extends StatefulWidget {
   const HfIclassPage({super.key});
@@ -66,11 +67,11 @@ class _HfIclassPageState extends State<HfIclassPage>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TabBar(controller: _tabController, tabs: const [
-          Tab(text: '信息'),
-          Tab(text: '读写'),
-          Tab(text: '破解'),
-          Tab(text: '模拟器'),
+        TabBar(controller: _tabController, tabs: [
+          Tab(text: context.l10n.messageInformation),
+          Tab(text: context.l10n.messageReadWrite),
+          Tab(text: context.l10n.messageKeyRecovery),
+          Tab(text: context.l10n.messageEmulator),
         ]),
         Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -90,18 +91,18 @@ class _HfIclassPageState extends State<HfIclassPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '获取信息',
-              subtitle: '读取 iCLASS 标签',
+              title: context.l10n.messageGetInformation,
+              subtitle: context.l10n.messageReadAnIclassTag,
               icon: Icons.info_outline,
               onTap: () => _execute(HfIclassCmd.info())),
           ActionCard(
-              title: '读取卡片',
-              subtitle: 'reader 模式',
+              title: context.l10n.messageReadCard,
+              subtitle: context.l10n.messageReaderMode,
               icon: Icons.nfc,
               onTap: () => _execute(HfIclassCmd.reader())),
           ActionCard(
-              title: '转储卡片',
-              subtitle: '转储全部块到文件',
+              title: context.l10n.messageDumpCard,
+              subtitle: context.l10n.messageDumpAllBlocksToAFile,
               icon: Icons.download,
               onTap: () =>
                   _execute(HfIclassCmd.dump(key: _key.isEmpty ? null : _key))),
@@ -129,17 +130,18 @@ class _HfIclassPageState extends State<HfIclassPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('块操作',
+                    Text(context.l10n.messageBlockOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: '密钥 (8 字节 hex)',
+                        label: context.l10n.messageKey8ByteHex,
                         byteLength: 8,
                         onChanged: (v) => _key = v,
                         prefixIcon: Icons.vpn_key),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(labelText: '块号'),
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageBlockNumber),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       onChanged: (v) => _blockNumber = int.tryParse(v) ?? 0,
@@ -151,12 +153,12 @@ class _HfIclassPageState extends State<HfIclassPage>
                         onPressed: () => _execute(HfIclassCmd.rdbl(_blockNumber,
                             key: _key.isEmpty ? null : _key)),
                         icon: const Icon(Icons.visibility, size: 18),
-                        label: const Text('读取块'),
+                        label: Text(context.l10n.messageReadBlock),
                       ),
                     ),
                     const SizedBox(height: 12),
                     HexInputField(
-                        label: '写入数据 (8 字节 hex)',
+                        label: context.l10n.messageWriteData8ByteHex,
                         byteLength: 8,
                         onChanged: (v) => _blockData = v),
                     const SizedBox(height: 8),
@@ -167,7 +169,7 @@ class _HfIclassPageState extends State<HfIclassPage>
                               key: _key.isEmpty ? null : _key))
                           : null,
                       icon: const Icon(Icons.edit, size: 18),
-                      label: const Text('写入块'),
+                      label: Text(context.l10n.messageWriteBlock),
                     ),
                   ],
                 ))),
@@ -189,18 +191,18 @@ class _HfIclassPageState extends State<HfIclassPage>
       sideWidth: 300,
       side: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         ActionCard(
-            title: '检查密钥',
-            subtitle: '检查常用默认密钥',
+            title: context.l10n.messageCheckKeys,
+            subtitle: context.l10n.messageCheckCommonDefaultKeys,
             icon: Icons.security,
             onTap: () => _execute(HfIclassCmd.chk())),
         ActionCard(
-            title: 'Loclass 攻击',
-            subtitle: '离线破解 iCLASS 密钥',
+            title: context.l10n.messageLoclassAttack,
+            subtitle: context.l10n.messageRecoverIclassKeysOffline,
             icon: Icons.bolt,
             onTap: () => _execute(HfIclassCmd.loclass())),
         ActionCard(
-            title: '嗅探通信',
-            subtitle: '捕获卡片与读卡器通信',
+            title: context.l10n.messageSniffCommunication,
+            subtitle: context.l10n.messageCaptureCardReaderCommunication,
             icon: Icons.hearing,
             onTap: () => _execute(HfIclassCmd.sniff())),
       ]),
@@ -226,13 +228,14 @@ class _HfIclassPageState extends State<HfIclassPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('模拟器操作',
+                    Text(context.l10n.messageEmulatorOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: '文件路径（可选）',
-                          hintText: '留空使用默认',
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageFilePathOptional,
+                          hintText:
+                              context.l10n.messageLeaveBlankToUseTheDefault,
                           prefixIcon: Icon(Icons.file_open, size: 18)),
                       style: const TextStyle(
                           fontFamily: 'monospace', fontSize: 12),
@@ -244,15 +247,15 @@ class _HfIclassPageState extends State<HfIclassPage>
                           onPressed: () => _execute(HfIclassCmd.eload(
                               _emuFile.isEmpty ? 'dump' : _emuFile)),
                           icon: const Icon(Icons.upload, size: 18),
-                          label: const Text('加载到模拟器')),
+                          label: Text(context.l10n.messageLoadIntoEmulator)),
                       OutlinedButton.icon(
                           onPressed: () => _execute(HfIclassCmd.eview()),
                           icon: const Icon(Icons.visibility, size: 18),
-                          label: const Text('查看')),
+                          label: Text(context.l10n.messageView)),
                       ElevatedButton.icon(
                           onPressed: () => _execute(HfIclassCmd.sim()),
                           icon: const Icon(Icons.play_arrow, size: 18),
-                          label: const Text('模拟')),
+                          label: Text(context.l10n.messageSimulate)),
                     ]),
                   ],
                 ))),

@@ -1,5 +1,14 @@
 # HID Prox 页面文档
 
+> 原始设计参考（PR #27 之前）。下文中文图示、示例和功能目标不等于当前实现或实卡
+> 验证情况；新增/修改界面须使用 [中英文 ARB 与校验契约](localization.md)。
+> 当前使用与支持范围见 [README](../README.md)。
+>
+> `lf hid brute` 针对读卡器枚举设施码/卡号，不执行密码学密钥恢复。当前界面已使用
+> `hidReaderBruteForceTab`、`hidReaderBruteForceTitle` 和 `hidStartBruteForce`
+> 专用资源，并由[中英文回归测试](../test/ui/lf_hid_page_test.dart)覆盖；
+> 行为与验证范围见[本地化指南](localization.md)。
+
 ## 1. 页面概述
 
 ### 1.1 功能目标

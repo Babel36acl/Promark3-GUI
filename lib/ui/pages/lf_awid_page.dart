@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfAwidPage extends StatefulWidget {
   const LfAwidPage({super.key});
@@ -57,8 +58,8 @@ class _LfAwidPageState extends State<LfAwidPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取',
-              subtitle: '读取 AWID 卡片',
+              title: context.l10n.messageRead,
+              subtitle: context.l10n.messageReadAnAwidCard,
               icon: Icons.nfc,
               onTap: () => _execute(LfAwidCmd.reader())),
           Card(
@@ -67,13 +68,14 @@ class _LfAwidPageState extends State<LfAwidPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('克隆 / 模拟',
+                      Text(context.l10n.messageCloneSimulate,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'FC (设施码)', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageFcFacilityCode,
+                            isDense: true),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -82,8 +84,9 @@ class _LfAwidPageState extends State<LfAwidPage> {
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'CN (卡号)', isDense: true),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageCnCardNumber,
+                            isDense: true),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -97,13 +100,13 @@ class _LfAwidPageState extends State<LfAwidPage> {
                                 ? () => _execute(LfAwidCmd.clone(_fc, _cn))
                                 : null,
                             icon: const Icon(Icons.copy, size: 18),
-                            label: const Text('克隆')),
+                            label: Text(context.l10n.messageClone)),
                         OutlinedButton.icon(
                             onPressed: _fc.isNotEmpty && _cn.isNotEmpty
                                 ? () => _execute(LfAwidCmd.sim(_fc, _cn))
                                 : null,
                             icon: const Icon(Icons.play_arrow, size: 18),
-                            label: const Text('模拟')),
+                            label: Text(context.l10n.messageSimulate)),
                       ]),
                     ],
                   ))),

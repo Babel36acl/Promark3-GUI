@@ -1,8 +1,10 @@
 # PM3 GUI
 
+**简体中文 (Simplified Chinese)** | [English](README.en.md) | [English quick start](README.quickstart.en.md)
+
 <div align="center">
-  <a href="https://github.com/AKCX2002/Promark3-GUI/actions/workflows/build.yml"><img src="https://github.com/AKCX2002/Promark3-GUI/actions/workflows/build.yml/badge.svg" alt="Build"/></a>
-  <a href="https://github.com/AKCX2002/Promark3-GUI/releases"><img src="https://img.shields.io/github/v/release/AKCX2002/Promark3-GUI?display_name=tag" alt="Release"/></a>
+  <a href="https://github.com/Babel36acl/Promark3-GUI/actions/workflows/build.yml"><img src="https://github.com/Babel36acl/Promark3-GUI/actions/workflows/build.yml/badge.svg" alt="Build"/></a>
+  <a href="https://github.com/Babel36acl/Promark3-GUI/releases"><img src="https://img.shields.io/github/v/release/Babel36acl/Promark3-GUI?display_name=tag" alt="Release"/></a>
   <img src="https://img.shields.io/badge/Platforms-Windows%20x64%20%7C%20Linux%20x64-2ea44f" alt="Platforms"/>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue" alt="License"/></a>
 </div>
@@ -12,6 +14,16 @@ PM3 GUI 是面向 Proxmark3 的 GPL-3.0 开源桌面图形客户端，提供常�
 > ⚠️ **Alpha 说明**：当前版本仍在迭代，页面和行为可能调整。
 
 请仅对自有或已明确授权的设备、卡片和系统执行操作，并遵守所在地适用法律。
+
+## 界面语言
+
+在“设置 → 语言”中选择“跟随系统”、“简体中文”或“English”。更改立即生效，无需重启或断开设备；不受支持的系统语言使用英语。语言设置独立保存，不影响现有 PM3 配置、草稿和设备数据。命令帮助说明也会切换语言；原始客户端输出、命令语法和导出格式保持不变。
+
+仅提供简体中文和英语资源；系统的其他中文地区/书写变体使用现有简体中文资源。Flutter 的菜单、对话框等框架文案随应用语言变化，原生文件选择器仍使用操作系统语言。
+
+语言保存失败时，当前会话仍使用所选语言，并在设置页显示错误；修复目录或权限问题后，再次选择语言可重试保存。损坏或不受支持的语言设置不会阻止界面启动。
+
+翻译维护、新增语言、当前行为、PR #27 的回归覆盖与验证限制请参阅 [Localization](docs/localization.md)。全部文档的现状与历史说明见 [文档索引](docs/README.md)；[README.html](README.html) 是本文件的 HTML 快照。
 
 ## 平台与范围
 
@@ -24,8 +36,8 @@ CI 工作流包含 Windows 和 Linux x64 桌面路径。当前有限实机证据
 
 ## 下载与发布
 
-- 已发布版本及 Windows/Linux x64 压缩包见 [GitHub Releases](https://github.com/AKCX2002/Promark3-GUI/releases)。
-- `main` 分支提交和 Pull Request 会执行静态分析、测试及双平台 release 构建。
+- 已发布版本及 Windows/Linux x64 压缩包见 [GitHub Releases](https://github.com/Babel36acl/Promark3-GUI/releases)。本地化变更属于 [PR #27](https://github.com/Babel36acl/Promark3-GUI/pull/27) 和下文的 Unreleased 开发内容；历史版本压缩包不保证包含这些变更。
+- `main` 分支提交和 Pull Request 的 CI 在两个平台生成并检查本地化资源、构建 release；静态分析和完整测试在 Linux job 执行。外部 PR 的首次运行可能需要上游维护者批准。
 - 推送形如 `v0.0.4` 的标签后，同一工作流会打包两个平台并创建带自动发行说明的 GitHub Release。
 - Release 仅包含 PM3 GUI；Proxmark3 client 和固件请从 [RfidResearchGroup/proxmark3](https://github.com/RfidResearchGroup/proxmark3) 获取。
 
@@ -51,17 +63,19 @@ Flutter UI / Feature
                          official proxmark3 client
 ```
 
-`Pm3Process` 是 `DesktopCliBackend` 的内部适配器，Widget 和 Feature 不直接使用 `dart:io Process`。
+`Pm3Process` 是 `DesktopCliBackend` 使用的纯 Dart 进程适配器，也供独立 Dart 帮助同步工具复用；Widget 和 Feature 不直接使用 `dart:io Process`。GUI 通过后端注入本地化消息，独立工具不加载 Flutter 的 `dart:ui`，并保留中文诊断默认值。
 
 管道模式使用 RRG 客户端的 `rem` 命令生成顺序完成标记（已验证客户端 `da509461`），不会因短暂停顿或表格分隔线提前结束。默认持续等待，长命令执行期间可从连接页断开会话；切页只停止子终端监听，不终止命令。显式指定超时的调用在超时后断开会话，避免未完成命令与后续输出混合。
 
-终端补全合并现有中文帮助与 `docs/pm3_commands_client.json` 客户端快照。更新客户端后，可在项目根目录执行以下只读帮助同步；Windows 使用发行包根目录入口，原生客户端在路径后增加端口参数：
+终端补全按界面语言选择 `docs/pm3_commands_help.zh.yaml` 或 `docs/pm3_commands_help.yaml`，再合并 `docs/pm3_commands_client.json` 客户端快照。快照补充的条目保留客户端原始说明，不进行实时机器翻译。更新客户端后，可在项目根目录执行以下只读帮助同步；Windows 使用发行包根目录入口，原生客户端在路径后增加端口参数：
 
 ```powershell
-dart run tools/sync_command_catalog.dart 'C:/path/to/pm3.bat'
+dart run tools\sync_command_catalog.dart 'C:\path\to\pm3.bat'
 ```
 
-同步完成后重新构建 GUI。快照反映采集时客户端与已连接设备可见的命令，不代表每项功能已有专用页面或完成实卡验证。
+Linux 示例为 `dart run tools/sync_command_catalog.dart /usr/bin/proxmark3 /dev/ttyACM0`。先运行 `flutter pub get` 准备包配置，再使用 Flutter 附带的 `dart` 执行；这不是 `flutter run` 入口。工具需要已安装的客户端及相应设备连接，不读取 GUI 保存的语言设置。
+
+同步成功后更新 `docs/pm3_commands_client.json`，然后重新构建 GUI。无参数调用显示用法并返回 2；连接/采集失败返回 1；成功返回 0。快照反映采集时客户端与已连接设备可见的命令，不代表每项功能已有专用页面或完成实卡验证。
 
 ## 配置与隐私
 
@@ -71,9 +85,10 @@ PM3EASY512K 等已由官方 [RfidResearchGroup/proxmark3](https://github.com/Rfi
 
 ```text
 <应用支持目录>/pm3_settings.json
+<应用支持目录>/language.json
 ```
 
-应用支持目录由 `path_provider` 的 `getApplicationSupportDirectory()` 按当前操作系统和用户账户决定。它不是项目目录，实际绝对路径请以系统配置为准。
+两者分别保存客户端配置和语言偏好，互不覆盖；`language.json` 中的 `language` 为 `"en"`、`"zh"` 或 `null`（跟随系统）。应用支持目录由 `path_provider` 的 `getApplicationSupportDirectory()` 按当前操作系统和用户账户决定。它不是项目目录，实际绝对路径请以系统配置为准。语言目录查找/读写异常会显示为设置错误；不会回退到当前工作目录静默保存。
 
 每次成功连接会在同一应用支持目录下创建本地 Session：
 
@@ -84,26 +99,33 @@ PM3EASY512K 等已由官方 [RfidResearchGroup/proxmark3](https://github.com/Rfi
 └─ commands.jsonl     # 发出的命令（每行一条 JSON）
 ```
 
-这些文件仅写入本机，不会由 PM3 GUI 上传。终端输出和命令参数可能包含 UID、设备信息或其他敏感数据，请保护应用支持目录，并在共享日志前自行检查内容。
+这些文件仅写入本机，不会由 PM3 GUI 上传。终端输出和命令参数可能包含 UID、设备信息或其他敏感数据；存储错误详情也可能包含个人目录路径。请保护应用支持目录，并在共享日志或错误报告前自行检查、去敏。
 
 ## 安装与运行
 
 ### 环境要求
 
-- Flutter 3.27+
-- Dart 3.6+
+- Flutter stable（本次验证使用 3.47.7）
+- 随 Flutter 提供的 Dart SDK（本次验证使用 3.13.5）
 - 官方 Proxmark3 client：Windows 发行包根目录 `pm3.bat`，或 Linux `proxmark3`
 
 ### 运行
 
 ```bash
-git clone https://github.com/AKCX2002/Promark3-GUI.git
+git clone https://github.com/Babel36acl/Promark3-GUI.git
 cd Promark3-GUI
 flutter pub get
 flutter run -d windows
 ```
 
 Linux x64 可使用 `flutter run -d linux`。请先按 Flutter 官方文档安装对应桌面工具链。
+
+若上游 `main` 或所选 Release 尚未包含 PR #27，可在上述仓库中取出 PR 分支试用，再执行 `flutter pub get`：
+
+```powershell
+git fetch https://github.com/Babel36acl/Promark3-GUI.git pull/27/head:pr-27
+git switch pr-27
+```
 
 ### 构建
 
@@ -116,7 +138,7 @@ flutter build linux
 
 转储查看器的“命令数据”页可直接编辑命令采集结果，无需先生成 dump 文件。功能页和总终端发送的 MIFARE `chk/fchk/nested/staticnested/autopwn` 结果按实际扇区号收集；`hardnested` 需要命令明确包含 `--tblk` 和 `--ta/--tb`，才会归属其恢复结果。`rdbl/rdsc/cgetblk/cgetsc/egetblk/eview/view` 的块表按实际块号收集。总终端输出保持原样。
 
-换卡前通过“新卡 / 容量”清空草稿并选择容量；识别到不同 UID 时也会清空旧数据。缺失块和密钥保留为未知，普通认证读取的尾块不会把隐藏密钥当成零密钥。“密钥 → 尾块”和“尾块 → 密钥”显式同步两者。草稿 JSON 可保存、重新打开未完成数据；完整数据才能导出 BIN/EML，完整扇区密钥才能导出密钥 BIN，已知密钥可单独导出字典。没有转储时打开密钥 BIN/密钥文本会进入此页，不会生成虚假的全零转储。
+换卡前通过“新卡 / 容量”清空草稿并选择容量；识别到不同 UID 时也会清空旧数据。缺失块和密钥保留为未知，普通认证读取的尾块不会把隐藏密钥当成零密钥。“密钥 → 尾块”和“尾块 → 密钥”显式同步两者。草稿 JSON 可保存、重新打开未完成数据；完整数据才能导出 BIN/EML，完整扇区密钥才能导出密钥 BIN，已知密钥可单独导出字典。没有转储时打开密钥 BIN/密钥文本会进入此页，不会生成虚假的全零转储。导入草稿或卡片数据时，块与密钥的校验使用当前所选语言；导入失败不改变原有草稿、容量、UID 和密钥。
 
 文件收集扫描配置的工作目录、Windows 发行包 `client` 目录、客户端 `.proxmark3/preferences.json` 中的保存/转储路径，以及 GUI 默认 `pm3_files` 归类目录。扫描异常在文件收集标题旁显示，其他可访问目录仍会继续扫描。
 
@@ -137,6 +159,7 @@ lib/backend/         # DesktopCliBackend、Pm3Process 和 Mock Backend
 lib/services/        # 设置、Session、文件和命令服务
 lib/state/           # Provider 状态管理
 lib/ui/              # 桌面页面和组件
+lib/l10n/            # ARB 资源、语言偏好状态与 Flutter 本地化适配
 docs/                # 命令映射、规格和架构路线
 .github/workflows/   # Windows/Linux 构建与标签发布
 ```
@@ -145,14 +168,15 @@ docs/                # 命令映射、规格和架构路线
 
 提交前可运行：
 
-```bash
-dart format --output=none --set-exit-if-changed lib test
+```powershell
+flutter gen-l10n
+dart run tools\check_localizations.dart
 flutter analyze --no-pub --no-fatal-infos
 flutter test --no-pub
 flutter build windows --debug --no-pub
 ```
 
-上述命令覆盖 Windows 上的格式、静态分析、Dart/Flutter 测试和 Windows debug 构建；不覆盖 Linux runner 构建，也不替代真实 PM3 硬件验收。CI 的 Linux x64 构建路径以 `.github/workflows/build.yml` 为准。
+对本次修改的 Dart 文件单独运行 `dart format`，不要为了整理历史格式而重排无关文件。上述命令覆盖本地化生成/完整性、静态分析、Dart/Flutter 测试和 Windows debug 构建；不覆盖 Linux runner 构建，也不替代真实 PM3 硬件验收。CI 的 Linux x64 构建路径以 `.github/workflows/build.yml` 为准。
 
 ## 参与贡献与安全
 

@@ -1,5 +1,10 @@
 # PM3 Desktop Foundation 实现计划
 
+> **历史实现计划（2026-09-04）。** 下文步骤与执行说明记录当时的开发过程，
+> 不是当前代理应直接执行的新指令。PR #27 的语言状态、独立 Dart 工具边界和
+> 存储恢复契约见 [Localization](../../localization.md)；当前开发流程以
+> [CONTRIBUTING](../../../CONTRIBUTING.md) 为准。
+
 > **面向 AI 代理的工作者：** 必需子技能：使用 superpowers:subagent-driven-development（推荐）或 superpowers:executing-plans 逐任务实现此计划。步骤使用复选框（`- [ ]`）语法来跟踪进度。
 
 **目标：** 在已完成的 `Pm3Backend` 边界上补齐 Windows/Linux 客户端配置持久化、本地 Session 日志和可靠进程退出，使 Phase 2 形成可运行、可测试的桌面基础层。

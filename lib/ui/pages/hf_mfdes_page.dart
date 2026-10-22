@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfMfdesPage extends StatefulWidget {
   const HfMfdesPage({super.key});
@@ -67,11 +68,11 @@ class _HfMfdesPageState extends State<HfMfdesPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '信息'),
-        Tab(text: '应用'),
-        Tab(text: '文件'),
-        Tab(text: '管理'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageInformation),
+        Tab(text: context.l10n.desfireApplicationsTab),
+        Tab(text: context.l10n.messageFiles),
+        Tab(text: context.l10n.messageManagement),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -89,33 +90,33 @@ class _HfMfdesPageState extends State<HfMfdesPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '检测',
-              subtitle: '检测 DESFire 卡片',
+              title: context.l10n.messageDetect,
+              subtitle: context.l10n.messageDetectADesfireCard,
               icon: Icons.search,
               onTap: () => _execute(HfMfdesCmd.detect())),
           ActionCard(
-              title: '信息',
-              subtitle: '读取卡片基本信息',
+              title: context.l10n.messageInformation,
+              subtitle: context.l10n.messageReadBasicCardInformation,
               icon: Icons.info_outline,
               onTap: () => _execute(HfMfdesCmd.info())),
           ActionCard(
-              title: '获取 UID',
-              subtitle: '获取卡片 UID',
+              title: context.l10n.messageGetUid,
+              subtitle: context.l10n.messageGetCardUid,
               icon: Icons.credit_card,
               onTap: () => _execute(HfMfdesCmd.getuid())),
           ActionCard(
-              title: '空闲内存',
-              subtitle: '查看可用内存',
+              title: context.l10n.messageFreeMemory,
+              subtitle: context.l10n.messageViewAvailableMemory,
               icon: Icons.storage,
               onTap: () => _execute(HfMfdesCmd.freemem())),
           ActionCard(
-              title: '检查密钥',
-              subtitle: '检查默认密钥',
+              title: context.l10n.messageCheckKeys,
+              subtitle: context.l10n.messageCheckDefaultKeys,
               icon: Icons.security,
               onTap: () => _execute(HfMfdesCmd.chk())),
           ActionCard(
               title: 'MAD',
-              subtitle: '查看应用目录',
+              subtitle: context.l10n.messageViewApplicationDirectory,
               icon: Icons.list_alt,
               onTap: () => _execute(HfMfdesCmd.mad())),
         ],
@@ -139,11 +140,11 @@ class _HfMfdesPageState extends State<HfMfdesPage>
           ElevatedButton.icon(
               onPressed: () => _execute(HfMfdesCmd.getaids()),
               icon: const Icon(Icons.list, size: 18),
-              label: const Text('列出 AID')),
+              label: Text(context.l10n.messageListAids)),
           ElevatedButton.icon(
               onPressed: () => _execute(HfMfdesCmd.lsapp()),
               icon: const Icon(Icons.apps, size: 18),
-              label: const Text('列出应用')),
+              label: Text(context.l10n.messageListApplications)),
         ]),
         const SizedBox(height: 16),
         Card(
@@ -152,11 +153,11 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('选择应用',
+                    Text(context.l10n.messageSelectApplication,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: 'AID (3 字节 hex)',
+                        label: context.l10n.messageAid3ByteHex,
                         byteLength: 3,
                         onChanged: (v) => _aid = v,
                         prefixIcon: Icons.apps),
@@ -166,7 +167,7 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                             ? () => _execute(HfMfdesCmd.selectapp(_aid))
                             : null,
                         icon: const Icon(Icons.check_circle, size: 18),
-                        label: const Text('选择')),
+                        label: Text(context.l10n.messageSelect)),
                   ],
                 ))),
       ]),
@@ -189,16 +190,16 @@ class _HfMfdesPageState extends State<HfMfdesPage>
           ElevatedButton.icon(
               onPressed: () => _execute(HfMfdesCmd.getfileids()),
               icon: const Icon(Icons.folder_open, size: 18),
-              label: const Text('列出文件')),
+              label: Text(context.l10n.messageListFiles)),
           ElevatedButton.icon(
               onPressed: () => _execute(HfMfdesCmd.lsfiles()),
               icon: const Icon(Icons.description, size: 18),
-              label: const Text('文件详情')),
+              label: Text(context.l10n.messageFileDetails)),
           ElevatedButton.icon(
               onPressed: () =>
                   _execute(HfMfdesCmd.dump(aid: _aid.isEmpty ? null : _aid)),
               icon: const Icon(Icons.download, size: 18),
-              label: const Text('转储应用')),
+              label: Text(context.l10n.messageDumpApplication)),
         ]),
         const SizedBox(height: 16),
         Card(
@@ -207,7 +208,7 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('文件读写',
+                    Text(context.l10n.messageFileReadWrite,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
@@ -216,18 +217,19 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                         onChanged: (v) => _fid = v,
                         prefixIcon: Icons.tag),
                     const SizedBox(height: 8),
-                    Row(children: [
+                    Wrap(runSpacing: 8, children: [
                       ElevatedButton.icon(
                           onPressed: _fid.isNotEmpty
                               ? () => _execute(HfMfdesCmd.read(
                                   aid: _aid.isEmpty ? null : _aid, fid: _fid))
                               : null,
                           icon: const Icon(Icons.visibility, size: 18),
-                          label: const Text('读取')),
+                          label: Text(context.l10n.messageRead)),
                     ]),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: '写入数据 (hex)', onChanged: (v) => _writeData = v),
+                        label: context.l10n.messageWriteDataHex,
+                        onChanged: (v) => _writeData = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _writeData.isNotEmpty && _fid.isNotEmpty
@@ -235,7 +237,7 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                                 aid: _aid.isEmpty ? null : _aid, fid: _fid))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入')),
+                        label: Text(context.l10n.messageWrite)),
                   ],
                 ))),
       ]),
@@ -260,13 +262,14 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('认证',
+                    Text(context.l10n.messageAuthenticate,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Row(children: [
                       Expanded(
                           child: TextFormField(
-                        decoration: const InputDecoration(labelText: '密钥号'),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageKeyNumber),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -277,8 +280,8 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                       Expanded(
                         child: DropdownButtonFormField<String>(
                           initialValue: _algorithm,
-                          decoration: const InputDecoration(
-                            labelText: '算法',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.messageAlgorithm,
                             isDense: true,
                           ),
                           items: const [
@@ -294,7 +297,7 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                     ]),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: '密钥 (hex)',
+                        label: context.l10n.messageKeyHex,
                         byteLength: 16,
                         onChanged: (v) => _key = v,
                         prefixIcon: Icons.vpn_key),
@@ -306,21 +309,23 @@ class _HfMfdesPageState extends State<HfMfdesPage>
                                 algo: _algorithm))
                             : null,
                         icon: const Icon(Icons.lock_open, size: 18),
-                        label: const Text('认证')),
+                        label: Text(context.l10n.messageAuthenticate)),
                   ],
                 ))),
         const SizedBox(height: 12),
         ActionCard(
-            title: '密钥设置',
-            subtitle: '获取密钥设置信息',
+            title: context.l10n.messageKeySettings,
+            subtitle: context.l10n.messageGetKeySettings,
             icon: Icons.settings,
             onTap: () => _execute(HfMfdesCmd.getkeysettings())),
         ActionCard(
-            title: '格式化 PICC',
-            subtitle: '删除所有应用和数据',
+            title: context.l10n.messageFormatPicc,
+            subtitle: context.l10n.messageDeleteAllApplicationsAndData,
             icon: Icons.delete_forever,
             onTap: () => _confirmThenExecute(
-                '确认格式化', '此操作将删除所有应用和数据，不可恢复！', HfMfdesCmd.formatpicc())),
+                context.l10n.messageConfirmFormat,
+                context.l10n.messageThisWillDeleteAllApplicationsAndData,
+                HfMfdesCmd.formatpicc())),
       ]),
       main: ResultDisplay(
           command: _lastCmd,
@@ -342,13 +347,13 @@ class _HfMfdesPageState extends State<HfMfdesPage>
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('取消')),
+                    child: Text(context.l10n.messageCancel)),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                       _execute(cmd);
                     },
-                    child: const Text('确认')),
+                    child: Text(context.l10n.messageConfirm)),
               ],
             ));
   }

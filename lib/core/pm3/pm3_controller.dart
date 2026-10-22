@@ -5,12 +5,22 @@ import 'pm3_command.dart';
 import 'pm3_connection.dart';
 import 'pm3_event.dart';
 import 'pm3_result.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 /// The only PM3 entry point exposed to application and feature layers.
-final class Pm3Controller {
+final class Pm3Controller with LocalizedMessages {
   Pm3Controller(this._backend);
 
   final Pm3Backend _backend;
+
+  @override
+  void updateLocalizations(AppLocalizations value) {
+    super.updateLocalizations(value);
+    if (_backend case final LocalizedMessages backend) {
+      backend.updateLocalizations(value);
+    }
+  }
+
   final StreamController<Pm3Command> _commands =
       StreamController<Pm3Command>.broadcast(sync: true);
   Future<void>? _shutdownFuture;
@@ -40,7 +50,7 @@ final class Pm3Controller {
   Future<void> disconnect() => _backend.disconnect();
 
   Future<Pm3Result> execute(Pm3Command command, {Duration? timeout}) async {
-    if (_isExecuting) throw StateError('PM3 命令仍在执行，请等待完成或断开连接');
+    if (_isExecuting) throw StateError(l10n.pm3Busy);
     _isExecuting = true;
     try {
       _commands.add(command);

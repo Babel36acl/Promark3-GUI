@@ -10,6 +10,7 @@ import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/file_collector.dart';
 import 'package:pm3gui/services/file_dialog_service.dart';
 import 'package:pm3gui/ui/theme.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({super.key});
@@ -139,17 +140,18 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 // ── PM3 路径 ──
                 _buildSection(
                   icon: Icons.folder_open,
-                  title: 'PM3 程序路径',
+                  title: context.l10n.settingsPm3Path,
                   child: TextFormField(
                     controller: _pm3PathController,
                     style:
                         const TextStyle(fontFamily: 'monospace', fontSize: 13),
                     decoration: InputDecoration(
                       hintText: Platform.isWindows
-                          ? r'官方发行包根目录\pm3.bat'
+                          ? context.l10n.settingsWindowsPathHint
                           : '/usr/bin/proxmark3',
-                      helperText:
-                          Platform.isWindows ? 'Windows 推荐使用官方 pm3.bat' : null,
+                      helperText: Platform.isWindows
+                          ? context.l10n.messageOnWindowsUseTheOfficialPm3Bat
+                          : null,
                       prefixIcon: const Icon(Icons.terminal, size: 18),
                       suffixIcon: File(pm3Path).existsSync()
                           ? Row(
@@ -177,7 +179,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 // ── 串口选择 ──
                 _buildSection(
                   icon: Icons.usb,
-                  title: '串口选择',
+                  title: context.l10n.messageSerialPort,
                   trailing: IconButton(
                     icon: _scanning
                         ? const SizedBox(
@@ -186,7 +188,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             child: CircularProgressIndicator(strokeWidth: 2))
                         : const Icon(Icons.refresh, size: 18),
                     onPressed: _scanning ? null : _scanPorts,
-                    tooltip: '刷新端口',
+                    tooltip: context.l10n.messageRefreshPorts,
                     visualDensity: VisualDensity.compact,
                   ),
                   child: availablePorts.isEmpty
@@ -201,8 +203,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             Icon(Icons.info_outline,
                                 size: 16, color: const Color(0xFFF87171)),
                             const SizedBox(width: 8),
-                            const Expanded(
-                              child: Text('未找到串口，请连接 PM3 设备',
+                            Expanded(
+                              child: Text(
+                                  context.l10n
+                                      .messageNoSerialPortFoundConnectYourPm3,
                                   style: TextStyle(fontSize: 13)),
                             ),
                           ]),
@@ -225,7 +229,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             helperText: Platform.isWindows &&
                                     (pm3Path.toLowerCase().endsWith('.bat') ||
                                         pm3Path.toLowerCase().endsWith('.cmd'))
-                                ? '官方 BAT 会自动检测设备；此端口值仅保留于设置中'
+                                ? context.l10n
+                                    .messageTheOfficialBatLauncherDetectsDevicesAutomatically
                                 : null,
                           ),
                         ),
@@ -256,10 +261,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             size: 18),
                     label: Text(
                       isConnecting
-                          ? '连接中...'
+                          ? context.l10n.messageConnecting
                           : isConnected
-                              ? '断开连接'
-                              : '连接 PM3',
+                              ? context.l10n.messageDisconnect
+                              : context.l10n.messageConnectPm3,
                       style: const TextStyle(fontSize: 14),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -278,33 +283,38 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   const SizedBox(height: 12),
                   _buildSection(
                     icon: Icons.developer_board,
-                    title: '设备信息',
+                    title: context.l10n.messageDeviceInformation,
                     trailing: IconButton(
                       icon: const Icon(Icons.refresh, size: 16),
-                      tooltip: '刷新硬件信息',
+                      tooltip: context.l10n.messageRefreshHardwareInformation,
                       onPressed: () => appState.refreshHwInfo(),
                       visualDensity: VisualDensity.compact,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _infoRow('端口', portName),
-                        _infoRow('版本', pm3Version),
-                        _infoRow('状态', '已连接', valueColor: AppTheme.accentBlue),
+                        _infoRow(context.l10n.messagePort, portName),
+                        _infoRow(context.l10n.messageVersion, pm3Version),
+                        _infoRow(
+                            context.l10n.messageStatus, context.l10n.connected,
+                            valueColor: AppTheme.accentBlue),
                         if (hwInfoParsed) ...[
                           const Divider(height: 16),
-                          if (hwModel.isNotEmpty) _infoRow('设备型号', hwModel),
+                          if (hwModel.isNotEmpty)
+                            _infoRow(context.l10n.messageDeviceModel, hwModel),
                           if (hwMcu.isNotEmpty) _infoRow('MCU', hwMcu),
                           if (hwFlashSize.isNotEmpty)
                             _infoRow('Flash', hwFlashSize),
-                          if (hwFirmware.isNotEmpty) _infoRow('固件', hwFirmware),
+                          if (hwFirmware.isNotEmpty)
+                            _infoRow(context.l10n.messageFirmware, hwFirmware),
                           if (hwBootrom.isNotEmpty)
                             _infoRow('Bootrom', hwBootrom),
                           if (hwFpga.isNotEmpty) _infoRow('FPGA', hwFpga),
                           if (hwSmartcard.isNotEmpty)
-                            _infoRow('智能卡模块', hwSmartcard),
+                            _infoRow(context.l10n.messageSmartcardModule,
+                                hwSmartcard),
                           if (hwUniqueId.isNotEmpty)
-                            _infoRow('设备 ID', hwUniqueId),
+                            _infoRow(context.l10n.messageDeviceId, hwUniqueId),
                           if (hwFlashTotal > 0) _buildFlashUsage(appState),
                         ] else ...[
                           const Divider(height: 16),
@@ -315,14 +325,20 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               child: CircularProgressIndicator(strokeWidth: 2),
                             ),
                             const SizedBox(width: 8),
-                            Text('正在获取硬件信息...',
+                            Text(
+                                context
+                                    .l10n.messageRetrievingHardwareInformation,
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.grey[500])),
                           ]),
                         ],
                         const Divider(height: 16),
-                        _infoRow('命令历史', '$commandHistoryLength 条'),
-                        _infoRow('终端缓冲', '$terminalOutputLength 行'),
+                        _infoRow(context.l10n.messageCommandHistory,
+                            context.l10n.messageCommands(commandHistoryLength)),
+                        _infoRow(
+                            context.l10n.messageTerminalBuffer,
+                            context.l10n.messageLines(
+                                (terminalOutputLength).toString())),
                         const SizedBox(height: 8),
                         Row(children: [
                           Expanded(
@@ -330,7 +346,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               onPressed: () =>
                                   appState.sendCommand('hw version'),
                               icon: const Icon(Icons.info, size: 14),
-                              label: const Text('硬件版本',
+                              label: Text(context.l10n.hardwareVersion,
                                   style: TextStyle(fontSize: 12)),
                             ),
                           ),
@@ -339,7 +355,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             child: OutlinedButton.icon(
                               onPressed: () => appState.sendCommand('hw tune'),
                               icon: const Icon(Icons.wifi_tethering, size: 14),
-                              label: const Text('天线调谐',
+                              label: Text(context.l10n.antennaTune,
                                   style: TextStyle(fontSize: 12)),
                             ),
                           ),
@@ -351,7 +367,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               onPressed: () =>
                                   appState.sendCommand('hw status'),
                               icon: const Icon(Icons.monitor_heart, size: 14),
-                              label: const Text('硬件状态',
+                              label: Text(context.l10n.messageHardwareStatus,
                                   style: TextStyle(fontSize: 12)),
                             ),
                           ),
@@ -361,7 +377,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               onPressed: () =>
                                   appState.sendCommand('hw dbg -4'),
                               icon: const Icon(Icons.bug_report, size: 14),
-                              label: const Text('调试级别',
+                              label: Text(context.l10n.messageDebugLevel,
                                   style: TextStyle(fontSize: 12)),
                             ),
                           ),
@@ -375,15 +391,19 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 const SizedBox(height: 16),
                 _buildSection(
                   icon: Icons.computer,
-                  title: '环境信息',
+                  title: context.l10n.messageEnvironment,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _infoRow('平台', Platform.operatingSystem),
-                      _infoRow('架构', _getArch()),
+                      _infoRow(context.l10n.settingsPlatform,
+                          Platform.operatingSystem),
+                      _infoRow(context.l10n.settingsArchitecture, _getArch()),
                       _infoRow('Dart', Platform.version.split(' ').first),
-                      _infoRow('PM3 路径',
-                          File(pm3Path).existsSync() ? '✅ 有效' : '❌ 无效'),
+                      _infoRow(
+                          context.l10n.messagePm3Path,
+                          File(pm3Path).existsSync()
+                              ? context.l10n.messageValid
+                              : context.l10n.messageInvalid),
                     ],
                   ),
                 ),
@@ -401,46 +421,54 @@ class _ConnectionPageState extends State<ConnectionPage> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Row(children: [
-                  Icon(Icons.folder_special,
-                      size: 20, color: AppTheme.accentBlue),
-                  const SizedBox(width: 8),
-                  const Text('PM3 文件收集',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  if (appState.fileState.scanError != null)
-                    Tooltip(
-                        message: appState.fileState.scanError!,
-                        child: const Icon(Icons.error_outline,
-                            color: Colors.orange)),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$collectedFilesCount 个文件, '
-                    '$cardGroupsCount 张卡',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                  ),
-                  const Spacer(),
-                  if (isFileScanning)
-                    const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2)),
-                  const SizedBox(width: 8),
-                  OutlinedButton.icon(
-                    onPressed:
-                        isFileScanning ? null : () => appState.scanForFiles(),
-                    icon: const Icon(Icons.refresh, size: 16),
-                    label: const Text('扫描', style: TextStyle(fontSize: 12)),
-                  ),
-                  const SizedBox(width: 8),
-                  OutlinedButton.icon(
-                    onPressed: !hasCollectedFiles
-                        ? null
-                        : () => _showOrganizeDialog(appState),
-                    icon: const Icon(Icons.create_new_folder, size: 16),
-                    label: const Text('归类整理', style: TextStyle(fontSize: 12)),
-                  ),
-                ]),
+                child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Icon(Icons.folder_special,
+                          size: 20, color: AppTheme.accentBlue),
+                      const SizedBox(width: 8),
+                      Text(context.l10n.messagePm3FileCollection,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15)),
+                      if (appState.fileState.scanError != null)
+                        Tooltip(
+                            message: appState.fileState.scanError!,
+                            child: const Icon(Icons.error_outline,
+                                color: Colors.orange)),
+                      const SizedBox(width: 8),
+                      Text(
+                        context.l10n.messageFilesCards(
+                            (collectedFilesCount).toString(),
+                            (cardGroupsCount).toString()),
+                        style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                      ),
+                      const SizedBox(width: 8),
+                      if (isFileScanning)
+                        const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2)),
+                      const SizedBox(width: 8),
+                      OutlinedButton.icon(
+                        onPressed: isFileScanning
+                            ? null
+                            : () => appState.scanForFiles(),
+                        icon: const Icon(Icons.refresh, size: 16),
+                        label: Text(context.l10n.messageScan,
+                            style: TextStyle(fontSize: 12)),
+                      ),
+                      const SizedBox(width: 8),
+                      OutlinedButton.icon(
+                        onPressed: !hasCollectedFiles
+                            ? null
+                            : () => _showOrganizeDialog(appState),
+                        icon: const Icon(Icons.create_new_folder, size: 16),
+                        label: Text(context.l10n.messageOrganizeFiles,
+                            style: TextStyle(fontSize: 12)),
+                      ),
+                    ]),
               ),
               const Divider(height: 1),
 
@@ -454,11 +482,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               size: 48,
                               color: Colors.grey.withValues(alpha: 0.3)),
                           const SizedBox(height: 12),
-                          Text('未发现 PM3 导出文件',
+                          Text(context.l10n.messageNoPm3ExportFilesFound,
                               style: TextStyle(
                                   color: Colors.grey[500], fontSize: 14)),
                           const SizedBox(height: 4),
-                          Text('连接设备并执行 dump/autopwn 后自动收集',
+                          Text(
+                              context.l10n
+                                  .messageFilesAreCollectedAutomaticallyAfterConnectingAnd,
                               style: TextStyle(
                                   color: Colors.grey[600], fontSize: 12)),
                         ]),
@@ -479,7 +509,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   Widget _pickPm3PathButton(AppState appState) => IconButton(
         icon: const Icon(Icons.folder_open, size: 18),
-        tooltip: '选择 PM3 程序',
+        tooltip: context.l10n.settingsPickPm3,
         onPressed: () async {
           final path = await FileDialogService.pickSingleFilePath();
           if (path != null) await appState.setPm3Path(path);
@@ -534,7 +564,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                isConnected ? 'PM3 已连接' : 'PM3 未连接',
+                isConnected
+                    ? context.l10n.messagePm3Connected
+                    : context.l10n.messagePm3NotConnected,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
@@ -542,7 +574,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               Text(
                 isConnected
                     ? '${appState.portName}  •  ${appState.pm3Version}'
-                    : '请选择串口并连接设备',
+                    : context.l10n.messageSelectASerialPortAndConnectThe,
                 style: TextStyle(fontSize: 12, color: Colors.grey[500]),
               ),
             ],
@@ -598,7 +630,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('连接失败',
+                  Text(context.l10n.messageConnectionFailed2,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: const Color(0xFFF87171),
@@ -641,8 +673,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
         title: Text(group.label,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
         subtitle: Text(
-          '${group.dumpCount} 份转储  •  ${group.keyCount} 份密钥  •  '
-          '${group.files.length} 个文件',
+          context.l10n.messageDumpsKeyFilesFiles((group.dumpCount).toString(),
+              (group.keyCount).toString(), (group.files.length).toString()),
           style: TextStyle(fontSize: 11, color: Colors.grey[500]),
         ),
         children: [
@@ -669,16 +701,19 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 '${_formatTime(f.modified)}  •  ${f.format}',
                 style: TextStyle(fontSize: 10, color: Colors.grey[500]),
               ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
+              trailing: Wrap(
+                runSpacing: 8,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.folder_open, size: 16),
-                    tooltip: '在 Dump 查看器中打开',
+                    tooltip: context.l10n.messageOpenInDumpViewer,
                     onPressed: () {
                       context.read<AppState>().requestOpenDumpInViewer(f.path);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('已切换到 Dump 查看器: ${f.fileName}')),
+                        SnackBar(
+                            content: Text(context.l10n
+                                .messageOpenedInDumpViewer(
+                                    (f.fileName).toString()))),
                       );
                     },
                     visualDensity: VisualDensity.compact,
@@ -701,31 +736,28 @@ class _ConnectionPageState extends State<ConnectionPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('归类整理 PM3 文件'),
+        title: Text(context.l10n.messageOrganizePm3Files),
         content: SizedBox(
           width: 400,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const Text(
-              '将收集到的 PM3 导出文件按卡片 UID 分类整理到子目录中。\n\n'
-              '目录结构：\n'
-              '  📁 hf-mf/A991A280/\n'
-              '    ├── hf-mf-A991A280-dump.bin\n'
-              '    ├── hf-mf-A991A280-key.bin\n'
-              '    └── ...\n',
+            Text(
+              context.l10n
+                  .messageOrganizeCollectedPm3ExportFilesIntoSubdirectories,
               style: TextStyle(fontSize: 13),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: controller,
-              decoration: const InputDecoration(
-                labelText: '目标目录',
+              decoration: InputDecoration(
+                labelText: context.l10n.messageDestinationDirectory,
                 prefixIcon: Icon(Icons.folder, size: 18),
               ),
               style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
             ),
             const SizedBox(height: 8),
             Text(
-              '共 ${appState.collectedFiles.length} 个文件将被整理',
+              context.l10n.messageFilesToOrganize(
+                  (appState.collectedFiles.length).toString()),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             ),
           ]),
@@ -733,7 +765,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('取消'),
+            child: Text(context.l10n.messageCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -742,11 +774,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   await appState.organizeCollectedFiles(controller.text);
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('已整理 $count 个文件')),
+                  SnackBar(
+                      content: Text(context.l10n
+                          .messageFilesOrganized((count).toString()))),
                 );
               }
             },
-            child: const Text('开始整理'),
+            child: Text(context.l10n.messageStartOrganizing),
           ),
         ],
       ),
@@ -790,7 +824,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           Row(children: [
             SizedBox(
               width: 80,
-              child: Text('Flash 用量',
+              child: Text(context.l10n.messageFlashUsage,
                   style: TextStyle(color: Colors.grey[500], fontSize: 12)),
             ),
             Expanded(

@@ -4,10 +4,11 @@ import 'dart:typed_data';
 import 'mifare_card.dart';
 import '../parsers/output_parser.dart';
 import '../parsers/key_parser.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 /// 命令采集的未完成卡片。缺项保持未知，不能当作全零块或默认密钥。
 /// 文件转储仍由 MifareCard 表示；只有完整草稿才能导出为转储。
-class CommandCard {
+class CommandCard with LocalizedMessages {
   CardType type = card1K;
   String uid = '';
   final Map<int, String> blocks = {};
@@ -144,14 +145,15 @@ class CommandCard {
     if (normalized.isNotEmpty &&
         (normalized.length != length ||
             !RegExp(r'^[0-9A-F?]+$').hasMatch(normalized))) {
-      throw FormatException('需要 $length 位十六进制字符；未知位用 ?，清空表示未读取');
+      throw FormatException(
+          l10n.messageEnterHexDigitsUseForUnknownDigits((length).toString()));
     }
     return normalized;
   }
 
   void editBlock(int block, String value) {
     if (block < 0 || block >= type.blockCount) {
-      throw const FormatException('块号超出卡容量');
+      throw FormatException(l10n.messageBlockNumberExceedsTheCardCapacity);
     }
     final data = normalize(value, 32);
     if (data.isEmpty) {
@@ -163,7 +165,7 @@ class CommandCard {
 
   void editKey(int sector, bool a, String value) {
     if (sector < 0 || sector >= type.sectorCount) {
-      throw const FormatException('扇区号超出卡容量');
+      throw FormatException(l10n.messageSectorNumberExceedsTheCardCapacity);
     }
     final key = normalize(value, 12);
     final target = a ? keysA : keysB;
@@ -207,16 +209,20 @@ class CommandCard {
   void importDraft(String text) {
     final json = jsonDecode(text) as Map<String, dynamic>;
     if (json['format'] != 'pm3gui-command-card-v1') {
-      throw const FormatException('不是命令数据草稿');
+      throw FormatException(l10n.messageThisIsNotACommandDataDraft);
     }
     final cardType = CardType.fromBlockCount(json['blocksCount'] as int);
-    if (cardType == null) throw const FormatException('不支持的卡容量');
-    final parsed = CommandCard()..clear(cardType: cardType);
+    if (cardType == null) {
+      throw FormatException(l10n.messageUnsupportedCardCapacity);
+    }
+    final parsed = CommandCard()
+      ..updateLocalizations(l10n)
+      ..clear(cardType: cardType);
     parsed.uid = json['uid'] as String;
     if (parsed.uid.isNotEmpty &&
         !RegExp(r'^(?:[0-9A-F]{8}|[0-9A-F]{14}|[0-9A-F]{20})$')
             .hasMatch(parsed.uid)) {
-      throw const FormatException('UID 格式不正确');
+      throw FormatException(l10n.messageInvalidUidFormat);
     }
     for (final item in (json['blocks'] as Map).entries) {
       parsed.editBlock(int.parse(item.key), item.value as String);
@@ -237,7 +243,8 @@ class CommandCard {
   String exportEml() {
     for (var b = 0; b < type.blockCount; b++) {
       if (!RegExp(r'^[0-9A-F]{32}$').hasMatch(blocks[b] ?? '')) {
-        throw FormatException('块 $b 尚未完整，先保存草稿或补齐数据');
+        throw FormatException(
+            l10n.messageBlockIsIncompleteSaveADraftOr((b).toString()));
       }
     }
     return '${List.generate(type.blockCount, (b) => blocks[b]).join('\n')}\n';
@@ -250,7 +257,9 @@ class CommandCard {
   }
 
   void importCard(MifareCard card) {
-    final parsed = CommandCard()..clear(cardType: card.cardType);
+    final parsed = CommandCard()
+      ..updateLocalizations(l10n)
+      ..clear(cardType: card.cardType);
     for (var b = 0; b < card.blocks.length; b++) {
       parsed.editBlock(b, card.blocks[b]);
     }
@@ -270,7 +279,8 @@ class CommandCard {
     for (var s = 0; s < type.sectorCount; s++) {
       if (!RegExp(r'^[0-9A-F]{12}$').hasMatch(keysA[s] ?? '') ||
           !RegExp(r'^[0-9A-F]{12}$').hasMatch(keysB[s] ?? '')) {
-        throw FormatException('扇区 $s 密钥不完整，可先导出字典或保存草稿');
+        throw FormatException(l10n
+            .messageSectorHasIncompleteKeysExportADictionary((s).toString()));
       }
       keys.add(SectorKey(keyA: keysA[s]!, keyB: keysB[s]!));
     }
@@ -280,7 +290,9 @@ class CommandCard {
   String exportDictionary() {
     final keys = {...keysA.values, ...keysB.values}
         .where((k) => RegExp(r'^[0-9A-F]{12}$').hasMatch(k));
-    if (keys.isEmpty) throw const FormatException('没有完整密钥可导出');
+    if (keys.isEmpty) {
+      throw FormatException(l10n.messageThereAreNoCompleteKeysToExport);
+    }
     return '${keys.join('\n')}\n';
   }
 }

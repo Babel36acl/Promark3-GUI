@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_command_catalog.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class _AutocompleteIntent extends Intent {
   const _AutocompleteIntent();
@@ -38,6 +39,9 @@ class _TerminalPageState extends State<TerminalPage> {
   bool _ignoreNextInputChange = false;
 
   int _lastTerminalLineCount = 0;
+  String? _catalogLanguage;
+  Object? _catalogError;
+  int _catalogRequest = 0;
 
   bool get _isCyclingAutocomplete => _cycleCandidates.isNotEmpty;
 
@@ -76,7 +80,20 @@ class _TerminalPageState extends State<TerminalPage> {
   void initState() {
     super.initState();
     _inputController.addListener(_onInputChanged);
-    _loadCatalog();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final language = Localizations.localeOf(context).languageCode;
+    if (_catalogLanguage != language) {
+      _catalogLanguage = language;
+      _catalog = const [];
+      _suggestionIndex.clear();
+      _suggestions = const [];
+      _resetAutocompleteCycle();
+      _loadCatalog(language);
+    }
   }
 
   @override
@@ -105,14 +122,27 @@ class _TerminalPageState extends State<TerminalPage> {
     _cycleIndex = -1;
   }
 
-  Future<void> _loadCatalog() async {
-    final loaded = await Pm3CommandCatalog.load(preferZh: true);
-    if (!mounted) return;
-    setState(() {
-      _catalog = loaded;
-      _rebuildSuggestionIndex();
-      _updateSuggestions();
-    });
+  Future<void> _loadCatalog(String language) async {
+    final request = ++_catalogRequest;
+    try {
+      final loaded = await Pm3CommandCatalog.load(
+          preferZh: language == 'zh', bundle: DefaultAssetBundle.of(context));
+      if (!mounted || request != _catalogRequest) return;
+      setState(() {
+        _catalogError = null;
+        _catalog = loaded;
+        _rebuildSuggestionIndex();
+        _updateSuggestions();
+      });
+    } on FlutterError catch (error) {
+      if (mounted && request == _catalogRequest) {
+        setState(() => _catalogError = error);
+      }
+    } on FormatException catch (error) {
+      if (mounted && request == _catalogRequest) {
+        setState(() => _catalogError = error);
+      }
+    }
   }
 
   void _rebuildSuggestionIndex() {
@@ -283,6 +313,9 @@ class _TerminalPageState extends State<TerminalPage> {
 
     return Column(
       children: [
+        if (_catalogError case final error?)
+          Text(context.l10n.terminalCatalogError(error.toString()),
+              style: TextStyle(color: Theme.of(context).colorScheme.error)),
         // Quick command bar
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -290,13 +323,13 @@ class _TerminalPageState extends State<TerminalPage> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _quickBtn('高频搜索', 'hf search'),
-                _quickBtn('低频搜索', 'lf search'),
-                _quickBtn('14A 信息', 'hf 14a info'),
-                _quickBtn('硬件版本', 'hw version'),
-                _quickBtn('天线调谐', 'hw tune'),
-                _quickBtn('低频读取', 'lf read'),
-                _quickBtn('自动破解', 'hf mf autopwn'),
+                _quickBtn(context.l10n.terminalHfSearch, 'hf search'),
+                _quickBtn(context.l10n.terminalLfSearch, 'lf search'),
+                _quickBtn(context.l10n.terminal14aInfo, 'hf 14a info'),
+                _quickBtn(context.l10n.hardwareVersion, 'hw version'),
+                _quickBtn(context.l10n.antennaTune, 'hw tune'),
+                _quickBtn(context.l10n.terminalLfRead, 'lf read'),
+                _quickBtn(context.l10n.terminalAutopwn, 'hf mf autopwn'),
               ],
             ),
           ),
@@ -365,7 +398,8 @@ class _TerminalPageState extends State<TerminalPage> {
             color: const Color(0xFF17172A),
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 6),
             child: Text(
-              '提示：${_selectedOrFirstSuggestion!.localizedHint}',
+              context.l10n.messageHint(
+                  (_selectedOrFirstSuggestion!.localizedHint).toString()),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -434,9 +468,9 @@ class _TerminalPageState extends State<TerminalPage> {
                           fontFamily: 'monospace',
                           fontSize: 14,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: '输入命令...（Tab/Shift+Tab 循环补全）',
+                          hintText: context.l10n.terminalInputHint,
                           isDense: true,
                           contentPadding: EdgeInsets.zero,
                         ),
@@ -450,19 +484,19 @@ class _TerminalPageState extends State<TerminalPage> {
               IconButton(
                 icon: const Icon(Icons.menu_book, size: 20),
                 onPressed: _showQuickInputPanel,
-                tooltip: '命令库',
+                tooltip: context.l10n.terminalCatalog,
               ),
               IconButton(
                 icon: const Icon(Icons.send, size: 20),
                 onPressed: _submitCommand,
-                tooltip: '发送',
+                tooltip: context.l10n.terminalSend,
               ),
               IconButton(
                 icon: const Icon(Icons.delete_sweep, size: 20),
                 onPressed: () {
                   context.read<AppState>().clearTerminal();
                 },
-                tooltip: '清屏',
+                tooltip: context.l10n.messageClearTerminal,
               ),
             ],
           ),
@@ -539,9 +573,9 @@ class _TerminalPageState extends State<TerminalPage> {
                     TextField(
                       controller: searchCtrl,
                       autofocus: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search),
-                        hintText: '搜索命令（如 hf mf, autopwn, info）',
+                        hintText: context.l10n.terminalSearchHint,
                       ),
                       onChanged: updateFilter,
                     ),

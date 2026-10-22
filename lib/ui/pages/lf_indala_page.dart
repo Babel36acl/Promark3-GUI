@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfIndalaPage extends StatefulWidget {
   const LfIndalaPage({super.key});
@@ -54,8 +55,8 @@ class _LfIndalaPageState extends State<LfIndalaPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取',
-              subtitle: '读取 Indala 卡片',
+              title: context.l10n.messageRead,
+              subtitle: context.l10n.messageReadAnIndalaCard,
               icon: Icons.nfc,
               onTap: () => _execute(LfIndalaCmd.reader())),
           const SizedBox(height: 8),
@@ -65,12 +66,12 @@ class _LfIndalaPageState extends State<LfIndalaPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('克隆 / 模拟',
+                      Text(context.l10n.messageCloneSimulate,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       HexInputField(
-                          label: 'RAW 数据',
+                          label: context.l10n.messageRawData2,
                           onChanged: (v) => setState(() => _rawData = v)),
                       const SizedBox(height: 8),
                       Wrap(spacing: 8, runSpacing: 8, children: [
@@ -79,13 +80,13 @@ class _LfIndalaPageState extends State<LfIndalaPage> {
                                 ? () => _execute(LfIndalaCmd.clone(_rawData))
                                 : null,
                             icon: const Icon(Icons.copy, size: 18),
-                            label: const Text('克隆')),
+                            label: Text(context.l10n.messageClone)),
                         OutlinedButton.icon(
                             onPressed: _rawData.isNotEmpty
                                 ? () => _execute(LfIndalaCmd.sim(_rawData))
                                 : null,
                             icon: const Icon(Icons.play_arrow, size: 18),
-                            label: const Text('模拟')),
+                            label: Text(context.l10n.messageSimulate)),
                       ]),
                     ],
                   ))),

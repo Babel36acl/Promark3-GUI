@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfFelicaPage extends StatefulWidget {
   const HfFelicaPage({super.key});
@@ -63,9 +64,9 @@ class _HfFelicaPageState extends State<HfFelicaPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '信息'),
-        Tab(text: '读写'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageInformation),
+        Tab(text: context.l10n.messageReadWrite),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -81,28 +82,28 @@ class _HfFelicaPageState extends State<HfFelicaPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取器',
-              subtitle: '读取 FeliCa 卡片',
+              title: context.l10n.messageReader,
+              subtitle: context.l10n.messageReadAFelicaCard,
               icon: Icons.nfc,
               onTap: () => _execute(HfFelicaCmd.reader())),
           ActionCard(
-              title: '标签信息',
-              subtitle: '获取 FeliCa 详情',
+              title: context.l10n.messageTagInformation,
+              subtitle: context.l10n.messageGetFelicaDetails,
               icon: Icons.info_outline,
               onTap: () => _execute(HfFelicaCmd.info())),
           ActionCard(
-              title: '转储',
-              subtitle: '转储卡片数据',
+              title: context.l10n.messageDump,
+              subtitle: context.l10n.messageDumpCardData,
               icon: Icons.download,
               onTap: () => _execute(HfFelicaCmd.dump())),
           ActionCard(
-              title: 'Lite 转储',
-              subtitle: '转储 FeliCa Lite',
+              title: context.l10n.messageLiteDump,
+              subtitle: context.l10n.messageDumpFelicaLite,
               icon: Icons.download_for_offline,
               onTap: () => _execute(HfFelicaCmd.litedump())),
           ActionCard(
-              title: '嗅探',
-              subtitle: '捕获 FeliCa 通信',
+              title: context.l10n.messageSniff,
+              subtitle: context.l10n.messageCaptureFelicaCommunication,
               icon: Icons.hearing,
               onTap: () => _execute(HfFelicaCmd.sniff())),
         ],
@@ -128,17 +129,19 @@ class _HfFelicaPageState extends State<HfFelicaPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('块操作',
+                    Text(context.l10n.messageBlockOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Row(children: [
                       Expanded(
                           child: HexInputField(
-                              label: 'SC (服务代码)', onChanged: (v) => _sc = v)),
+                              label: context.l10n.messageScServiceCode,
+                              onChanged: (v) => _sc = v)),
                       const SizedBox(width: 8),
                       Expanded(
                           child: HexInputField(
-                              label: 'BL (块号)', onChanged: (v) => _bl = v)),
+                              label: context.l10n.messageBlBlockNumber,
+                              onChanged: (v) => _bl = v)),
                     ]),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
@@ -146,10 +149,11 @@ class _HfFelicaPageState extends State<HfFelicaPage>
                             ? () => _execute(HfFelicaCmd.rdbl(_sc, _bl))
                             : null,
                         icon: const Icon(Icons.visibility, size: 18),
-                        label: const Text('读取块')),
+                        label: Text(context.l10n.messageReadBlock)),
                     const SizedBox(height: 12),
                     HexInputField(
-                        label: '写入数据 (hex)', onChanged: (v) => _blockData = v),
+                        label: context.l10n.messageWriteDataHex,
+                        onChanged: (v) => _blockData = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _blockData.isNotEmpty &&
@@ -159,7 +163,7 @@ class _HfFelicaPageState extends State<HfFelicaPage>
                                 _execute(HfFelicaCmd.wrbl(_sc, _bl, _blockData))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入块')),
+                        label: Text(context.l10n.messageWriteBlock)),
                   ],
                 ))),
         const SizedBox(height: 12),
@@ -169,18 +173,19 @@ class _HfFelicaPageState extends State<HfFelicaPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('裸命令',
+                    Text(context.l10n.messageRawCommand,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     HexInputField(
-                        label: '原始 hex 数据', onChanged: (v) => _rawHex = v),
+                        label: context.l10n.messageRawHexData,
+                        onChanged: (v) => _rawHex = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _rawHex.isNotEmpty
                             ? () => _execute(HfFelicaCmd.raw(_rawHex))
                             : null,
                         icon: const Icon(Icons.send, size: 18),
-                        label: const Text('发送')),
+                        label: Text(context.l10n.terminalSend)),
                   ],
                 ))),
       ]),

@@ -1,5 +1,5 @@
 name: pm3gui
-description: "Proxmark3 跨平台图形界面 — 读写分析 RFID/NFC 卡片，点击即用"
+description: "Multilingual Proxmark3 desktop GUI for RFID/NFC operations and dump analysis."
 publish_to: 'none'
 version: 0.0.3
 
@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   cupertino_icons: ^1.0.9
   # State management
   provider: ^6.1.2
@@ -36,6 +39,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

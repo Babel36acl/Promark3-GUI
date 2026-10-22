@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pm3gui/l10n/app_localizations.dart';
 import 'package:pm3gui/models/command_card.dart';
 import 'package:pm3gui/models/mifare_card.dart';
 import 'package:pm3gui/parsers/key_parser.dart';
@@ -64,6 +68,58 @@ void main() {
     expect(restored.exportDictionary(), 'ABCDEF012345\n');
   });
 
+  for (final field in ['blocks', 'keysA', 'keysB']) {
+    test('English draft import localizes invalid $field and remains atomic',
+        () {
+      final english = lookupAppLocalizations(const Locale('en'));
+      final card = _populatedCard(english);
+      final saved = card.exportDraft();
+      final draft = jsonEncode({
+        'format': 'pm3gui-command-card-v1',
+        'blocksCount': card1K.blockCount,
+        'uid': '55667788',
+        'blocks': {'0': field == 'blocks' ? 'ZZ' : 'CD' * 16},
+        'keysA': {'0': field == 'keysA' ? 'ZZ' : 'C0C1C2C3C4C5'},
+        'keysB': {'0': field == 'keysB' ? 'ZZ' : 'D0D1D2D3D4D5'},
+      });
+      final message = english.messageEnterHexDigitsUseForUnknownDigits(
+          field == 'blocks' ? '32' : '12');
+
+      expect(
+        () => card.importDraft(draft),
+        throwsA(isA<FormatException>()
+            .having((error) => error.message, 'English message', message)),
+      );
+      expect(card.exportDraft(), saved);
+      expect(card.l10n, same(english));
+    });
+
+    test('English card import localizes invalid $field and remains atomic', () {
+      final english = lookupAppLocalizations(const Locale('en'));
+      final card = _populatedCard(english);
+      final saved = card.exportDraft();
+      final imported = MifareCard(uid: '55667788');
+      switch (field) {
+        case 'blocks':
+          imported.blocks[0] = 'ZZ';
+        case 'keysA':
+          imported.sectorKeys[0].keyA = 'ZZ';
+        case 'keysB':
+          imported.sectorKeys[0].keyB = 'ZZ';
+      }
+      final message = english.messageEnterHexDigitsUseForUnknownDigits(
+          field == 'blocks' ? '32' : '12');
+
+      expect(
+        () => card.importCard(imported),
+        throwsA(isA<FormatException>()
+            .having((error) => error.message, 'English message', message)),
+      );
+      expect(card.exportDraft(), saved);
+      expect(card.l10n, same(english));
+    });
+  }
+
   test('complete export has correct capacity and RRG key ordering', () {
     final card = CommandCard()..clear(cardType: cardMini);
     for (var b = 0; b < 20; b++) {
@@ -93,3 +149,11 @@ void main() {
     expect(card.keysA, isEmpty);
   });
 }
+
+CommandCard _populatedCard(AppLocalizations localizations) => CommandCard()
+  ..updateLocalizations(localizations)
+  ..clear(cardType: cardMini)
+  ..uid = '11223344'
+  ..editBlock(0, 'AB' * 16)
+  ..editKey(0, true, 'A0A1A2A3A4A5')
+  ..editKey(0, false, 'B0B1B2B3B4B5');

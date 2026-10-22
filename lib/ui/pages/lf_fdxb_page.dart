@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfFdxbPage extends StatefulWidget {
   const LfFdxbPage({super.key});
@@ -54,8 +55,8 @@ class _LfFdxbPageState extends State<LfFdxbPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取',
-              subtitle: '读取 FDX-B 标签',
+              title: context.l10n.messageRead,
+              subtitle: context.l10n.messageReadAnFdxBTag,
               icon: Icons.pets,
               onTap: () => _execute(LfFdxbCmd.reader())),
           const SizedBox(height: 8),
@@ -65,12 +66,12 @@ class _LfFdxbPageState extends State<LfFdxbPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('克隆',
+                      Text(context.l10n.messageClone,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       HexInputField(
-                          label: 'RAW 数据',
+                          label: context.l10n.messageRawData2,
                           onChanged: (v) => setState(() => _rawData = v)),
                       const SizedBox(height: 8),
                       ElevatedButton.icon(
@@ -78,7 +79,7 @@ class _LfFdxbPageState extends State<LfFdxbPage> {
                               ? () => _execute(LfFdxbCmd.clone(_rawData))
                               : null,
                           icon: const Icon(Icons.copy, size: 18),
-                          label: const Text('克隆到 T55xx')),
+                          label: Text(context.l10n.messageCloneToT55xx)),
                     ],
                   ))),
         ],

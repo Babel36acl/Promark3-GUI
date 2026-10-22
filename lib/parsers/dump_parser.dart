@@ -12,6 +12,7 @@ import 'package:pm3gui/models/dump_analysis.dart';
 import 'package:pm3gui/parsers/eml_parser.dart';
 import 'package:pm3gui/parsers/bin_parser.dart';
 import 'package:pm3gui/parsers/json_dump_parser.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 /// Result of parsing a dump file.
 class DumpResult {
@@ -19,13 +20,20 @@ class DumpResult {
   final String format; // 'eml', 'bin', 'json'
   final String? error;
   DumpAnalysis? _analysis;
+  String? _analysisLocale;
 
   DumpResult({required this.card, required this.format, this.error});
   bool get isSuccess => error == null;
 
   /// 获取或生成深度分析结果 (懒加载)
-  DumpAnalysis get analysis {
-    _analysis ??= DumpAnalyzer.analyze(card);
+  DumpAnalysis get analysis => analysisFor(defaultLocalizations);
+
+  DumpAnalysis analysisFor(AppLocalizations localizations) {
+    if (_analysisLocale != localizations.localeName) {
+      _analysis = null;
+      _analysisLocale = localizations.localeName;
+    }
+    _analysis ??= DumpAnalyzer.analyze(card, localizations: localizations);
     return _analysis!;
   }
 }

@@ -9,8 +9,9 @@ import 'package:pm3gui/core/pm3/pm3_client_settings.dart';
 import 'package:pm3gui/core/pm3/pm3_connection.dart';
 import 'package:pm3gui/core/pm3/pm3_controller.dart';
 import 'package:pm3gui/services/pm3_settings_store.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
-class ConnectionState extends ChangeNotifier {
+class ConnectionState extends ChangeNotifier with LocalizedMessages {
   ConnectionState({
     Pm3Controller? controller,
     Pm3SettingsRepository? settingsStore,
@@ -20,6 +21,12 @@ class ConnectionState extends ChangeNotifier {
   }
 
   final Pm3Controller controller;
+  @override
+  void updateLocalizations(AppLocalizations value) {
+    super.updateLocalizations(value);
+    controller.updateLocalizations(value);
+  }
+
   final Pm3SettingsRepository _settingsStore;
   Future<void>? _initialization;
   Future<void> _settingsQueue = Future.value();
@@ -29,7 +36,7 @@ class ConnectionState extends ChangeNotifier {
   bool _argumentsDirty = false;
   bool _workingDirectoryDirty = false;
   int _pendingSettingsSaves = 0;
-  String? _settingsError;
+  Object? _settingsError;
 
   String pm3Path = '';
   String portName = '';
@@ -42,7 +49,9 @@ class ConnectionState extends ChangeNotifier {
   bool get isConnected => controller.isConnected;
   String get lastError => controller.lastError;
   bool get isSavingSettings => _pendingSettingsSaves > 0;
-  String? get settingsError => _settingsError;
+  String? get settingsError => _settingsError == null
+      ? null
+      : l10n.messageCouldNotSaveSettings(_settingsError.toString());
   bool get usesWindowsBatchClient {
     final lowerPath = pm3Path.toLowerCase();
     return Platform.isWindows &&
@@ -130,7 +139,7 @@ class ConnectionState extends ChangeNotifier {
         _settingsError = null;
       },
       onError: (Object error, StackTrace _) {
-        _settingsError = '设置保存失败: $error';
+        _settingsError = error;
       },
     ).whenComplete(() {
       _pendingSettingsSaves--;

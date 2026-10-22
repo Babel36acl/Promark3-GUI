@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfSeosPage extends StatefulWidget {
   const HfSeosPage({super.key});
@@ -53,18 +54,18 @@ class _HfSeosPageState extends State<HfSeosPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '信息',
-              subtitle: '读取 SEOS 信息',
+              title: context.l10n.messageInformation,
+              subtitle: context.l10n.messageReadSeosInformation,
               icon: Icons.info_outline,
               onTap: () => _execute(HfSeosCmd.info())),
           ActionCard(
               title: 'PACS',
-              subtitle: '读取 PACS 数据',
+              subtitle: context.l10n.messageReadPacsData,
               icon: Icons.badge,
               onTap: () => _execute(HfSeosCmd.pacs())),
           ActionCard(
-              title: '模拟',
-              subtitle: '模拟 SEOS 卡片',
+              title: context.l10n.messageSimulate,
+              subtitle: context.l10n.messageSimulateASeosCard,
               icon: Icons.play_arrow,
               onTap: () => _execute(HfSeosCmd.sim())),
         ],

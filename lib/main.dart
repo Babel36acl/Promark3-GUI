@@ -11,29 +11,35 @@
 library;
 
 import 'dart:ui' show AppExitResponse;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/ui/theme.dart';
 import 'package:pm3gui/ui/home_page.dart';
+import 'package:pm3gui/l10n/l10n.dart';
+import 'package:pm3gui/l10n/app_locale_controller.dart';
 
 /// 应用入口函数
 ///
 /// 初始化应用并提供全局状态管理
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final localeController = AppLocaleController();
+  await localeController.initialize();
   final appState = AppState();
   AppLifecycleListener(
     onExitRequested: () async {
       await appState.shutdown();
+      await localeController.flush();
       return AppExitResponse.exit;
     },
   );
   runApp(
     ChangeNotifierProvider(
       create: (_) => appState,
-      child: const PM3GuiApp(),
+      child: PM3GuiApp(localeController: localeController),
     ),
   );
 }
@@ -41,17 +47,51 @@ void main() {
 /// 应用根组件
 ///
 /// 负责应用的主题管理和页面导航
-class PM3GuiApp extends StatelessWidget {
-  const PM3GuiApp({super.key});
+class PM3GuiApp extends StatefulWidget {
+  const PM3GuiApp({super.key, this.localeController});
+
+  final AppLocaleController? localeController;
+
+  @override
+  State<PM3GuiApp> createState() => _PM3GuiAppState();
+}
+
+class _PM3GuiAppState extends State<PM3GuiApp> {
+  late final AppLocaleController _localeController;
+
+  @override
+  void initState() {
+    super.initState();
+    _localeController = widget.localeController ?? AppLocaleController();
+    unawaited(_localeController.initialize());
+  }
+
+  @override
+  void dispose() {
+    if (widget.localeController == null) _localeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PM3 图形界面',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme(),
-      // 应用主页面
-      home: const HomePage(),
+    return ChangeNotifierProvider.value(
+      value: _localeController,
+      child: AnimatedBuilder(
+        animation: _localeController,
+        builder: (context, _) => MaterialApp(
+          onGenerateTitle: (context) => context.l10n.appTitle,
+          locale: _localeController.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          builder: (context, child) {
+            context.read<AppState>().updateLocalizations(context.l10n);
+            return child!;
+          },
+          home: const HomePage(),
+        ),
+      ),
     );
   }
 }

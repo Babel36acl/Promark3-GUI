@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfPage extends StatefulWidget {
   const LfPage({super.key});
@@ -66,8 +67,8 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
       children: [
         TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: '通用'),
+          tabs: [
+            Tab(text: context.l10n.messageGeneral),
             Tab(text: 'EM4x05'),
             Tab(text: 'T55xx'),
           ],
@@ -92,16 +93,26 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
       side: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _actionCard('低频搜索', '自动检测低频标签', Icons.search, () {
+          _actionCard(
+              context.l10n.terminalLfSearch,
+              context.l10n.messageAutomaticallyDetectLowFrequencyTags,
+              Icons.search, () {
             _execute(Pm3Commands.lfSearch());
           }),
-          _actionCard('低频读取', '读取低频原始信号', Icons.sensors, () {
+          _actionCard(
+              context.l10n.terminalLfRead,
+              context.l10n.messageReadTheRawLowFrequencySignal,
+              Icons.sensors, () {
             _execute(Pm3Commands.lfRead());
           }),
-          _actionCard('低频喗探', '捕获低频通信', Icons.hearing, () {
+          _actionCard(
+              context.l10n.messageLfSniff,
+              context.l10n.messageCaptureLowFrequencyCommunication,
+              Icons.hearing, () {
             _execute(Pm3Commands.lfSniff());
           }),
-          _actionCard('天线调谐', '检查天线调谐状态', Icons.tune, () {
+          _actionCard(context.l10n.antennaTune,
+              context.l10n.messageCheckAntennaTuning, Icons.tune, () {
             _execute(Pm3Commands.lfTune());
           }),
         ],
@@ -123,7 +134,8 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
       side: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _actionCard('读取 EM410x', '读取 EM4100 标签 ID', Icons.nfc, () {
+          _actionCard(context.l10n.messageReadEm410x,
+              context.l10n.messageReadTheEm4100TagId, Icons.nfc, () {
             _execute(Pm3Commands.lfEm410xRead());
           }),
           const SizedBox(height: 12),
@@ -133,13 +145,13 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('克隆 EM410x',
+                  Text(context.l10n.messageCloneEm410x,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: '标签 ID (10位 hex)',
-                      hintText: '例如 0102030405',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.messageTagId10HexDigits,
+                      hintText: context.l10n.messageForExample0102030405,
                     ),
                     style: const TextStyle(fontFamily: 'monospace'),
                     onChanged: (v) => _em410xId = v,
@@ -151,12 +163,14 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
                         _execute(Pm3Commands.lfEm410xClone(_em410xId));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('ID 必须是 10 位 hex 字符')),
+                          SnackBar(
+                              content: Text(context
+                                  .l10n.messageIdMustContain10HexDigits)),
                         );
                       }
                     },
                     icon: const Icon(Icons.copy),
-                    label: const Text('克隆'),
+                    label: Text(context.l10n.messageClone),
                   ),
                 ],
               ),
@@ -181,13 +195,20 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
       side: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _actionCard('检测', '检测 T55xx 芯片配置', Icons.memory, () {
+          _actionCard(
+              context.l10n.messageDetect,
+              context.l10n.messageDetectT55xxChipConfiguration,
+              Icons.memory, () {
             _execute(Pm3Commands.lfT55xxDetect());
           }),
-          _actionCard('信息', '显示 T55xx 配置信息', Icons.info_outline, () {
+          _actionCard(
+              context.l10n.messageInformation,
+              context.l10n.messageShowT55xxConfiguration,
+              Icons.info_outline, () {
             _execute(Pm3Commands.lfT55xxInfo());
           }),
-          _actionCard('转储', '转储所有 T55xx 块', Icons.download, () {
+          _actionCard(context.l10n.messageDump,
+              context.l10n.messageDumpAllT55xxBlocks, Icons.download, () {
             _execute(Pm3Commands.lfT55xxDump());
           }),
           const Divider(),
@@ -197,22 +218,23 @@ class _LfPageState extends State<LfPage> with SingleTickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('块操作',
+                  Text(context.l10n.messageBlockOperations,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   for (var block = 0; block < 8; block++)
                     ListTile(
                       dense: true,
-                      title: Text('块 $block',
+                      title: Text(
+                          context.l10n.messageBlock2((block).toString()),
                           style: const TextStyle(fontFamily: 'monospace')),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
+                      trailing: Wrap(
+                        runSpacing: 8,
                         children: [
                           IconButton(
                             icon: const Icon(Icons.visibility, size: 20),
                             onPressed: () =>
                                 _execute(Pm3Commands.lfT55xxReadBlock(block)),
-                            tooltip: '读取',
+                            tooltip: context.l10n.messageRead,
                           ),
                         ],
                       ),

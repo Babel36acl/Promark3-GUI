@@ -2,14 +2,16 @@
 library;
 
 import 'package:flutter/foundation.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
-class HardwareState extends ChangeNotifier {
+class HardwareState extends ChangeNotifier with LocalizedMessages {
   String hwModel = '';
   String hwFirmware = '';
   String hwBootrom = '';
   String hwMcu = '';
   String hwFlashSize = '';
-  String hwSmartcard = '';
+  bool _hasSmartcard = false;
+  String get hwSmartcard => _hasSmartcard ? l10n.messageInstalled : '';
   String hwFpga = '';
   String hwUniqueId = '';
   int hwFlashFree = 0;
@@ -63,7 +65,7 @@ class HardwareState extends ChangeNotifier {
     hwBootrom = '';
     hwMcu = '';
     hwFlashSize = '';
-    hwSmartcard = '';
+    _hasSmartcard = false;
     hwFpga = '';
     hwUniqueId = '';
     hwFlashFree = 0;
@@ -119,7 +121,7 @@ class HardwareState extends ChangeNotifier {
 
     // 检查智能卡模块
     if (output.toLowerCase().contains('smartcard module (sim)')) {
-      hwSmartcard = '已安装';
+      _hasSmartcard = true;
     }
 
     // 解析 Flash 内存使用情况

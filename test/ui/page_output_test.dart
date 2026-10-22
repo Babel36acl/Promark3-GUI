@@ -15,15 +15,20 @@ import 'package:pm3gui/services/pm3_settings_store.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/state/connection_state.dart' as connection;
 import 'package:pm3gui/ui/pages/hf_mfu_page.dart';
+import '../support/localized_test_app.dart';
 
 void main() {
-  testWidgets('one click streams immediately beyond five seconds until page switch', (tester) async {
+  testWidgets(
+      'one click streams immediately beyond five seconds until page switch',
+      (tester) async {
     late _StreamingBackend backend;
     late AppState state;
     await tester.runAsync(() async {
       backend = _StreamingBackend();
-      state = AppState(connectionState: connection.ConnectionState(
-        controller: Pm3Controller(backend), settingsStore: _Settings(),
+      state = AppState(
+          connectionState: connection.ConnectionState(
+        controller: Pm3Controller(backend),
+        settingsStore: _Settings(),
       ));
       await state.initialize();
     });
@@ -31,7 +36,7 @@ void main() {
     addTearDown(state.dispose);
     await tester.pumpWidget(ChangeNotifierProvider.value(
       value: state,
-      child: const MaterialApp(home: Scaffold(body: HfMfuPage())),
+      child: const LocalizedTestApp(home: Scaffold(body: HfMfuPage())),
     ));
     await tester.tap(find.text('获取信息'));
     await tester.pump();
@@ -70,12 +75,18 @@ void main() {
     await tester.runAsync(state.shutdown);
   });
 
-  testWidgets('catalog includes installed client commands and retains localized entries', (tester) async {
+  testWidgets(
+      'catalog includes installed client commands and retains localized entries',
+      (tester) async {
     final entries = (await tester.runAsync(() => Pm3CommandCatalog.load()))!;
     final commands = entries.map((e) => e.command).toSet();
-    expect(commands, containsAll(['hf mf sen', 'hf mf gdmgetcfg', 'hf mf madread', 'hf mf wrbl']));
+    expect(
+        commands,
+        containsAll(
+            ['hf mf sen', 'hf mf gdmgetcfg', 'hf mf madread', 'hf mf wrbl']));
     expect(entries.where((e) => e.command == 'hf 14a info'), hasLength(1));
-    expect(entries.firstWhere((e) => e.command == 'hf 14a info').description, contains('用法'));
+    expect(entries.firstWhere((e) => e.command == 'hf 14a info').description,
+        contains('用法'));
   });
 }
 
@@ -113,7 +124,10 @@ class _StreamingBackend implements Pm3Backend {
     final started = DateTime.now();
     emit('FIRST_ROW');
     await done.future;
-    return Pm3Result(command: command, output: 'FIRST_ROW\nLATE_ROW',
-        startedAt: started, finishedAt: DateTime.now());
+    return Pm3Result(
+        command: command,
+        output: 'FIRST_ROW\nLATE_ROW',
+        startedAt: started,
+        finishedAt: DateTime.now());
   }
 }

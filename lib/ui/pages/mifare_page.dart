@@ -9,6 +9,7 @@ import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/services/file_dialog_service.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class MifarePage extends StatefulWidget {
   const MifarePage({super.key});
@@ -86,7 +87,7 @@ class _MifarePageState extends State<MifarePage>
           padding: const EdgeInsets.all(8),
           child: Row(
             children: [
-              const Text('卡片类型：',
+              Text(context.l10n.messageCardType2,
                   style: TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 8),
               SegmentedButton<String>(
@@ -105,11 +106,11 @@ class _MifarePageState extends State<MifarePage>
         ),
         TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: '快捷操作'),
-            Tab(text: '密钥攻击'),
-            Tab(text: '读写块'),
-            Tab(text: '魔术卡'),
+          tabs: [
+            Tab(text: context.l10n.messageQuickActions),
+            Tab(text: context.l10n.messageKeyRecoveryAttacks),
+            Tab(text: context.l10n.messageReadWriteBlocks),
+            Tab(text: context.l10n.messageMagicCards),
           ],
         ),
         Expanded(
@@ -150,14 +151,15 @@ class _MifarePageState extends State<MifarePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Dump/Restore 参数（可选）',
+                    Text(context.l10n.messageDumpRestoreParametersOptional,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
                       initialValue: _quickKeyFile,
                       decoration: InputDecoration(
-                        labelText: '密钥文件 --keys (可选)',
-                        hintText: appState.preferredMfKeyFile ?? '留空则使用 PM3 默认',
+                        labelText: context.l10n.messageKeyFileKeysOptional,
+                        hintText: appState.preferredMfKeyFile ??
+                            context.l10n.messageLeaveBlankToUseThePm3Default,
                         prefixIcon: const Icon(Icons.vpn_key, size: 18),
                       ),
                       onChanged: (v) => _quickKeyFile = v,
@@ -168,9 +170,9 @@ class _MifarePageState extends State<MifarePage>
                     TextFormField(
                       initialValue: _quickDumpFile,
                       decoration: InputDecoration(
-                        labelText: '转储文件 --file (可选)',
+                        labelText: context.l10n.messageDumpFileFileOptional,
                         hintText: appState.preferredMfDumpFile ??
-                            'dump:输出文件 / restore:输入文件',
+                            context.l10n.messageDumpOutputFileRestoreInputFile,
                         prefixIcon: const Icon(Icons.file_open, size: 18),
                       ),
                       onChanged: (v) => _quickDumpFile = v,
@@ -197,7 +199,7 @@ class _MifarePageState extends State<MifarePage>
                             }
                           },
                           icon: const Icon(Icons.vpn_key, size: 16),
-                          label: const Text('选择密钥文件'),
+                          label: Text(context.l10n.messageSelectKeyFile),
                         ),
                         OutlinedButton.icon(
                           onPressed: () async {
@@ -214,7 +216,7 @@ class _MifarePageState extends State<MifarePage>
                             }
                           },
                           icon: const Icon(Icons.file_open, size: 16),
-                          label: const Text('选择转储文件'),
+                          label: Text(context.l10n.messageSelectDumpFile),
                         ),
                         TextButton.icon(
                           onPressed: () => setState(() {
@@ -222,7 +224,7 @@ class _MifarePageState extends State<MifarePage>
                             _quickDumpFile = '';
                           }),
                           icon: const Icon(Icons.cleaning_services, size: 16),
-                          label: const Text('清空自定义'),
+                          label: Text(context.l10n.messageClearCustomSettings),
                         ),
                       ],
                     ),
@@ -230,8 +232,9 @@ class _MifarePageState extends State<MifarePage>
                         appState.preferredMfDumpFile != null) ...[
                       const SizedBox(height: 6),
                       Text(
-                        '默认来源：key=${appState.preferredMfKeyFile ?? '-'}; '
-                        'dump=${appState.preferredMfDumpFile ?? '-'}',
+                        context.l10n.messageDefaultSourcesKeyDump(
+                            (appState.preferredMfKeyFile ?? '-').toString(),
+                            (appState.preferredMfDumpFile ?? '-').toString()),
                         style: TextStyle(fontSize: 11, color: Colors.grey[500]),
                       ),
                     ],
@@ -240,30 +243,42 @@ class _MifarePageState extends State<MifarePage>
               ),
             ),
             const SizedBox(height: 10),
-            _actionCard('检测卡片', '扫描 HF 14A 标签', Icons.search, () {
+            _actionCard(context.l10n.messageDetectCard,
+                context.l10n.messageScanHf14aTags, Icons.search, () {
               _execute(Pm3Commands.hf14aSearch());
             }),
-            _actionCard('卡片信息', '获取详细卡片信息', Icons.info_outline, () {
+            _actionCard(
+                context.l10n.messageCardInformation,
+                context.l10n.messageGetDetailedCardInformation,
+                Icons.info_outline, () {
               _execute(Pm3Commands.hfMfInfo());
             }),
-            _actionCard('自动破解', '自动密钥恢复', Icons.bolt, () {
+            _actionCard(context.l10n.terminalAutopwn,
+                context.l10n.messageAutomaticKeyRecovery, Icons.bolt, () {
               _execute(Pm3Commands.hfMfAutopwn(flag));
             }),
-            _actionCard('转储卡片', '读取所有扇区到文件', Icons.download, () {
+            _actionCard(context.l10n.messageDumpCard,
+                context.l10n.messageReadAllSectorsToAFile, Icons.download, () {
               _execute(Pm3Commands.hfMfDump(
                 flag,
                 keyFile: effectiveKey.isEmpty ? null : effectiveKey,
                 dumpFile: effectiveDump.isEmpty ? null : effectiveDump,
               ));
             }),
-            _actionCard('恢复卡片', '将转储写回卡片', Icons.upload, () {
+            _actionCard(
+                context.l10n.messageRestoreCard,
+                context.l10n.messageWriteTheDumpBackToTheCard,
+                Icons.upload, () {
               _execute(Pm3Commands.hfMfRestore(
                 flag,
                 keyFile: effectiveKey.isEmpty ? null : effectiveKey,
                 dumpFile: effectiveDump.isEmpty ? null : effectiveDump,
               ));
             }),
-            _actionCard('喗探', '捕获卡片通信', Icons.hearing, () {
+            _actionCard(
+                context.l10n.messageSniff2,
+                context.l10n.messageCaptureCardCommunication,
+                Icons.hearing, () {
               _execute(Pm3Commands.hf14aSniff());
             }),
             const SizedBox(height: 10),
@@ -273,7 +288,9 @@ class _MifarePageState extends State<MifarePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('更多卡型破解/诊断（参考命令文档）',
+                    Text(
+                        context.l10n
+                            .messageMoreCardRecoveryDiagnosticsSeeCommandReference,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Wrap(
@@ -298,16 +315,17 @@ class _MifarePageState extends State<MifarePage>
                         OutlinedButton.icon(
                           onPressed: () => _execute(Hf14aCmd.cuids(count: 20)),
                           icon: const Icon(Icons.qr_code, size: 16),
-                          label: const Text('采集 CUID'),
+                          label: Text(context.l10n.messageCollectCuid),
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
                       initialValue: _scriptName,
-                      decoration: const InputDecoration(
-                        labelText: 'PM3 脚本名 (script run <name>)',
-                        hintText: '例如: mifare/mf_autopwn',
+                      decoration: InputDecoration(
+                        labelText:
+                            context.l10n.messagePm3ScriptNameScriptRunName,
+                        hintText: context.l10n.messageForExampleMifareMfAutopwn,
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -316,12 +334,13 @@ class _MifarePageState extends State<MifarePage>
                           fontFamily: 'monospace', fontSize: 12),
                     ),
                     const SizedBox(height: 8),
-                    Row(
+                    Wrap(
+                      runSpacing: 8,
                       children: [
                         OutlinedButton.icon(
                           onPressed: () => _execute(ScriptCmd.list()),
                           icon: const Icon(Icons.list, size: 16),
-                          label: const Text('列出脚本'),
+                          label: Text(context.l10n.messageListScripts),
                         ),
                         const SizedBox(width: 8),
                         ElevatedButton.icon(
@@ -329,7 +348,7 @@ class _MifarePageState extends State<MifarePage>
                               ? null
                               : () => _execute(ScriptCmd.run(_scriptName)),
                           icon: const Icon(Icons.play_arrow, size: 16),
-                          label: const Text('运行脚本'),
+                          label: Text(context.l10n.messageRunScript),
                         ),
                       ],
                     ),
@@ -361,15 +380,15 @@ class _MifarePageState extends State<MifarePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('已知密钥',
+                    Text(context.l10n.messageKnownKey,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Row(children: [
                       Expanded(
                         child: TextFormField(
                           initialValue: _keyA,
-                          decoration:
-                              const InputDecoration(labelText: '密钥 (hex)'),
+                          decoration: InputDecoration(
+                              labelText: context.l10n.messageKeyHex),
                           onChanged: (v) => _keyA = v,
                           style: const TextStyle(fontFamily: 'monospace'),
                         ),
@@ -390,7 +409,8 @@ class _MifarePageState extends State<MifarePage>
                       Expanded(
                         child: TextFormField(
                           initialValue: '0',
-                          decoration: const InputDecoration(labelText: '块号'),
+                          decoration: InputDecoration(
+                              labelText: context.l10n.messageBlockNumber),
                           onChanged: (v) =>
                               _selectedBlock = int.tryParse(v) ?? 0,
                           keyboardType: TextInputType.number,
@@ -402,22 +422,31 @@ class _MifarePageState extends State<MifarePage>
               ),
             ),
             const SizedBox(height: 12),
-            _actionCard('检查密钥', '用默认密钥尝试所有扇区', Icons.vpn_key, () {
+            _actionCard(
+                context.l10n.messageCheckKeys,
+                context.l10n.messageTryDefaultKeysOnAllSectors,
+                Icons.vpn_key, () {
               _execute(Pm3Commands.hfMfCheck(flag));
             }),
-            _actionCard('Nested 攻击', '用已知密钥查找其他密钥', Icons.account_tree, () {
+            _actionCard(
+                context.l10n.messageNestedAttack,
+                context.l10n.messageUseAKnownKeyToFindOther,
+                Icons.account_tree, () {
               _execute(Pm3Commands.hfMfNested(
                   flag, _selectedBlock, _selectedKeyType, _keyA));
             }),
-            _actionCard('Static Nested', '适用于静态 nonce 卡片', Icons.repeat, () {
+            _actionCard('Static Nested',
+                context.l10n.messageForCardsWithStaticNonces, Icons.repeat, () {
               _execute(Pm3Commands.hfMfStaticNested(
                   flag, _selectedBlock, _selectedKeyType, _keyA));
             }),
-            _actionCard('Hardnested', '高级密钥恢复', Icons.security, () {
+            _actionCard('Hardnested', context.l10n.messageAdvancedKeyRecovery,
+                Icons.security, () {
               _execute(Pm3Commands.hfMfHardnested(
                   _selectedBlock, _selectedKeyType, _keyA, 0, 'A'));
             }),
-            _actionCard('Darkside', '无需已知密钥', Icons.dark_mode, () {
+            _actionCard('Darkside', context.l10n.messageNoKnownKeyRequired,
+                Icons.dark_mode, () {
               _execute(Pm3Commands.hfMfDarkside());
             }),
           ],
@@ -442,14 +471,15 @@ class _MifarePageState extends State<MifarePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('块操作',
+                    Text(context.l10n.messageBlockOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Row(children: [
                       Expanded(
                           child: TextFormField(
                         initialValue: '0',
-                        decoration: const InputDecoration(labelText: '块号'),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageBlockNumber),
                         onChanged: (v) => _selectedBlock = int.tryParse(v) ?? 0,
                         keyboardType: TextInputType.number,
                       )),
@@ -467,7 +497,8 @@ class _MifarePageState extends State<MifarePage>
                     const SizedBox(height: 8),
                     TextFormField(
                       initialValue: _keyA,
-                      decoration: const InputDecoration(labelText: '密钥 (hex)'),
+                      decoration: InputDecoration(
+                          labelText: context.l10n.messageKeyHex),
                       onChanged: (v) => _keyA = v,
                       style: const TextStyle(fontFamily: 'monospace'),
                     ),
@@ -483,8 +514,8 @@ class _MifarePageState extends State<MifarePage>
               child: ListTile(
                 leading: Icon(Icons.visibility,
                     color: Theme.of(context).colorScheme.primary),
-                title: const Text('读取块'),
-                subtitle: Text('读取单个块数据',
+                title: Text(context.l10n.messageReadBlock),
+                subtitle: Text(context.l10n.messageReadDataFromOneBlock,
                     style: TextStyle(fontSize: 12, color: Colors.grey[400])),
                 trailing: _isExecuting
                     ? const SizedBox(
@@ -507,13 +538,14 @@ class _MifarePageState extends State<MifarePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('写入数据',
+                    Text(context.l10n.messageWriteData,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: '数据 (32位 hex)',
-                        hintText: '例如 00000000000000000000000000000000',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.messageData32HexDigits,
+                        hintText: context.l10n
+                            .messageForExample00000000000000000000000000000000,
                       ),
                       style: const TextStyle(fontFamily: 'monospace'),
                       onChanged: (v) => _writeData = v,
@@ -532,7 +564,7 @@ class _MifarePageState extends State<MifarePage>
                               }
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入块'),
+                        label: Text(context.l10n.messageWriteBlock),
                       ),
                     ),
                   ],
@@ -555,7 +587,7 @@ class _MifarePageState extends State<MifarePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
+            Card(
               child: Padding(
                 padding: EdgeInsets.all(12),
                 child: Column(
@@ -563,14 +595,13 @@ class _MifarePageState extends State<MifarePage>
                     Icon(Icons.warning_amber, color: Colors.orange, size: 36),
                     SizedBox(height: 8),
                     Text(
-                      '魔术卡操作',
+                      context.l10n.messageMagicCardOperations,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     SizedBox(height: 4),
                     Text(
-                      '这些命令仅适用于 Gen1A/Gen2 (CUID) 魔术卡。\n'
-                      '写入块 0 可能会损坏非魔术卡！',
+                      context.l10n.messageTheseCommandsOnlyApplyToGen1aGen2,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.orange),
                     ),
@@ -579,32 +610,40 @@ class _MifarePageState extends State<MifarePage>
               ),
             ),
             const SizedBox(height: 12),
-            _actionCard('读取块 0', '读取制造商块', Icons.visibility, () {
+            _actionCard(
+                context.l10n.messageReadBlock0,
+                context.l10n.messageReadManufacturerBlock,
+                Icons.visibility, () {
               _execute(Pm3Commands.hfMfMagicGetBlock(0));
             }),
-            _actionCard('擦除卡片', '恢复出厂状态', Icons.delete_forever, () {
+            _actionCard(
+                context.l10n.messageEraseCard,
+                context.l10n.messageRestoreFactoryDefaults,
+                Icons.delete_forever, () {
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('擦除卡片？'),
-                  content: const Text('这将重置所有块。确定吗？'),
+                  title: Text(context.l10n.messageEraseCard2),
+                  content:
+                      Text(context.l10n.messageThisWillResetAllBlocksAreYou),
                   actions: [
                     TextButton(
                         onPressed: () => Navigator.pop(ctx),
-                        child: const Text('取消')),
+                        child: Text(context.l10n.messageCancel)),
                     TextButton(
                       onPressed: () {
                         Navigator.pop(ctx);
                         _execute(Pm3Commands.hfMfMagicWipe());
                       },
-                      child:
-                          const Text('擦除', style: TextStyle(color: Colors.red)),
+                      child: Text(context.l10n.messageErase,
+                          style: TextStyle(color: Colors.red)),
                     ),
                   ],
                 ),
               );
             }),
-            _actionCard('加载模拟器', '将转储加载到模拟器', Icons.memory, () {
+            _actionCard(context.l10n.messageLoadEmulator,
+                context.l10n.messageLoadADumpIntoTheEmulator, Icons.memory, () {
               _execute(Pm3Commands.hfMfEmulatorClear());
             }),
           ],

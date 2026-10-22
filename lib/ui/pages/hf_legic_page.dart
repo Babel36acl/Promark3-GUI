@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfLegicPage extends StatefulWidget {
   const HfLegicPage({super.key});
@@ -63,9 +64,9 @@ class _HfLegicPageState extends State<HfLegicPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '信息'),
-        Tab(text: '读写'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageInformation),
+        Tab(text: context.l10n.messageReadWrite),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
@@ -81,24 +82,26 @@ class _HfLegicPageState extends State<HfLegicPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '标签信息',
-              subtitle: '读取 Legic 标签',
+              title: context.l10n.messageTagInformation,
+              subtitle: context.l10n.messageReadALegicTag,
               icon: Icons.info_outline,
               onTap: () => _execute(HfLegicCmd.info())),
           ActionCard(
-              title: '转储',
-              subtitle: '转储全部数据',
+              title: context.l10n.messageDump,
+              subtitle: context.l10n.messageDumpAllData,
               icon: Icons.download,
               onTap: () => _execute(HfLegicCmd.dump())),
           ActionCard(
-              title: '擦除',
-              subtitle: '清空卡片数据',
+              title: context.l10n.messageErase,
+              subtitle: context.l10n.messageClearCardData,
               icon: Icons.delete_forever,
-              onTap: () =>
-                  _confirmThenExecute('确认擦除', '此操作不可恢复！', HfLegicCmd.wipe())),
+              onTap: () => _confirmThenExecute(
+                  context.l10n.messageConfirmErase,
+                  context.l10n.messageThisOperationCannotBeUndone,
+                  HfLegicCmd.wipe())),
           ActionCard(
-              title: '模拟',
-              subtitle: '模拟 Legic 标签',
+              title: context.l10n.messageSimulate,
+              subtitle: context.l10n.messageSimulateALegicTag,
               icon: Icons.play_arrow,
               onTap: () => _execute(HfLegicCmd.sim())),
         ],
@@ -124,13 +127,14 @@ class _HfLegicPageState extends State<HfLegicPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('读写操作',
+                    Text(context.l10n.messageReadWriteOperations,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     Row(children: [
                       Expanded(
                           child: TextFormField(
-                        decoration: const InputDecoration(labelText: '偏移'),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageOffset),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -140,7 +144,8 @@ class _HfLegicPageState extends State<HfLegicPage>
                       const SizedBox(width: 8),
                       Expanded(
                           child: TextFormField(
-                        decoration: const InputDecoration(labelText: '长度'),
+                        decoration: InputDecoration(
+                            labelText: context.l10n.messageLength),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly
@@ -156,11 +161,12 @@ class _HfLegicPageState extends State<HfLegicPage>
                           onPressed: () =>
                               _execute(HfLegicCmd.rdbl(_offset, _length)),
                           icon: const Icon(Icons.visibility, size: 18),
-                          label: const Text('读取')),
+                          label: Text(context.l10n.messageRead)),
                     ),
                     const SizedBox(height: 12),
                     HexInputField(
-                        label: '写入数据 (hex)', onChanged: (v) => _writeData = v),
+                        label: context.l10n.messageWriteDataHex,
+                        onChanged: (v) => _writeData = v),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
                         onPressed: _writeData.isNotEmpty
@@ -168,7 +174,7 @@ class _HfLegicPageState extends State<HfLegicPage>
                                 _execute(HfLegicCmd.wrbl(_offset, _writeData))
                             : null,
                         icon: const Icon(Icons.edit, size: 18),
-                        label: const Text('写入')),
+                        label: Text(context.l10n.messageWrite)),
                   ],
                 ))),
       ]),
@@ -192,13 +198,13 @@ class _HfLegicPageState extends State<HfLegicPage>
               actions: [
                 TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('取消')),
+                    child: Text(context.l10n.messageCancel)),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                       _execute(cmd);
                     },
-                    child: const Text('确认')),
+                    child: Text(context.l10n.messageConfirm)),
               ],
             ));
   }

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfKeriPage extends StatefulWidget {
   const LfKeriPage({super.key});
@@ -54,8 +55,8 @@ class _LfKeriPageState extends State<LfKeriPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取',
-              subtitle: '读取 Keri 卡片',
+              title: context.l10n.messageRead,
+              subtitle: context.l10n.messageReadAKeriCard,
               icon: Icons.nfc,
               onTap: () => _execute(LfKeriCmd.reader())),
           const SizedBox(height: 8),
@@ -65,12 +66,12 @@ class _LfKeriPageState extends State<LfKeriPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('克隆',
+                      Text(context.l10n.messageClone,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 13)),
                       const SizedBox(height: 8),
                       HexInputField(
-                          label: 'RAW 数据',
+                          label: context.l10n.messageRawData2,
                           onChanged: (v) => setState(() => _rawData = v)),
                       const SizedBox(height: 8),
                       ElevatedButton.icon(
@@ -78,7 +79,7 @@ class _LfKeriPageState extends State<LfKeriPage> {
                               ? () => _execute(LfKeriCmd.clone(_rawData))
                               : null,
                           icon: const Icon(Icons.copy, size: 18),
-                          label: const Text('克隆到 T55xx')),
+                          label: Text(context.l10n.messageCloneToT55xx)),
                     ],
                   ))),
         ],

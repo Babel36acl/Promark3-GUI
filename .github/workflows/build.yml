@@ -54,6 +54,11 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Generate and check localizations
+        run: |
+          flutter gen-l10n
+          dart run tools/check_localizations.dart
+
       - name: Analyze
         if: runner.os == 'Linux'
         run: flutter analyze --no-fatal-infos

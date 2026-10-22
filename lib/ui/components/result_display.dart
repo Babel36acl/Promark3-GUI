@@ -7,6 +7,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class ResultDisplay extends StatelessWidget {
   final String command;
@@ -50,7 +51,7 @@ class ResultDisplay extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '执行: $command',
+                      context.l10n.executingCommand(command),
                       style: TextStyle(
                         fontFamily: 'monospace',
                         fontSize: 12,
@@ -77,20 +78,20 @@ class ResultDisplay extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               child: SelectionArea(
-                      child: SingleChildScrollView(
-                        child: Text(
-                          result.isEmpty ? '执行命令查看结果' : result,
-                          style: TextStyle(
-                            fontFamily: 'monospace',
-                            fontSize: 12,
-                            height: 1.5,
-                            color: result.isEmpty
-                                ? Colors.grey[600]
-                                : theme.colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
+                child: SingleChildScrollView(
+                  child: Text(
+                    result.isEmpty ? context.l10n.executeToViewResults : result,
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      height: 1.5,
+                      color: result.isEmpty
+                          ? Colors.grey[600]
+                          : theme.colorScheme.onSurface,
                     ),
+                  ),
+                ),
+              ),
             ),
           ),
 
@@ -106,17 +107,18 @@ class ResultDisplay extends StatelessWidget {
                         () {
                           Clipboard.setData(ClipboardData(text: result));
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('已复制到剪贴板')),
+                            SnackBar(
+                                content: Text(context.l10n.copiedToClipboard)),
                           );
                         },
                     icon: const Icon(Icons.copy, size: 16),
-                    label: const Text('复制'),
+                    label: Text(context.l10n.copy),
                   ),
                   if (onClear != null)
                     TextButton.icon(
                       onPressed: onClear,
                       icon: const Icon(Icons.clear, size: 16),
-                      label: const Text('清空'),
+                      label: Text(context.l10n.clear),
                     ),
                 ],
               ),

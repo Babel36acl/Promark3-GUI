@@ -71,13 +71,17 @@ class Pm3CommandCatalog {
   static const _zhAsset = 'docs/pm3_commands_help.zh.yaml';
   static const _enAsset = 'docs/pm3_commands_help.yaml';
 
-  static Future<List<Pm3CommandEntry>> load({bool preferZh = true}) async {
-    final text = await _loadYamlText(preferZh: preferZh);
+  static Future<List<Pm3CommandEntry>> load(
+      {bool preferZh = true, AssetBundle? bundle}) async {
+    final assets = bundle ?? rootBundle;
+    final text = await _loadYamlText(preferZh: preferZh, bundle: assets);
     final entries = _parseEntries(text);
-    final snapshot = jsonDecode(await rootBundle.loadString(
-        'docs/pm3_commands_client.json')) as Map<String, dynamic>;
+    final snapshot =
+        jsonDecode(await assets.loadString('docs/pm3_commands_client.json'))
+            as Map<String, dynamic>;
     final known = entries.map((entry) => entry.command).toSet();
-    for (final item in (snapshot['commands'] as List).cast<Map<String, dynamic>>()) {
+    for (final item
+        in (snapshot['commands'] as List).cast<Map<String, dynamic>>()) {
       final command = item['command'] as String;
       if (!known.add(command)) continue;
       entries.add(Pm3CommandEntry(
@@ -90,12 +94,9 @@ class Pm3CommandCatalog {
     return entries;
   }
 
-  static Future<String> _loadYamlText({required bool preferZh}) async {
-    try {
-      return await rootBundle.loadString(preferZh ? _zhAsset : _enAsset);
-    } catch (_) {
-      return rootBundle.loadString(preferZh ? _enAsset : _zhAsset);
-    }
+  static Future<String> _loadYamlText(
+      {required bool preferZh, required AssetBundle bundle}) async {
+    return bundle.loadString(preferZh ? _zhAsset : _enAsset);
   }
 
   /// Lightweight line parser for our generated YAML structure.

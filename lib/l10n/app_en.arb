@@ -1,0 +1,3350 @@
+{
+  "@@locale": "en",
+  "appTitle": "PM3 GUI",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "navConnection": "Connection",
+  "@navConnection": {
+    "description": "Connection navigation entry"
+  },
+  "navTerminal": "Terminal",
+  "@navTerminal": {
+    "description": "Terminal navigation entry"
+  },
+  "navDumpViewer": "Dump viewer",
+  "@navDumpViewer": {
+    "description": "Dump viewer navigation entry"
+  },
+  "navDumpCompare": "Compare dumps",
+  "@navDumpCompare": {
+    "description": "Dump comparison navigation entry"
+  },
+  "navHfSniff": "HF sniff / tune",
+  "@navHfSniff": {
+    "description": "High-frequency sniffing and tuning navigation"
+  },
+  "navLfGeneral": "LF general / EM / T55",
+  "@navLfGeneral": {
+    "description": "Low-frequency general operations navigation"
+  },
+  "navData": "Data processing",
+  "@navData": {
+    "description": "Data processing navigation entry"
+  },
+  "navScripts": "Scripts",
+  "@navScripts": {
+    "description": "Scripts navigation entry"
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Settings page title and navigation entry"
+  },
+  "navCollapse": "Collapse menu",
+  "@navCollapse": {
+    "description": "Collapse navigation sidebar"
+  },
+  "navHighFrequency": "High frequency (HF)",
+  "@navHighFrequency": {
+    "description": "High-frequency navigation group"
+  },
+  "navLowFrequency": "Low frequency (LF)",
+  "@navLowFrequency": {
+    "description": "Low-frequency navigation group"
+  },
+  "navTools": "Tools",
+  "@navTools": {
+    "description": "Tools navigation group"
+  },
+  "connected": "Connected",
+  "@connected": {
+    "description": "Device connection status"
+  },
+  "disconnected": "Disconnected",
+  "@disconnected": {
+    "description": "Device disconnected status"
+  },
+  "pm3NotConnected": "PM3 is not connected",
+  "@pm3NotConnected": {
+    "description": "Command rejected because no device is connected"
+  },
+  "pm3Busy": "A PM3 command is still running. Wait for it to finish or disconnect.",
+  "@pm3Busy": {
+    "description": "Command rejected because another command is running"
+  },
+  "hexDigits": "{count} hex digits",
+  "@hexDigits": {
+    "description": "Hex input length hint",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "maxCharacters": "Maximum {count} characters",
+  "@maxCharacters": {
+    "description": "Input character limit",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "executingCommand": "Execute: {command}",
+  "@executingCommand": {
+    "description": "Executed command heading",
+    "placeholders": {
+      "command": {
+        "type": "String"
+      }
+    }
+  },
+  "executeToViewResults": "Run a command to view results",
+  "@executeToViewResults": {
+    "description": "Empty command result panel"
+  },
+  "copiedToClipboard": "Copied to clipboard",
+  "@copiedToClipboard": {
+    "description": "Copy confirmation"
+  },
+  "copy": "Copy",
+  "@copy": {
+    "description": "Copy result action"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Clear result action"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Display language setting"
+  },
+  "languageSystem": "System default",
+  "@languageSystem": {
+    "description": "Follow the operating system language"
+  },
+  "languageHelp": "Changes apply immediately. Unsupported system languages use English.",
+  "@languageHelp": {
+    "description": "Language preference help"
+  },
+  "languagePreferenceError": "Could not load or save the language preference: {error}",
+  "@languagePreferenceError": {
+    "description": "Visible language preference persistence error",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsPm3Configuration": "PM3 configuration",
+  "@settingsPm3Configuration": {
+    "description": "Client configuration section"
+  },
+  "settingsPm3Path": "PM3 program path",
+  "@settingsPm3Path": {
+    "description": "Client executable path field"
+  },
+  "settingsWindowsPathHint": "Official distribution root\\pm3.bat",
+  "@settingsWindowsPathHint": {
+    "description": "Windows client path example"
+  },
+  "settingsWindowsPathHelp": "On Windows, select pm3.bat in the official distribution root.",
+  "@settingsWindowsPathHelp": {
+    "description": "Windows launcher guidance"
+  },
+  "settingsPickPm3": "Select PM3 program",
+  "@settingsPickPm3": {
+    "description": "Browse for client executable"
+  },
+  "settingsArguments": "PM3 launch arguments",
+  "@settingsArguments": {
+    "description": "Client argument field"
+  },
+  "settingsWindowsArgumentsHelp": "pm3.bat initializes its environment and detects devices itself; these arguments are not passed to the script. One argument per line; spaces, quotes and backslashes are preserved.",
+  "@settingsWindowsArgumentsHelp": {
+    "description": "Windows launcher argument behavior"
+  },
+  "settingsArgumentsHelp": "One argument per line; spaces, quotes and backslashes are preserved.",
+  "@settingsArgumentsHelp": {
+    "description": "Native executable argument behavior"
+  },
+  "settingsWorkingDirectory": "PM3 working directory (optional)",
+  "@settingsWorkingDirectory": {
+    "description": "Optional client working directory field"
+  },
+  "settingsSaving": "Saving settings…",
+  "@settingsSaving": {
+    "description": "Client settings save progress"
+  },
+  "settingsAbout": "About PM3 GUI",
+  "@settingsAbout": {
+    "description": "About section title"
+  },
+  "settingsDescription": "A Flutter-based Proxmark3 graphical interface",
+  "@settingsDescription": {
+    "description": "Application description"
+  },
+  "settingsPlatform": "Platform",
+  "@settingsPlatform": {
+    "description": "Operating system field"
+  },
+  "settingsArchitecture": "Architecture",
+  "@settingsArchitecture": {
+    "description": "Software architecture field"
+  },
+  "settingsArchitectureDescription": "CLI wrapper (compatible with future updates)",
+  "@settingsArchitectureDescription": {
+    "description": "Software architecture description"
+  },
+  "settingsSupportedFormats": "Supported formats",
+  "@settingsSupportedFormats": {
+    "description": "Supported file formats label"
+  },
+  "settingsMaintenance": "Maintenance",
+  "@settingsMaintenance": {
+    "description": "Maintenance section title"
+  },
+  "terminalClear": "Clear terminal",
+  "@terminalClear": {
+    "description": "Clear terminal output action"
+  },
+  "hardwareVersion": "Hardware version",
+  "@hardwareVersion": {
+    "description": "Read hardware version action"
+  },
+  "antennaTune": "Antenna tuning",
+  "@antennaTune": {
+    "description": "Antenna tuning action"
+  },
+  "terminalHfSearch": "HF search",
+  "@terminalHfSearch": {
+    "description": "High-frequency search quick command"
+  },
+  "terminalLfSearch": "LF search",
+  "@terminalLfSearch": {
+    "description": "Low-frequency search quick command"
+  },
+  "terminal14aInfo": "14A information",
+  "@terminal14aInfo": {
+    "description": "ISO 14443-A information quick command"
+  },
+  "terminalLfRead": "LF read",
+  "@terminalLfRead": {
+    "description": "Low-frequency read quick command"
+  },
+  "terminalAutopwn": "Automatic key recovery",
+  "@terminalAutopwn": {
+    "description": "MIFARE automatic key recovery quick command"
+  },
+  "terminalHint": "Hint: {hint}",
+  "@terminalHint": {
+    "description": "Command hint caption",
+    "placeholders": {
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalInputHint": "Enter a command… (Tab / Shift+Tab cycles completions)",
+  "@terminalInputHint": {
+    "description": "Terminal input placeholder"
+  },
+  "terminalCatalog": "Command library",
+  "@terminalCatalog": {
+    "description": "Open the command library"
+  },
+  "terminalSend": "Send",
+  "@terminalSend": {
+    "description": "Send terminal command"
+  },
+  "terminalSearchHint": "Search commands (e.g. hf mf, autopwn, info)",
+  "@terminalSearchHint": {
+    "description": "Command library search placeholder"
+  },
+  "terminalCatalogError": "Could not load the command library: {error}",
+  "@terminalCatalogError": {
+    "description": "Command catalog loading failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFailedToTerminateTheProcessTreeExit": "Failed to terminate the process tree (exit={value}){value2}",
+  "@messageFailedToTerminateTheProcessTreeExit": {
+    "description": "pm3_process: Failed to terminate the process tree (exit={value}){value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageThePm3ProcessManagerHasBeenDisposed": "The PM3 process manager has been disposed",
+  "@messageThePm3ProcessManagerHasBeenDisposed": {
+    "description": "pm3_process: The PM3 process manager has been disposed"
+  },
+  "messagePleaseWaitSecondsBeforeRetrying": "Please wait {value} seconds before retrying",
+  "@messagePleaseWaitSecondsBeforeRetrying": {
+    "description": "pm3_process: Please wait {value} seconds before retrying",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageCoolingDownS": "[Cooling down: {value}s]",
+  "@messageCoolingDownS": {
+    "description": "pm3_process: [Cooling down: {value}s]",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3ProgramNotFoundOnWindowsSelect": "PM3 program not found: {value}\nOn Windows, select pm3.bat in the official distribution root; on Linux, select proxmark3.",
+  "@messagePm3ProgramNotFoundOnWindowsSelect": {
+    "description": "pm3_process: PM3 program not found: {value}\nOn Windows, select pm3.bat in the official distribution root; on Linux, select proxmark3.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageError": "[Error] {value}",
+  "@messageError": {
+    "description": "pm3_process: [Error] {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUsingPm3": "[Using PM3: {value}]",
+  "@messageUsingPm3": {
+    "description": "pm3_process: [Using PM3: {value}]",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageWorkingDirectory": "[Working directory: {value}]",
+  "@messageWorkingDirectory": {
+    "description": "pm3_process: [Working directory: {value}]",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFatalErrorOnPm3Stdout": "Fatal error on PM3 stdout",
+  "@messageFatalErrorOnPm3Stdout": {
+    "description": "pm3_process: Fatal error on PM3 stdout"
+  },
+  "messageFailedToSendTheReadOnlyPm3": "Failed to send the read-only PM3 BAT handshake: {value}",
+  "@messageFailedToSendTheReadOnlyPm3": {
+    "description": "pm3_process: Failed to send the read-only PM3 BAT handshake: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3StdoutStreamError": "PM3 stdout stream error: {value}",
+  "@messagePm3StdoutStreamError": {
+    "description": "pm3_process: PM3 stdout stream error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFatalErrorOnPm3Stderr": "Fatal error on PM3 stderr",
+  "@messageFatalErrorOnPm3Stderr": {
+    "description": "pm3_process: Fatal error on PM3 stderr"
+  },
+  "messagePm3StderrStreamError": "PM3 stderr stream error: {value}",
+  "@messagePm3StderrStreamError": {
+    "description": "pm3_process: PM3 stderr stream error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3ProcessExitedCode": "[PM3 process exited, code={value}]",
+  "@messagePm3ProcessExitedCode": {
+    "description": "pm3_process: [PM3 process exited, code={value}]",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3ProcessExitedBeforeTheConnectionPrompt": "PM3 process exited before the connection prompt (code={value})",
+  "@messagePm3ProcessExitedBeforeTheConnectionPrompt": {
+    "description": "pm3_process: PM3 process exited before the connection prompt (code={value})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3ProcessExitStatusError": "PM3 process exit status error: {value}",
+  "@messagePm3ProcessExitStatusError": {
+    "description": "pm3_process: PM3 process exit status error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageConnectionTimedOutSCheckThatThe": "Connection timed out ({value}s). Check that the device is connected.",
+  "@messageConnectionTimedOutSCheckThatThe": {
+    "description": "pm3_process: Connection timed out ({value}s). Check that the device is connected.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageConnectionTimedOut": "[Connection timed out]",
+  "@messageConnectionTimedOut": {
+    "description": "pm3_process: [Connection timed out]"
+  },
+  "messageCouldNotStartPm3PathCheckThe": "Could not start PM3: {value}\nPath: {value2}\nCheck the program path and that the client has been built.",
+  "@messageCouldNotStartPm3PathCheckThe": {
+    "description": "pm3_process: Could not start PM3: {value}\nPath: {value2}\nCheck the program path and that the client has been built.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageConnectionFailed": "Connection failed: {value}",
+  "@messageConnectionFailed": {
+    "description": "pm3_process: Connection failed: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageNotConnected": "[Not connected]",
+  "@messageNotConnected": {
+    "description": "pm3_process: [Not connected]"
+  },
+  "messageErrorCommandTimedOutTheSessionWas": "[Error] Command timed out; the session was stopped",
+  "@messageErrorCommandTimedOutTheSessionWas": {
+    "description": "pm3_process: [Error] Command timed out; the session was stopped"
+  },
+  "messageThePm3SessionDisconnectedBeforeTheCommand": "The PM3 session disconnected before the command completed",
+  "@messageThePm3SessionDisconnectedBeforeTheCommand": {
+    "description": "pm3_process: The PM3 session disconnected before the command completed"
+  },
+  "messageFailedWhileWaitingForPm3ToStart": "Failed while waiting for PM3 to start: {value}",
+  "@messageFailedWhileWaitingForPm3ToStart": {
+    "description": "pm3_process: Failed while waiting for PM3 to start: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFailedToSendQuit": "Failed to send quit: {value}",
+  "@messageFailedToSendQuit": {
+    "description": "pm3_process: Failed to send quit: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageCouldNotReadTheExitStatusAfter": "Could not read the exit status after PM3 {value} closed: {value2}",
+  "@messageCouldNotReadTheExitStatusAfter": {
+    "description": "pm3_process: Could not read the exit status after PM3 {value} closed: {value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messagePm3StreamClosed": "PM3 {value} stream closed",
+  "@messagePm3StreamClosed": {
+    "description": "pm3_process: PM3 {value} stream closed",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFailedWhileWaitingForPm3ToExit": "Failed while waiting for PM3 to exit: {value}",
+  "@messageFailedWhileWaitingForPm3ToExit": {
+    "description": "pm3_process: Failed while waiting for PM3 to exit: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFailedToTerminatePm3TermProcessTree": "Failed to terminate PM3: TERM / process-tree termination failed",
+  "@messageFailedToTerminatePm3TermProcessTree": {
+    "description": "pm3_process: Failed to terminate PM3: TERM / process-tree termination failed"
+  },
+  "messageFailedToForceTerminatePm3KillProcess": "Failed to force-terminate PM3: KILL / process-tree termination failed",
+  "@messageFailedToForceTerminatePm3KillProcess": {
+    "description": "pm3_process: Failed to force-terminate PM3: KILL / process-tree termination failed"
+  },
+  "messageTimedOutWaitingForPm3ToExit": "Timed out waiting for PM3 to exit after termination",
+  "@messageTimedOutWaitingForPm3ToExit": {
+    "description": "pm3_process: Timed out waiting for PM3 to exit after termination"
+  },
+  "messageFailedToTerminatePm3ReturnedFalse": "Failed to terminate PM3: {value} returned false",
+  "@messageFailedToTerminatePm3ReturnedFalse": {
+    "description": "pm3_process: Failed to terminate PM3: {value} returned false",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFailedToTerminatePm3": "Failed to terminate PM3: {value}",
+  "@messageFailedToTerminatePm3": {
+    "description": "pm3_process: Failed to terminate PM3: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageTheSerialPortIsInUseBy": "The serial port is in use by another process.\nClose other programs using this port, such as another PM3 terminal.",
+  "@messageTheSerialPortIsInUseBy": {
+    "description": "pm3_process: The serial port is in use by another process.\nClose other programs using this port, such as another PM3 terminal."
+  },
+  "messageSerialDeviceNotFoundCheckThePm3": "Serial device not found. Check the PM3 USB connection.",
+  "@messageSerialDeviceNotFoundCheckThePm3": {
+    "description": "pm3_process: Serial device not found. Check the PM3 USB connection."
+  },
+  "messagePermissionDeniedForTheSerialPortTry": "Permission denied for the serial port.\nTry: sudo chmod 666 /dev/ttyACM0\nOr add your user to the dialout group.",
+  "@messagePermissionDeniedForTheSerialPortTry": {
+    "description": "pm3_process: Permission denied for the serial port.\nTry: sudo chmod 666 /dev/ttyACM0\nOr add your user to the dialout group."
+  },
+  "messageSerialConnectionError": "Serial connection error: {value}",
+  "@messageSerialConnectionError": {
+    "description": "pm3_process: Serial connection error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageEnterHexDigitsUseForUnknownDigits": "Enter {value} hex digits; use ? for unknown digits or clear the field for unread data.",
+  "@messageEnterHexDigitsUseForUnknownDigits": {
+    "description": "command_card: Enter {value} hex digits; use ? for unknown digits or clear the field for unread data.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageBlockNumberExceedsTheCardCapacity": "Block number exceeds the card capacity",
+  "@messageBlockNumberExceedsTheCardCapacity": {
+    "description": "command_card: Block number exceeds the card capacity"
+  },
+  "messageSectorNumberExceedsTheCardCapacity": "Sector number exceeds the card capacity",
+  "@messageSectorNumberExceedsTheCardCapacity": {
+    "description": "command_card: Sector number exceeds the card capacity"
+  },
+  "messageThisIsNotACommandDataDraft": "This is not a command data draft",
+  "@messageThisIsNotACommandDataDraft": {
+    "description": "command_card: This is not a command data draft"
+  },
+  "messageUnsupportedCardCapacity": "Unsupported card capacity",
+  "@messageUnsupportedCardCapacity": {
+    "description": "command_card: Unsupported card capacity"
+  },
+  "messageInvalidUidFormat": "Invalid UID format",
+  "@messageInvalidUidFormat": {
+    "description": "command_card: Invalid UID format"
+  },
+  "messageBlockIsIncompleteSaveADraftOr": "Block {value} is incomplete. Save a draft or complete the data first.",
+  "@messageBlockIsIncompleteSaveADraftOr": {
+    "description": "command_card: Block {value} is incomplete. Save a draft or complete the data first.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSectorHasIncompleteKeysExportADictionary": "Sector {value} has incomplete keys. Export a dictionary or save a draft first.",
+  "@messageSectorHasIncompleteKeysExportADictionary": {
+    "description": "command_card: Sector {value} has incomplete keys. Export a dictionary or save a draft first.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageThereAreNoCompleteKeysToExport": "There are no complete keys to export",
+  "@messageThereAreNoCompleteKeysToExport": {
+    "description": "command_card: There are no complete keys to export"
+  },
+  "messageEmptyUnallocated": "Empty / unallocated",
+  "@messageEmptyUnallocated": {
+    "description": "dump_analysis: Empty / unallocated"
+  },
+  "messageDefectManagement": "Defect management",
+  "@messageDefectManagement": {
+    "description": "dump_analysis: Defect management"
+  },
+  "messageReserved": "Reserved",
+  "@messageReserved": {
+    "description": "dump_analysis: Reserved"
+  },
+  "messageAdditionalDirectoryEntries": "Additional directory entries",
+  "@messageAdditionalDirectoryEntries": {
+    "description": "dump_analysis: Additional directory entries"
+  },
+  "messageCardholderInformation": "Cardholder information",
+  "@messageCardholderInformation": {
+    "description": "dump_analysis: Cardholder information"
+  },
+  "messageUnallocated": "Unallocated",
+  "@messageUnallocated": {
+    "description": "dump_analysis: Unallocated"
+  },
+  "messageAirlineServices": "Airline services",
+  "@messageAirlineServices": {
+    "description": "dump_analysis: Airline services"
+  },
+  "messageUrbanTransport": "Urban transport",
+  "@messageUrbanTransport": {
+    "description": "dump_analysis: Urban transport"
+  },
+  "messageUrbanTransport2": "Urban transport (2)",
+  "@messageUrbanTransport2": {
+    "description": "dump_analysis: Urban transport (2)"
+  },
+  "messageRailTransport": "Rail transport",
+  "@messageRailTransport": {
+    "description": "dump_analysis: Rail transport"
+  },
+  "messageTransportGeneral": "Transport (general)",
+  "@messageTransportGeneral": {
+    "description": "dump_analysis: Transport (general)"
+  },
+  "messageSecurityServices": "Security services",
+  "@messageSecurityServices": {
+    "description": "dump_analysis: Security services"
+  },
+  "messageUrbanTransport3": "Urban transport (3)",
+  "@messageUrbanTransport3": {
+    "description": "dump_analysis: Urban transport (3)"
+  },
+  "messageEventTicketing": "Event ticketing",
+  "@messageEventTicketing": {
+    "description": "dump_analysis: Event ticketing"
+  },
+  "messageLoyaltySchemes": "Loyalty schemes",
+  "@messageLoyaltySchemes": {
+    "description": "dump_analysis: Loyalty schemes"
+  },
+  "messageParking": "Parking",
+  "@messageParking": {
+    "description": "dump_analysis: Parking"
+  },
+  "messageAccessControl": "Access control",
+  "@messageAccessControl": {
+    "description": "dump_analysis: Access control"
+  },
+  "messageElectronicPurseMicropayments": "Electronic purse / micropayments",
+  "@messageElectronicPurseMicropayments": {
+    "description": "dump_analysis: Electronic purse / micropayments"
+  },
+  "messageElectronicTicketingGeneral": "Electronic ticketing (general)",
+  "@messageElectronicTicketingGeneral": {
+    "description": "dump_analysis: Electronic ticketing (general)"
+  },
+  "messageMobileOffice": "Mobile office",
+  "@messageMobileOffice": {
+    "description": "dump_analysis: Mobile office"
+  },
+  "messageIdentification": "Identification",
+  "@messageIdentification": {
+    "description": "dump_analysis: Identification"
+  },
+  "messageMobilePayments": "Mobile payments",
+  "@messageMobilePayments": {
+    "description": "dump_analysis: Mobile payments"
+  },
+  "messageFelicaIntegration": "FeliCa integration",
+  "@messageFelicaIntegration": {
+    "description": "dump_analysis: FeliCa integration"
+  },
+  "messageFuelServices": "Fuel services",
+  "@messageFuelServices": {
+    "description": "dump_analysis: Fuel services"
+  },
+  "messageInformationProcessing": "Information processing",
+  "@messageInformationProcessing": {
+    "description": "dump_analysis: Information processing"
+  },
+  "messageMifareClassic1kCompatible": "MIFARE Classic 1K (compatible)",
+  "@messageMifareClassic1kCompatible": {
+    "description": "dump_analysis: MIFARE Classic 1K (compatible)"
+  },
+  "messageMifareClassic1kCompatible2": "MIFARE Classic 1K (compatible 2)",
+  "@messageMifareClassic1kCompatible2": {
+    "description": "dump_analysis: MIFARE Classic 1K (compatible 2)"
+  },
+  "messageUnknownSak": "Unknown (SAK={value})",
+  "@messageUnknownSak": {
+    "description": "dump_analysis: Unknown (SAK={value})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUnknown0x": "Unknown (0x{value})",
+  "@messageUnknown0x": {
+    "description": "dump_analysis: Unknown (0x{value})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageApplication0x": "Application 0x{value}",
+  "@messageApplication0x": {
+    "description": "dump_analysis: Application 0x{value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageNxpFactoryDefault": "NXP factory default",
+  "@messageNxpFactoryDefault": {
+    "description": "dump_analysis: NXP factory default"
+  },
+  "messageAllZeros": "All zeros",
+  "@messageAllZeros": {
+    "description": "dump_analysis: All zeros"
+  },
+  "messageInvalidKeyTextFormat": "Invalid key text format",
+  "@messageInvalidKeyTextFormat": {
+    "description": "key_parser: Invalid key text format"
+  },
+  "messageDuplicateSector": "Duplicate sector {value}",
+  "@messageDuplicateSector": {
+    "description": "key_parser: Duplicate sector {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyTextIsMissingSectors": "Key text is missing sectors",
+  "@messageKeyTextIsMissingSectors": {
+    "description": "key_parser: Key text is missing sectors"
+  },
+  "messageBinaryDumpBin": "Binary dump (.bin)",
+  "@messageBinaryDumpBin": {
+    "description": "dump_converter: Binary dump (.bin)"
+  },
+  "messageTextDumpEml": "Text dump (.eml)",
+  "@messageTextDumpEml": {
+    "description": "dump_converter: Text dump (.eml)"
+  },
+  "messageBinaryKeysKeyBin": "Binary keys (.key.bin)",
+  "@messageBinaryKeysKeyBin": {
+    "description": "dump_converter: Binary keys (.key.bin)"
+  },
+  "messageKeyDictionaryDic": "Key dictionary (.dic)",
+  "@messageKeyDictionaryDic": {
+    "description": "dump_converter: Key dictionary (.dic)"
+  },
+  "messageKeyListKeysTxt": "Key list (.keys.txt)",
+  "@messageKeyListKeysTxt": {
+    "description": "dump_converter: Key list (.keys.txt)"
+  },
+  "messageFileNotFound": "File not found: {value}",
+  "@messageFileNotFound": {
+    "description": "dump_converter: File not found: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageAKeyFileCannotBeConvertedTo": "A key file cannot be converted to a full dump (data blocks are missing)",
+  "@messageAKeyFileCannotBeConvertedTo": {
+    "description": "dump_converter: A key file cannot be converted to a full dump (data blocks are missing)"
+  },
+  "messageAKeyFileCannotBeConvertedTo2": "A key file cannot be converted to EML (data blocks are missing)",
+  "@messageAKeyFileCannotBeConvertedTo2": {
+    "description": "dump_converter: A key file cannot be converted to EML (data blocks are missing)"
+  },
+  "messageAKeyFileCannotBeConvertedTo3": "A key file cannot be converted to JSON (data blocks are missing)",
+  "@messageAKeyFileCannotBeConvertedTo3": {
+    "description": "dump_converter: A key file cannot be converted to JSON (data blocks are missing)"
+  },
+  "messageNoKeyData": "No key data",
+  "@messageNoKeyData": {
+    "description": "dump_converter: No key data"
+  },
+  "messageConversionFailed": "Conversion failed: {value}",
+  "@messageConversionFailed": {
+    "description": "dump_converter: Conversion failed: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUniqueKeys": "Unique keys: {value}",
+  "@messageUniqueKeys": {
+    "description": "dump_converter: Unique keys: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageUnsupportedKeyExportFormat": "Unsupported key export format: {value}",
+  "@messageUnsupportedKeyExportFormat": {
+    "description": "dump_converter: Unsupported key export format: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSectorsUniqueKeyAUniqueKeyB": "Sectors: {value}; unique Key A: {value2}; unique Key B: {value3}; total unique keys: {value4}",
+  "@messageSectorsUniqueKeyAUniqueKeyB": {
+    "description": "dump_converter: Sectors: {value}; unique Key A: {value2}; unique Key B: {value3}; total unique keys: {value4}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      },
+      "value4": {
+        "type": "String"
+      }
+    }
+  },
+  "messageConnectionLostOperationAborted": "Connection lost; operation aborted",
+  "@messageConnectionLostOperationAborted": {
+    "description": "app_state: Connection lost; operation aborted"
+  },
+  "messageWritingBlock": "Writing block {value}…",
+  "@messageWritingBlock": {
+    "description": "app_state: Writing block {value}…",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageAuthenticationOrWritingFailed": "Authentication or writing failed",
+  "@messageAuthenticationOrWritingFailed": {
+    "description": "app_state: Authentication or writing failed"
+  },
+  "messageWriteSuccessful": "Write successful",
+  "@messageWriteSuccessful": {
+    "description": "app_state: Write successful"
+  },
+  "messageFinishedSucceededFailed": "Finished: {value} succeeded, {value2} failed",
+  "@messageFinishedSucceededFailed": {
+    "description": "app_state: Finished: {value} succeeded, {value2} failed",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageCancelled": "Cancelled",
+  "@messageCancelled": {
+    "description": "app_state: Cancelled"
+  },
+  "messageCouldNotSaveSettings": "Could not save settings: {value}",
+  "@messageCouldNotSaveSettings": {
+    "description": "connection_state: Could not save settings: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFileScanFailed": "File scan failed: {value}",
+  "@messageFileScanFailed": {
+    "description": "file_state: File scan failed: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageInstalled": "Installed",
+  "@messageInstalled": {
+    "description": "hardware_state: Installed"
+  },
+  "messageOnWindowsUseTheOfficialPm3Bat": "On Windows, use the official pm3.bat launcher.",
+  "@messageOnWindowsUseTheOfficialPm3Bat": {
+    "description": "connection_page: On Windows, use the official pm3.bat launcher."
+  },
+  "messageSerialPort": "Serial port",
+  "@messageSerialPort": {
+    "description": "connection_page: Serial port"
+  },
+  "messageRefreshPorts": "Refresh ports",
+  "@messageRefreshPorts": {
+    "description": "connection_page: Refresh ports"
+  },
+  "messageNoSerialPortFoundConnectYourPm3": "No serial port found. Connect your PM3 device.",
+  "@messageNoSerialPortFoundConnectYourPm3": {
+    "description": "connection_page: No serial port found. Connect your PM3 device."
+  },
+  "messageTheOfficialBatLauncherDetectsDevicesAutomatically": "The official BAT launcher detects devices automatically; this port is only saved in settings.",
+  "@messageTheOfficialBatLauncherDetectsDevicesAutomatically": {
+    "description": "connection_page: The official BAT launcher detects devices automatically; this port is only saved in settings."
+  },
+  "messageConnecting": "Connecting…",
+  "@messageConnecting": {
+    "description": "connection_page: Connecting…"
+  },
+  "messageDisconnect": "Disconnect",
+  "@messageDisconnect": {
+    "description": "connection_page: Disconnect"
+  },
+  "messageConnectPm3": "Connect PM3",
+  "@messageConnectPm3": {
+    "description": "connection_page: Connect PM3"
+  },
+  "messageDeviceInformation": "Device information",
+  "@messageDeviceInformation": {
+    "description": "connection_page: Device information"
+  },
+  "messageRefreshHardwareInformation": "Refresh hardware information",
+  "@messageRefreshHardwareInformation": {
+    "description": "connection_page: Refresh hardware information"
+  },
+  "messagePort": "Port",
+  "@messagePort": {
+    "description": "connection_page: Port"
+  },
+  "messageVersion": "Version",
+  "@messageVersion": {
+    "description": "connection_page: Version"
+  },
+  "messageStatus": "Status",
+  "@messageStatus": {
+    "description": "connection_page: Status"
+  },
+  "messageDeviceModel": "Device model",
+  "@messageDeviceModel": {
+    "description": "connection_page: Device model"
+  },
+  "messageFirmware": "Firmware",
+  "@messageFirmware": {
+    "description": "connection_page: Firmware"
+  },
+  "messageSmartcardModule": "Smartcard module",
+  "@messageSmartcardModule": {
+    "description": "connection_page: Smartcard module"
+  },
+  "messageDeviceId": "Device ID",
+  "@messageDeviceId": {
+    "description": "connection_page: Device ID"
+  },
+  "messageRetrievingHardwareInformation": "Retrieving hardware information…",
+  "@messageRetrievingHardwareInformation": {
+    "description": "connection_page: Retrieving hardware information…"
+  },
+  "messageCommandHistory": "Command history",
+  "@messageCommandHistory": {
+    "description": "connection_page: Command history"
+  },
+  "messageCommands": "{value, plural, =0{No commands} =1{1 command} other{{value} commands}}",
+  "@messageCommands": {
+    "description": "Number of commands in terminal history; follows locale plural rules.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "messageTerminalBuffer": "Terminal buffer",
+  "@messageTerminalBuffer": {
+    "description": "connection_page: Terminal buffer"
+  },
+  "messageLines": "Lines: {value}",
+  "@messageLines": {
+    "description": "connection_page: Lines: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageHardwareStatus": "Hardware status",
+  "@messageHardwareStatus": {
+    "description": "connection_page: Hardware status"
+  },
+  "messageDebugLevel": "Debug level",
+  "@messageDebugLevel": {
+    "description": "connection_page: Debug level"
+  },
+  "messageEnvironment": "Environment",
+  "@messageEnvironment": {
+    "description": "connection_page: Environment"
+  },
+  "messagePm3Path": "PM3 path",
+  "@messagePm3Path": {
+    "description": "connection_page: PM3 path"
+  },
+  "messageValid": "✅ Valid",
+  "@messageValid": {
+    "description": "connection_page: ✅ Valid"
+  },
+  "messageInvalid": "❌ Invalid",
+  "@messageInvalid": {
+    "description": "connection_page: ❌ Invalid"
+  },
+  "messagePm3FileCollection": "PM3 file collection",
+  "@messagePm3FileCollection": {
+    "description": "connection_page: PM3 file collection"
+  },
+  "messageFilesCards": "Files: {value}; cards: {value2}",
+  "@messageFilesCards": {
+    "description": "connection_page: Files: {value}; cards: {value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageScan": "Scan",
+  "@messageScan": {
+    "description": "connection_page: Scan"
+  },
+  "messageOrganizeFiles": "Organize files",
+  "@messageOrganizeFiles": {
+    "description": "connection_page: Organize files"
+  },
+  "messageNoPm3ExportFilesFound": "No PM3 export files found",
+  "@messageNoPm3ExportFilesFound": {
+    "description": "connection_page: No PM3 export files found"
+  },
+  "messageFilesAreCollectedAutomaticallyAfterConnectingAnd": "Files are collected automatically after connecting and running dump / autopwn.",
+  "@messageFilesAreCollectedAutomaticallyAfterConnectingAnd": {
+    "description": "connection_page: Files are collected automatically after connecting and running dump / autopwn."
+  },
+  "messagePm3Connected": "PM3 connected",
+  "@messagePm3Connected": {
+    "description": "connection_page: PM3 connected"
+  },
+  "messagePm3NotConnected": "PM3 not connected",
+  "@messagePm3NotConnected": {
+    "description": "connection_page: PM3 not connected"
+  },
+  "messageSelectASerialPortAndConnectThe": "Select a serial port and connect the device",
+  "@messageSelectASerialPortAndConnectThe": {
+    "description": "connection_page: Select a serial port and connect the device"
+  },
+  "messageConnectionFailed2": "Connection failed",
+  "@messageConnectionFailed2": {
+    "description": "connection_page: Connection failed"
+  },
+  "messageDumpsKeyFilesFiles": "Dumps: {value}  •  Key files: {value2}  •  Files: {value3}",
+  "@messageDumpsKeyFilesFiles": {
+    "description": "connection_page: Dumps: {value}  •  Key files: {value2}  •  Files: {value3}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      }
+    }
+  },
+  "messageOpenInDumpViewer": "Open in dump viewer",
+  "@messageOpenInDumpViewer": {
+    "description": "connection_page: Open in dump viewer"
+  },
+  "messageOpenedInDumpViewer": "Opened in dump viewer: {value}",
+  "@messageOpenedInDumpViewer": {
+    "description": "connection_page: Opened in dump viewer: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageOrganizePm3Files": "Organize PM3 files",
+  "@messageOrganizePm3Files": {
+    "description": "connection_page: Organize PM3 files"
+  },
+  "messageOrganizeCollectedPm3ExportFilesIntoSubdirectories": "Organize collected PM3 export files into subdirectories by card UID.\n\nDirectory structure:\n  📁 hf-mf/A991A280/\n    ├── hf-mf-A991A280-dump.bin\n    ├── hf-mf-A991A280-key.bin\n    └── …\n",
+  "@messageOrganizeCollectedPm3ExportFilesIntoSubdirectories": {
+    "description": "connection_page: Organize collected PM3 export files into subdirectories by card UID.\n\nDirectory structure:\n  📁 hf-mf/A991A280/\n    ├── hf-mf-A991A280-dump.bin\n    ├── hf-mf-A991A280-key.bin\n    └── …\n"
+  },
+  "messageDestinationDirectory": "Destination directory",
+  "@messageDestinationDirectory": {
+    "description": "connection_page: Destination directory"
+  },
+  "messageFilesToOrganize": "Files to organize: {value}",
+  "@messageFilesToOrganize": {
+    "description": "connection_page: Files to organize: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageCancel": "Cancel",
+  "@messageCancel": {
+    "description": "connection_page: Cancel"
+  },
+  "messageFilesOrganized": "Files organized: {value}",
+  "@messageFilesOrganized": {
+    "description": "connection_page: Files organized: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageStartOrganizing": "Start organizing",
+  "@messageStartOrganizing": {
+    "description": "connection_page: Start organizing"
+  },
+  "messageFlashUsage": "Flash usage",
+  "@messageFlashUsage": {
+    "description": "connection_page: Flash usage"
+  },
+  "messageBasic": "Basic",
+  "@messageBasic": {
+    "description": "data_page: Basic"
+  },
+  "messageAnalysis": "Analysis",
+  "@messageAnalysis": {
+    "description": "data_page: Analysis"
+  },
+  "messageCompare": "Compare",
+  "@messageCompare": {
+    "description": "data_page: Compare"
+  },
+  "messagePlot": "Plot",
+  "@messagePlot": {
+    "description": "data_page: Plot"
+  },
+  "messageDisplayTheDataGraph": "Display the data graph",
+  "@messageDisplayTheDataGraph": {
+    "description": "data_page: Display the data graph"
+  },
+  "messageClear": "Clear",
+  "@messageClear": {
+    "description": "data_page: Clear"
+  },
+  "messageClearTheGraphBuffer": "Clear the graph buffer",
+  "@messageClearTheGraphBuffer": {
+    "description": "data_page: Clear the graph buffer"
+  },
+  "messageDetectClock": "Detect clock",
+  "@messageDetectClock": {
+    "description": "data_page: Detect clock"
+  },
+  "messageAutomaticallyDetectTheClockRate": "Automatically detect the clock rate",
+  "@messageAutomaticallyDetectTheClockRate": {
+    "description": "data_page: Automatically detect the clock rate"
+  },
+  "messageSampling": "Sampling",
+  "@messageSampling": {
+    "description": "data_page: Sampling"
+  },
+  "messageSampleCount": "Sample count",
+  "@messageSampleCount": {
+    "description": "data_page: Sample count"
+  },
+  "messageReadSamples": "Read samples",
+  "@messageReadSamples": {
+    "description": "data_page: Read samples"
+  },
+  "messageFileOperations": "File operations",
+  "@messageFileOperations": {
+    "description": "data_page: File operations"
+  },
+  "messageFilePath": "File path",
+  "@messageFilePath": {
+    "description": "data_page: File path"
+  },
+  "messageSave": "Save",
+  "@messageSave": {
+    "description": "data_page: Save"
+  },
+  "messageLoad": "Load",
+  "@messageLoad": {
+    "description": "data_page: Load"
+  },
+  "messageAsn1Decoding": "ASN.1 decoding",
+  "@messageAsn1Decoding": {
+    "description": "data_page: ASN.1 decoding"
+  },
+  "messageHexData": "Hex data",
+  "@messageHexData": {
+    "description": "data_page: Hex data"
+  },
+  "messageDecode": "Decode",
+  "@messageDecode": {
+    "description": "data_page: Decode"
+  },
+  "messageFileComparison": "File comparison",
+  "@messageFileComparison": {
+    "description": "data_page: File comparison"
+  },
+  "messageFileA": "File A",
+  "@messageFileA": {
+    "description": "data_page: File A"
+  },
+  "messageFileB": "File B",
+  "@messageFileB": {
+    "description": "data_page: File B"
+  },
+  "messageOpenFileA": "Open file A",
+  "@messageOpenFileA": {
+    "description": "dump_compare_page: Open file A"
+  },
+  "messageOpenFileB": "Open file B",
+  "@messageOpenFileB": {
+    "description": "dump_compare_page: Open file B"
+  },
+  "messageDifferencesOnly": "Differences only",
+  "@messageDifferencesOnly": {
+    "description": "dump_compare_page: Differences only"
+  },
+  "messageFileAError": "File A error: {value}",
+  "@messageFileAError": {
+    "description": "dump_compare_page: File A error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageFileBError": "File B error: {value}",
+  "@messageFileBError": {
+    "description": "dump_compare_page: File B error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageOpenTwoDumpFilesToCompareThem": "Open two dump files to compare them",
+  "@messageOpenTwoDumpFilesToCompareThem": {
+    "description": "dump_compare_page: Open two dump files to compare them"
+  },
+  "messageSupportsEmlBinJsonDump": "Supports .eml / .bin / .json / .dump",
+  "@messageSupportsEmlBinJsonDump": {
+    "description": "dump_compare_page: Supports .eml / .bin / .json / .dump"
+  },
+  "messageTotalBlocks": "Total blocks",
+  "@messageTotalBlocks": {
+    "description": "dump_compare_page: Total blocks"
+  },
+  "messageDataDifferences": "Data differences",
+  "@messageDataDifferences": {
+    "description": "dump_compare_page: Data differences"
+  },
+  "messageBlocks": "Blocks: {value}",
+  "@messageBlocks": {
+    "description": "dump_compare_page: Blocks: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyADifferences": "Key A differences",
+  "@messageKeyADifferences": {
+    "description": "dump_compare_page: Key A differences"
+  },
+  "messageKeyBDifferences": "Key B differences",
+  "@messageKeyBDifferences": {
+    "description": "dump_compare_page: Key B differences"
+  },
+  "messageNone": "(none)",
+  "@messageNone": {
+    "description": "dump_compare_page: (none)"
+  },
+  "messageManufacturer": "Manufacturer",
+  "@messageManufacturer": {
+    "description": "dump_compare_page: Manufacturer"
+  },
+  "messageTrailer": "Trailer",
+  "@messageTrailer": {
+    "description": "dump_compare_page: Trailer"
+  },
+  "messageCouldNotOpenFile": "Could not open file: {value}",
+  "@messageCouldNotOpenFile": {
+    "description": "dump_viewer_page: Could not open file: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageDictionaryFileUniqueKeys": "Dictionary file: {value} unique keys",
+  "@messageDictionaryFileUniqueKeys": {
+    "description": "dump_viewer_page: Dictionary file: {value} unique keys",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageDictionaryLoadedKeys": "Dictionary loaded; keys: {value}",
+  "@messageDictionaryLoadedKeys": {
+    "description": "dump_viewer_page: Dictionary loaded; keys: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageMergedKeysForSectorsBlockDataUnchanged": "Merged keys for {value} sectors (block data unchanged)",
+  "@messageMergedKeysForSectorsBlockDataUnchanged": {
+    "description": "dump_viewer_page: Merged keys for {value} sectors (block data unchanged)",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyHandling": "Key handling",
+  "@messageKeyHandling": {
+    "description": "dump_viewer_page: Key handling"
+  },
+  "messageKeyDataIsAlreadyLoadedHowShould": "Key data is already loaded. How should keys be handled when opening another dump?",
+  "@messageKeyDataIsAlreadyLoadedHowShould": {
+    "description": "dump_viewer_page: Key data is already loaded. How should keys be handled when opening another dump?"
+  },
+  "messageDumpKeyFieldsAreOftenFfWhile": "Dump key fields are often FF, while actual keys may come from a separate key file.",
+  "@messageDumpKeyFieldsAreOftenFfWhile": {
+    "description": "dump_viewer_page: Dump key fields are often FF, while actual keys may come from a separate key file."
+  },
+  "messageKeepCurrentKeys": "Keep current keys",
+  "@messageKeepCurrentKeys": {
+    "description": "dump_viewer_page: Keep current keys"
+  },
+  "messageReplaceWithDumpKeys": "Replace with dump keys",
+  "@messageReplaceWithDumpKeys": {
+    "description": "dump_viewer_page: Replace with dump keys"
+  },
+  "messageDefaultKeyFileSet": "Default key file set: {value}",
+  "@messageDefaultKeyFileSet": {
+    "description": "dump_viewer_page: Default key file set: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageDefaultDumpFileSet": "Default dump file set: {value}",
+  "@messageDefaultDumpFileSet": {
+    "description": "dump_viewer_page: Default dump file set: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSectorView": "Sector view",
+  "@messageSectorView": {
+    "description": "dump_viewer_page: Sector view"
+  },
+  "messageKeysEdit": "Keys / edit",
+  "@messageKeysEdit": {
+    "description": "dump_viewer_page: Keys / edit"
+  },
+  "messageDetailedAnalysis": "Detailed analysis",
+  "@messageDetailedAnalysis": {
+    "description": "dump_viewer_page: Detailed analysis"
+  },
+  "messageWriteClear": "Write / clear",
+  "@messageWriteClear": {
+    "description": "dump_viewer_page: Write / clear"
+  },
+  "messageCommandData": "Command data",
+  "@messageCommandData": {
+    "description": "dump_viewer_page: Command data"
+  },
+  "messageOpenADumpFileToViewSector": "Open a dump file to view sector data",
+  "@messageOpenADumpFileToViewSector": {
+    "description": "dump_viewer_page: Open a dump file to view sector data"
+  },
+  "messageOpenADumpOrKeyFileTo": "Open a dump or key file to edit it",
+  "@messageOpenADumpOrKeyFileTo": {
+    "description": "dump_viewer_page: Open a dump or key file to edit it"
+  },
+  "messageOpenADumpFileToViewDetailed": "Open a dump file to view detailed analysis",
+  "@messageOpenADumpFileToViewDetailed": {
+    "description": "dump_viewer_page: Open a dump file to view detailed analysis"
+  },
+  "messageSupportsEmlBinJsonDumpDic": "Supports .eml / .bin / .json / .dump / .dic",
+  "@messageSupportsEmlBinJsonDumpDic": {
+    "description": "dump_viewer_page: Supports .eml / .bin / .json / .dump / .dic"
+  },
+  "messageOpenFile": "Open file",
+  "@messageOpenFile": {
+    "description": "dump_viewer_page: Open file"
+  },
+  "messageSetAsDefaultKeys": "Set as default keys",
+  "@messageSetAsDefaultKeys": {
+    "description": "dump_viewer_page: Set as default keys"
+  },
+  "messageSetAsDefaultDump": "Set as default dump",
+  "@messageSetAsDefaultDump": {
+    "description": "dump_viewer_page: Set as default dump"
+  },
+  "messageExportAs": "Export as",
+  "@messageExportAs": {
+    "description": "dump_viewer_page: Export as"
+  },
+  "messageEmlTextDump": ".eml (text dump)",
+  "@messageEmlTextDump": {
+    "description": "dump_viewer_page: .eml (text dump)"
+  },
+  "messageBinBinaryDump": ".bin (binary dump)",
+  "@messageBinBinaryDump": {
+    "description": "dump_viewer_page: .bin (binary dump)"
+  },
+  "messageJsonPm3Format": ".json (PM3 format)",
+  "@messageJsonPm3Format": {
+    "description": "dump_viewer_page: .json (PM3 format)"
+  },
+  "messageKeyBinBinaryKeys": ".key.bin (binary keys)",
+  "@messageKeyBinBinaryKeys": {
+    "description": "dump_viewer_page: .key.bin (binary keys)"
+  },
+  "messageDicKeyDictionary": ".dic (key dictionary)",
+  "@messageDicKeyDictionary": {
+    "description": "dump_viewer_page: .dic (key dictionary)"
+  },
+  "messageKeysTxtKeyList": ".keys.txt (key list)",
+  "@messageKeysTxtKeyList": {
+    "description": "dump_viewer_page: .keys.txt (key list)"
+  },
+  "messageExportFailed": "Export failed: {value}",
+  "@messageExportFailed": {
+    "description": "dump_viewer_page: Export failed: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageExportedAndOrganized": "Exported and organized: {value}",
+  "@messageExportedAndOrganized": {
+    "description": "dump_viewer_page: Exported and organized: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageExported": "Exported: {value}",
+  "@messageExported": {
+    "description": "dump_viewer_page: Exported: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageNoCardData": "No card data",
+  "@messageNoCardData": {
+    "description": "dump_viewer_page: No card data"
+  },
+  "messageSectorBlocks": "Sector {value}  (blocks {value2}–{value3})",
+  "@messageSectorBlocks": {
+    "description": "dump_viewer_page: Sector {value}  (blocks {value2}–{value3})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      }
+    }
+  },
+  "messageAccessConditions": "Access conditions",
+  "@messageAccessConditions": {
+    "description": "dump_viewer_page: Access conditions"
+  },
+  "messageManufacturerBlock": "Manufacturer block",
+  "@messageManufacturerBlock": {
+    "description": "dump_viewer_page: Manufacturer block"
+  },
+  "messageBlock": "Block",
+  "@messageBlock": {
+    "description": "dump_viewer_page: Block"
+  },
+  "messageDescription": "Description",
+  "@messageDescription": {
+    "description": "dump_viewer_page: Description"
+  },
+  "messageData": "Data {value}",
+  "@messageData": {
+    "description": "dump_viewer_page: Data {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyAWriteKeyAAccessBits": "Key A: write Key A / access bits / Key B",
+  "@messageKeyAWriteKeyAAccessBits": {
+    "description": "dump_viewer_page: Key A: write Key A / access bits / Key B"
+  },
+  "messageKeyAWriteKeyAAccessBits2": "Key A: write Key A / access bits; Key B: read / write",
+  "@messageKeyAWriteKeyAAccessBits2": {
+    "description": "dump_viewer_page: Key A: write Key A / access bits; Key B: read / write"
+  },
+  "messageReadAccessBitsOnly": "Read access bits only",
+  "@messageReadAccessBitsOnly": {
+    "description": "dump_viewer_page: Read access bits only"
+  },
+  "messageKeyAWriteAccessBitsKeyB": "Key A: write access bits; Key B: read / write",
+  "@messageKeyAWriteAccessBitsKeyB": {
+    "description": "dump_viewer_page: Key A: write access bits; Key B: read / write"
+  },
+  "messageKeyBWriteAll": "Key B: write all",
+  "@messageKeyBWriteAll": {
+    "description": "dump_viewer_page: Key B: write all"
+  },
+  "messageLocked": "Locked",
+  "@messageLocked": {
+    "description": "dump_viewer_page: Locked"
+  },
+  "messageUnknown": "Unknown",
+  "@messageUnknown": {
+    "description": "dump_viewer_page: Unknown"
+  },
+  "messageReadWriteWithKeyAOrB": "Read / write with Key A or B",
+  "@messageReadWriteWithKeyAOrB": {
+    "description": "dump_viewer_page: Read / write with Key A or B"
+  },
+  "messageReadWithABNoWriting": "Read with A / B; no writing",
+  "@messageReadWithABNoWriting": {
+    "description": "dump_viewer_page: Read with A / B; no writing"
+  },
+  "messageReadWriteWithKeyBOnly": "Read / write with Key B only",
+  "@messageReadWriteWithKeyBOnly": {
+    "description": "dump_viewer_page: Read / write with Key B only"
+  },
+  "messageReadABWriteBDecrementA": "Read: A / B; write: B; decrement: A / B (value block)",
+  "@messageReadABWriteBDecrementA": {
+    "description": "dump_viewer_page: Read: A / B; write: B; decrement: A / B (value block)"
+  },
+  "messageReadWithKeyBOnly": "Read with Key B only",
+  "@messageReadWithKeyBOnly": {
+    "description": "dump_viewer_page: Read with Key B only"
+  },
+  "messageReadABWriteIncrementBDecrement": "Read: A / B; write / increment: B; decrement: A / B (value block)",
+  "@messageReadABWriteIncrementBDecrement": {
+    "description": "dump_viewer_page: Read: A / B; write / increment: B; decrement: A / B (value block)"
+  },
+  "messageNoData": "No data",
+  "@messageNoData": {
+    "description": "dump_viewer_page: No data"
+  },
+  "messageOverview": "📋 Overview",
+  "@messageOverview": {
+    "description": "dump_viewer_page: 📋 Overview"
+  },
+  "messageCardType": "Card type",
+  "@messageCardType": {
+    "description": "dump_viewer_page: Card type"
+  },
+  "messageEmptyDataBlocks": "Empty data blocks",
+  "@messageEmptyDataBlocks": {
+    "description": "dump_viewer_page: Empty data blocks"
+  },
+  "messageDataUsage": "Data usage",
+  "@messageDataUsage": {
+    "description": "dump_viewer_page: Data usage"
+  },
+  "messageValueBlocks": "Value blocks",
+  "@messageValueBlocks": {
+    "description": "dump_viewer_page: Value blocks"
+  },
+  "messageManufacturerBlockBlock0": "🏭 Manufacturer block (block 0)",
+  "@messageManufacturerBlockBlock0": {
+    "description": "dump_viewer_page: 🏭 Manufacturer block (block 0)"
+  },
+  "messageChipType": "Chip type",
+  "@messageChipType": {
+    "description": "dump_viewer_page: Chip type"
+  },
+  "messageRawData": "Raw data",
+  "@messageRawData": {
+    "description": "dump_viewer_page: Raw data"
+  },
+  "messageKeyAnalysis": "🔑 Key analysis",
+  "@messageKeyAnalysis": {
+    "description": "dump_viewer_page: 🔑 Key analysis"
+  },
+  "messageTotalSectors": "Total sectors",
+  "@messageTotalSectors": {
+    "description": "dump_viewer_page: Total sectors"
+  },
+  "messageKnownKeyA": "Known Key A",
+  "@messageKnownKeyA": {
+    "description": "dump_viewer_page: Known Key A"
+  },
+  "messageKnownKeyB": "Known Key B",
+  "@messageKnownKeyB": {
+    "description": "dump_viewer_page: Known Key B"
+  },
+  "messageAllKeysIdentical": "All keys identical",
+  "@messageAllKeysIdentical": {
+    "description": "dump_viewer_page: All keys identical"
+  },
+  "messageYes": "Yes",
+  "@messageYes": {
+    "description": "dump_viewer_page: Yes"
+  },
+  "messageNo": "No",
+  "@messageNo": {
+    "description": "dump_viewer_page: No"
+  },
+  "messageContainsBlankKeys": "Contains blank keys",
+  "@messageContainsBlankKeys": {
+    "description": "dump_viewer_page: Contains blank keys"
+  },
+  "messageYes2": "Yes ⚠️",
+  "@messageYes2": {
+    "description": "dump_viewer_page: Yes ⚠️"
+  },
+  "messageKeyAGroups": "Key A groups:",
+  "@messageKeyAGroups": {
+    "description": "dump_viewer_page: Key A groups:"
+  },
+  "messageSectors": "{value} → sectors {value2}",
+  "@messageSectors": {
+    "description": "dump_viewer_page: {value} → sectors {value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyBGroups": "Key B groups:",
+  "@messageKeyBGroups": {
+    "description": "dump_viewer_page: Key B groups:"
+  },
+  "messageDefaultKeyMatches": "⚠️ Default key matches:",
+  "@messageDefaultKeyMatches": {
+    "description": "dump_viewer_page: ⚠️ Default key matches:"
+  },
+  "messageSectorKey": "Sector {value} Key {value2}: {value3} ({value4})",
+  "@messageSectorKey": {
+    "description": "dump_viewer_page: Sector {value} Key {value2}: {value3} ({value4})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      },
+      "value4": {
+        "type": "String"
+      }
+    }
+  },
+  "messageMadApplicationDirectoryV": "📂 MAD application directory (v{value})",
+  "@messageMadApplicationDirectoryV": {
+    "description": "dump_viewer_page: 📂 MAD application directory (v{value})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSector": "Sector {value}",
+  "@messageSector": {
+    "description": "dump_viewer_page: Sector {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageValueBlocks2": "💰 Value blocks",
+  "@messageValueBlocks2": {
+    "description": "dump_viewer_page: 💰 Value blocks"
+  },
+  "messageBlock2": "Block {value}",
+  "@messageBlock2": {
+    "description": "dump_viewer_page: Block {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageValueAddress": "Value: {value}  Address: {value2}",
+  "@messageValueAddress": {
+    "description": "dump_viewer_page: Value: {value}  Address: {value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSectorOverview": "📊 Sector overview",
+  "@messageSectorOverview": {
+    "description": "dump_viewer_page: 📊 Sector overview"
+  },
+  "messageValidAccessBits": "✅ Valid access bits",
+  "@messageValidAccessBits": {
+    "description": "dump_viewer_page: ✅ Valid access bits"
+  },
+  "messageInvalidAccessBits": "❌ Invalid access bits",
+  "@messageInvalidAccessBits": {
+    "description": "dump_viewer_page: ❌ Invalid access bits"
+  },
+  "messageNoAccessBits": "- No access bits",
+  "@messageNoAccessBits": {
+    "description": "dump_viewer_page: - No access bits"
+  },
+  "messageDataBlockAsciiView": "📝 Data block ASCII view",
+  "@messageDataBlockAsciiView": {
+    "description": "dump_viewer_page: 📝 Data block ASCII view"
+  },
+  "messageExportAllFormats": "📦 Export all formats",
+  "@messageExportAllFormats": {
+    "description": "dump_viewer_page: 📦 Export all formats"
+  },
+  "messageExportTheCurrentDumpInAllSupported": "Export the current dump in all supported formats:",
+  "@messageExportTheCurrentDumpInAllSupported": {
+    "description": "dump_viewer_page: Export the current dump in all supported formats:"
+  },
+  "messageExportEml": "Export .eml",
+  "@messageExportEml": {
+    "description": "dump_viewer_page: Export .eml"
+  },
+  "messageExportBin": "Export .bin",
+  "@messageExportBin": {
+    "description": "dump_viewer_page: Export .bin"
+  },
+  "messageExportJson": "Export .json",
+  "@messageExportJson": {
+    "description": "dump_viewer_page: Export .json"
+  },
+  "messageExportKeyBin": "Export .key.bin",
+  "@messageExportKeyBin": {
+    "description": "dump_viewer_page: Export .key.bin"
+  },
+  "messageExportDic": "Export .dic",
+  "@messageExportDic": {
+    "description": "dump_viewer_page: Export .dic"
+  },
+  "messageExportKeysTxt": "Export .keys.txt",
+  "@messageExportKeysTxt": {
+    "description": "dump_viewer_page: Export .keys.txt"
+  },
+  "messageKeyExtraction": "🔑 Key extraction",
+  "@messageKeyExtraction": {
+    "description": "dump_viewer_page: 🔑 Key extraction"
+  },
+  "messageAllKeysExtractedFromTheCurrentDump": "All keys extracted from the current dump:",
+  "@messageAllKeysExtractedFromTheCurrentDump": {
+    "description": "dump_viewer_page: All keys extracted from the current dump:"
+  },
+  "messageCopyAllKeys": "Copy all keys",
+  "@messageCopyAllKeys": {
+    "description": "dump_viewer_page: Copy all keys"
+  },
+  "messageKeyAOnly": "Key A only",
+  "@messageKeyAOnly": {
+    "description": "dump_viewer_page: Key A only"
+  },
+  "messageKeyBOnly": "Key B only",
+  "@messageKeyBOnly": {
+    "description": "dump_viewer_page: Key B only"
+  },
+  "messageFileFormatConversion": "🔄 File format conversion",
+  "@messageFileFormatConversion": {
+    "description": "dump_viewer_page: 🔄 File format conversion"
+  },
+  "messageSelectADumpOrKeyFileTo": "Select a dump or key file to convert to another format:",
+  "@messageSelectADumpOrKeyFileTo": {
+    "description": "dump_viewer_page: Select a dump or key file to convert to another format:"
+  },
+  "messageSelectSourceFile": "Select source file",
+  "@messageSelectSourceFile": {
+    "description": "dump_viewer_page: Select source file"
+  },
+  "messageTargetFormat": "Target format:",
+  "@messageTargetFormat": {
+    "description": "dump_viewer_page: Target format:"
+  },
+  "messageConverting": "Converting…",
+  "@messageConverting": {
+    "description": "dump_viewer_page: Converting…"
+  },
+  "messageStartConversion": "Start conversion",
+  "@messageStartConversion": {
+    "description": "dump_viewer_page: Start conversion"
+  },
+  "messageExternalKeyFile": "📋 External key file",
+  "@messageExternalKeyFile": {
+    "description": "dump_viewer_page: 📋 External key file"
+  },
+  "messageLoadedExternalKeys": "Loaded external keys:",
+  "@messageLoadedExternalKeys": {
+    "description": "dump_viewer_page: Loaded external keys:"
+  },
+  "messageFormatReference": "ℹ️ Format reference",
+  "@messageFormatReference": {
+    "description": "dump_viewer_page: ℹ️ Format reference"
+  },
+  "messageRawBinaryDump16BytesPerBlock": "Raw binary dump (16 bytes per block); the default PM3 dump format",
+  "@messageRawBinaryDump16BytesPerBlock": {
+    "description": "dump_viewer_page: Raw binary dump (16 bytes per block); the default PM3 dump format"
+  },
+  "messageTextDump32HexDigitsPerLine": "Text dump (32 hex digits per line); used for emulator loading",
+  "@messageTextDump32HexDigitsPerLine": {
+    "description": "dump_viewer_page: Text dump (32 hex digits per line); used for emulator loading"
+  },
+  "messagePm3JsonFormatIncludingCardMetadataAnd": "PM3 JSON format, including card metadata and keys",
+  "@messagePm3JsonFormatIncludingCardMetadataAnd": {
+    "description": "dump_viewer_page: PM3 JSON format, including card metadata and keys"
+  },
+  "messageBinaryKeyFile6ByteKeyA": "Binary key file: (6-byte Key A + 6-byte Key B) × sector count",
+  "@messageBinaryKeyFile6ByteKeyA": {
+    "description": "dump_viewer_page: Binary key file: (6-byte Key A + 6-byte Key B) × sector count"
+  },
+  "messageKeyDictionaryOneKeyPerLineUsed": "Key dictionary (one key per line); used for brute-force recovery",
+  "@messageKeyDictionaryOneKeyPerLineUsed": {
+    "description": "dump_viewer_page: Key dictionary (one key per line); used for brute-force recovery"
+  },
+  "messageReadableKeyTableSectorNumberKeyA": "Readable key table (sector number + Key A + Key B)",
+  "@messageReadableKeyTableSectorNumberKeyA": {
+    "description": "dump_viewer_page: Readable key table (sector number + Key A + Key B)"
+  },
+  "messageSector2": "Sector",
+  "@messageSector2": {
+    "description": "dump_viewer_page: Sector"
+  },
+  "messageSectorAB": "Sector {value}  A:{value2}  B:{value3}",
+  "@messageSectorAB": {
+    "description": "dump_viewer_page: Sector {value}  A:{value2}  B:{value3}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSaveConvertedFile": "Save converted file",
+  "@messageSaveConvertedFile": {
+    "description": "dump_viewer_page: Save converted file"
+  },
+  "messageConversionSuccessfulOutput": "✅ Conversion successful!\nOutput: {value}\n{value2}",
+  "@messageConversionSuccessfulOutput": {
+    "description": "dump_viewer_page: ✅ Conversion successful!\nOutput: {value}\n{value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageConversionError": "❌ Conversion error: {value}",
+  "@messageConversionError": {
+    "description": "dump_viewer_page: ❌ Conversion error: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageEnterHexDigits": "Enter {value} hex digits",
+  "@messageEnterHexDigits": {
+    "description": "dump_viewer_page: Enter {value} hex digits",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageChangesNotApplied": "Changes not applied: {value}",
+  "@messageChangesNotApplied": {
+    "description": "dump_viewer_page: Changes not applied: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageKeyEditor": "🔑 Key editor",
+  "@messageKeyEditor": {
+    "description": "dump_viewer_page: 🔑 Key editor"
+  },
+  "messageApplyChanges": "Apply changes",
+  "@messageApplyChanges": {
+    "description": "dump_viewer_page: Apply changes"
+  },
+  "messageAllDefaults": "All defaults",
+  "@messageAllDefaults": {
+    "description": "dump_viewer_page: All defaults"
+  },
+  "messageBlockDataEditor": "📝 Block data editor",
+  "@messageBlockDataEditor": {
+    "description": "dump_viewer_page: 📝 Block data editor"
+  },
+  "messageData2": "Data",
+  "@messageData2": {
+    "description": "dump_viewer_page: Data"
+  },
+  "messageOpenADumpFileFirst": "Open a dump file first",
+  "@messageOpenADumpFileFirst": {
+    "description": "dump_viewer_page: Open a dump file first"
+  },
+  "messageCuidCardWritingAndClearing": "CUID card writing and clearing",
+  "@messageCuidCardWritingAndClearing": {
+    "description": "dump_viewer_page: CUID card writing and clearing"
+  },
+  "messageCuidGen2CardsHaveNoBackdoorCommands": "CUID (Gen2) cards have no backdoor commands; each block must be authenticated with a known key before writing.\n• Clear card: authenticate with the current card keys and zero data blocks.\n• Write card: authenticate with the target card keys and write the dump block by block.\n• Write sector: write only the selected sector.\n• Gen1A backdoor restore: restore the entire card using hf mf restore (Gen1A cards only).\n\n⚠️ Writing CUID block 0 automatically adds --force.",
+  "@messageCuidGen2CardsHaveNoBackdoorCommands": {
+    "description": "dump_viewer_page: CUID (Gen2) cards have no backdoor commands; each block must be authenticated with a known key before writing.\n• Clear card: authenticate with the current card keys and zero data blocks.\n• Write card: authenticate with the target card keys and write the dump block by block.\n• Write sector: write only the selected sector.\n• Gen1A backdoor restore: restore the entire card using hf mf restore (Gen1A cards only).\n\n⚠️ Writing CUID block 0 automatically adds --force."
+  },
+  "messageConnectYourPm3DeviceFirst": "Connect your PM3 device first",
+  "@messageConnectYourPm3DeviceFirst": {
+    "description": "dump_viewer_page: Connect your PM3 device first"
+  },
+  "messageWriteOptions": "⚙️ Write options",
+  "@messageWriteOptions": {
+    "description": "dump_viewer_page: ⚙️ Write options"
+  },
+  "messageAuthenticationKeyType": "Authentication key type:",
+  "@messageAuthenticationKeyType": {
+    "description": "dump_viewer_page: Authentication key type:"
+  },
+  "messageSkipBlock0ManufacturerBlock": "Skip block 0 (manufacturer block)",
+  "@messageSkipBlock0ManufacturerBlock": {
+    "description": "dump_viewer_page: Skip block 0 (manufacturer block)"
+  },
+  "messageBlock0CannotBeWrittenUnlessThis": "Block 0 cannot be written unless this is a magic card",
+  "@messageBlock0CannotBeWrittenUnlessThis": {
+    "description": "dump_viewer_page: Block 0 cannot be written unless this is a magic card"
+  },
+  "messageWriteTrailersKeysAccessBits": "Write trailers (keys + access bits)",
+  "@messageWriteTrailersKeysAccessBits": {
+    "description": "dump_viewer_page: Write trailers (keys + access bits)"
+  },
+  "messageWriteTheDumpTrailerDataToThe": "Write the dump trailer data to the target card",
+  "@messageWriteTheDumpTrailerDataToThe": {
+    "description": "dump_viewer_page: Write the dump trailer data to the target card"
+  },
+  "messageDumpKeysForAuthentication": "🔑 Dump keys (for authentication)",
+  "@messageDumpKeysForAuthentication": {
+    "description": "dump_viewer_page: 🔑 Dump keys (for authentication)"
+  },
+  "messageSmartWrite": "🚀 Smart write",
+  "@messageSmartWrite": {
+    "description": "dump_viewer_page: 🚀 Smart write"
+  },
+  "messageSelectTheBestWritePathForThe": "Select the best write path for the target card type (UID / CUID / FUID / Gen1A / Gen3 / Gen4).",
+  "@messageSelectTheBestWritePathForThe": {
+    "description": "dump_viewer_page: Select the best write path for the target card type (UID / CUID / FUID / Gen1A / Gen3 / Gen4)."
+  },
+  "messageTargetCardTypeMode": "Target card type / mode",
+  "@messageTargetCardTypeMode": {
+    "description": "dump_viewer_page: Target card type / mode"
+  },
+  "messageAutoDefault": "AUTO (default)",
+  "@messageAutoDefault": {
+    "description": "dump_viewer_page: AUTO (default)"
+  },
+  "messageStandardUidCard": "Standard UID card",
+  "@messageStandardUidCard": {
+    "description": "dump_viewer_page: Standard UID card"
+  },
+  "messageFuidUidCanBeChangedOnce": "FUID (UID can be changed once)",
+  "@messageFuidUidCanBeChangedOnce": {
+    "description": "dump_viewer_page: FUID (UID can be changed once)"
+  },
+  "messageGen1aBackdoorCard": "Gen1A backdoor card",
+  "@messageGen1aBackdoorCard": {
+    "description": "dump_viewer_page: Gen1A backdoor card"
+  },
+  "messageGen3MagicCard": "Gen3 magic card",
+  "@messageGen3MagicCard": {
+    "description": "dump_viewer_page: Gen3 magic card"
+  },
+  "messageGen4PasswordOptional": "Gen4 password (optional)",
+  "@messageGen4PasswordOptional": {
+    "description": "dump_viewer_page: Gen4 password (optional)"
+  },
+  "message8HexDigitsEG00000000": "8 hex digits, e.g. 00000000",
+  "@message8HexDigitsEG00000000": {
+    "description": "dump_viewer_page: 8 hex digits, e.g. 00000000"
+  },
+  "messageSmartWrite2": "⚡ Smart write",
+  "@messageSmartWrite2": {
+    "description": "dump_viewer_page: ⚡ Smart write"
+  },
+  "messageAuthenticateWithTheDumpKeysAndZero": "Authenticate with the dump keys and zero all data blocks.\nReset trailers to default keys and access bits.\nFor CUID / Gen2 cards (no backdoor).",
+  "@messageAuthenticateWithTheDumpKeysAndZero": {
+    "description": "dump_viewer_page: Authenticate with the dump keys and zero all data blocks.\nReset trailers to default keys and access bits.\nFor CUID / Gen2 cards (no backdoor)."
+  },
+  "messageClearEntireCuidCard": "Clear entire CUID card",
+  "@messageClearEntireCuidCard": {
+    "description": "dump_viewer_page: Clear entire CUID card"
+  },
+  "messageAuthenticateWithTheTargetCardKeysAnd": "Authenticate with the target card keys and write the dump block by block.\nFor CUID / Gen2 cards (no backdoor).\nKnown target card keys are required.",
+  "@messageAuthenticateWithTheTargetCardKeysAnd": {
+    "description": "dump_viewer_page: Authenticate with the target card keys and write the dump block by block.\nFor CUID / Gen2 cards (no backdoor).\nKnown target card keys are required."
+  },
+  "messageWriteEntireCuidCard": "Write entire CUID card",
+  "@messageWriteEntireCuidCard": {
+    "description": "dump_viewer_page: Write entire CUID card"
+  },
+  "messageWriteOnlySelectedSectorAuthenticateWithThe": "Write only selected sector {value}.\nAuthenticate with the dump keys and write each block in this sector.\nUse for partial updates after editing one sector.",
+  "@messageWriteOnlySelectedSectorAuthenticateWithThe": {
+    "description": "dump_viewer_page: Write only selected sector {value}.\nAuthenticate with the dump keys and write each block in this sector.\nUse for partial updates after editing one sector.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageWriteSector": "Write sector {value}",
+  "@messageWriteSector": {
+    "description": "dump_viewer_page: Write sector {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageRestoreTheEntireCardUsingThePm3": "Restore the entire card using the PM3 hf mf restore command.\nFor Gen1A backdoor cards only; no keys required.\nWrites all blocks directly using the 0x40 / 0x43 backdoor commands.",
+  "@messageRestoreTheEntireCardUsingThePm3": {
+    "description": "dump_viewer_page: Restore the entire card using the PM3 hf mf restore command.\nFor Gen1A backdoor cards only; no keys required.\nWrites all blocks directly using the 0x40 / 0x43 backdoor commands."
+  },
+  "messageGen1aBackdoorRestore": "Gen1A backdoor restore",
+  "@messageGen1aBackdoorRestore": {
+    "description": "dump_viewer_page: Gen1A backdoor restore"
+  },
+  "messageWriteProgress": "📊 Write progress",
+  "@messageWriteProgress": {
+    "description": "dump_viewer_page: 📊 Write progress"
+  },
+  "messageFormatConversionAndKeyExtraction": "📦 Format conversion and key extraction",
+  "@messageFormatConversionAndKeyExtraction": {
+    "description": "dump_viewer_page: 📦 Format conversion and key extraction"
+  },
+  "messageEditedDataIsIncomplete": "Edited data is incomplete",
+  "@messageEditedDataIsIncomplete": {
+    "description": "dump_viewer_page: Edited data is incomplete"
+  },
+  "messageNoValidUidFoundCannotWriteUid": "No valid UID found; cannot write UID",
+  "@messageNoValidUidFoundCannotWriteUid": {
+    "description": "dump_viewer_page: No valid UID found; cannot write UID"
+  },
+  "messageClearCuidBlockByBlock": "Clear CUID block by block",
+  "@messageClearCuidBlockByBlock": {
+    "description": "dump_viewer_page: Clear CUID block by block"
+  },
+  "messageAuthenticateTheTargetCardWithTheDump": "Authenticate the target card with the dump keys,\nthen zero each data block.\n\nTrailers will be reset to defaults:\nKey A = FFFFFFFFFFFF\nAccess bits = FF078069\nKey B = FFFFFFFFFFFF\n\n⚠️ This operation cannot be undone!",
+  "@messageAuthenticateTheTargetCardWithTheDump": {
+    "description": "dump_viewer_page: Authenticate the target card with the dump keys,\nthen zero each data block.\n\nTrailers will be reset to defaults:\nKey A = FFFFFFFFFFFF\nAccess bits = FF078069\nKey B = FFFFFFFFFFFF\n\n⚠️ This operation cannot be undone!"
+  },
+  "messageBlocksToClear": "Blocks to clear: {value} ({value2})",
+  "@messageBlocksToClear": {
+    "description": "dump_viewer_page: Blocks to clear: {value} ({value2})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageSkipBlock0": "skip block 0",
+  "@messageSkipBlock0": {
+    "description": "dump_viewer_page: skip block 0"
+  },
+  "messageIncludeBlock0": "include block 0",
+  "@messageIncludeBlock0": {
+    "description": "dump_viewer_page: include block 0"
+  },
+  "messageStartClearing": "Start clearing",
+  "@messageStartClearing": {
+    "description": "dump_viewer_page: Start clearing"
+  },
+  "messageWriteCuidBlockByBlock": "Write CUID block by block",
+  "@messageWriteCuidBlockByBlock": {
+    "description": "dump_viewer_page: Write CUID block by block"
+  },
+  "messageAuthenticateTheTargetCardWithTheDump2": "Authenticate the target card with the dump keys,\nthen write the dump block by block.\n\n✅ Data blocks: write original dump data.\n✅ Trailers: write complete dump trailer data\n    (Key A + access bits + Key B).\n\n💡 Use when a CUID / standard card has known keys\n   and its data needs to be replaced.",
+  "@messageAuthenticateTheTargetCardWithTheDump2": {
+    "description": "dump_viewer_page: Authenticate the target card with the dump keys,\nthen write the dump block by block.\n\n✅ Data blocks: write original dump data.\n✅ Trailers: write complete dump trailer data\n    (Key A + access bits + Key B).\n\n💡 Use when a CUID / standard card has known keys\n   and its data needs to be replaced."
+  },
+  "messageBlocksToWrite": "Blocks to write: {value} ({value2}, {value3})",
+  "@messageBlocksToWrite": {
+    "description": "dump_viewer_page: Blocks to write: {value} ({value2}, {value3})",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      }
+    }
+  },
+  "messageIncludeTrailers": "include trailers",
+  "@messageIncludeTrailers": {
+    "description": "dump_viewer_page: include trailers"
+  },
+  "messageSkipTrailers": "skip trailers",
+  "@messageSkipTrailers": {
+    "description": "dump_viewer_page: skip trailers"
+  },
+  "messageStartWriting": "Start writing",
+  "@messageStartWriting": {
+    "description": "dump_viewer_page: Start writing"
+  },
+  "messageAuthenticateWithTheDumpKeysThenWrite": "Authenticate with the dump keys,\nthen write all blocks in sector {value} to the target card.\n\n{value2}  Authentication key: Key {value3}",
+  "@messageAuthenticateWithTheDumpKeysThenWrite": {
+    "description": "dump_viewer_page: Authenticate with the dump keys,\nthen write all blocks in sector {value} to the target card.\n\n{value2}  Authentication key: Key {value3}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      }
+    }
+  },
+  "messageIncludeTrailers2": "Include trailers",
+  "@messageIncludeTrailers2": {
+    "description": "dump_viewer_page: Include trailers"
+  },
+  "messageExcludeTrailers": "Exclude trailers",
+  "@messageExcludeTrailers": {
+    "description": "dump_viewer_page: Exclude trailers"
+  },
+  "messageInformation": "Information",
+  "@messageInformation": {
+    "description": "hf_14b_page: Information"
+  },
+  "messageReadWrite": "Read / write",
+  "@messageReadWrite": {
+    "description": "hf_14b_page: Read / write"
+  },
+  "messageReader": "Reader",
+  "@messageReader": {
+    "description": "hf_14b_page: Reader"
+  },
+  "messageReadA14443BCard": "Read a 14443-B card",
+  "@messageReadA14443BCard": {
+    "description": "hf_14b_page: Read a 14443-B card"
+  },
+  "messageTagInformation": "Tag information",
+  "@messageTagInformation": {
+    "description": "hf_14b_page: Tag information"
+  },
+  "messageReadTagDetails": "Read tag details",
+  "@messageReadTagDetails": {
+    "description": "hf_14b_page: Read tag details"
+  },
+  "messageSniff": "Sniff",
+  "@messageSniff": {
+    "description": "hf_14b_page: Sniff"
+  },
+  "messageCapture14443BCommunication": "Capture 14443-B communication",
+  "@messageCapture14443BCommunication": {
+    "description": "hf_14b_page: Capture 14443-B communication"
+  },
+  "messageDump": "Dump",
+  "@messageDump": {
+    "description": "hf_14b_page: Dump"
+  },
+  "messageReadAllData": "Read all data",
+  "@messageReadAllData": {
+    "description": "hf_14b_page: Read all data"
+  },
+  "messageReadNdefData": "Read NDEF data",
+  "@messageReadNdefData": {
+    "description": "hf_14b_page: Read NDEF data"
+  },
+  "messageBlockOperations": "Block operations",
+  "@messageBlockOperations": {
+    "description": "hf_14b_page: Block operations"
+  },
+  "messageBlockNumber": "Block number",
+  "@messageBlockNumber": {
+    "description": "hf_14b_page: Block number"
+  },
+  "messageReadBlock": "Read block",
+  "@messageReadBlock": {
+    "description": "hf_14b_page: Read block"
+  },
+  "messageWriteDataHex": "Write data (hex)",
+  "@messageWriteDataHex": {
+    "description": "hf_14b_page: Write data (hex)"
+  },
+  "messageWriteBlock": "Write block",
+  "@messageWriteBlock": {
+    "description": "hf_14b_page: Write block"
+  },
+  "messageRawCommand": "Raw command",
+  "@messageRawCommand": {
+    "description": "hf_14b_page: Raw command"
+  },
+  "messageRawHexData": "Raw hex data",
+  "@messageRawHexData": {
+    "description": "hf_14b_page: Raw hex data"
+  },
+  "messageSimulateCard": "Simulate card",
+  "@messageSimulateCard": {
+    "description": "hf_14b_page: Simulate card"
+  },
+  "messageSimulateA14443BTag": "Simulate a 14443-B tag",
+  "@messageSimulateA14443BTag": {
+    "description": "hf_14b_page: Simulate a 14443-B tag"
+  },
+  "messageAutomaticallyReadIso15693": "Automatically read ISO 15693",
+  "@messageAutomaticallyReadIso15693": {
+    "description": "hf_15_page: Automatically read ISO 15693"
+  },
+  "messageReadBasicTagInformation": "Read basic tag information",
+  "@messageReadBasicTagInformation": {
+    "description": "hf_15_page: Read basic tag information"
+  },
+  "messageDumpCard": "Dump card",
+  "@messageDumpCard": {
+    "description": "hf_15_page: Dump card"
+  },
+  "messageEraseCard": "Erase card",
+  "@messageEraseCard": {
+    "description": "hf_15_page: Erase card"
+  },
+  "messageClearCardData": "Clear card data",
+  "@messageClearCardData": {
+    "description": "hf_15_page: Clear card data"
+  },
+  "messageConfirmErase": "Confirm erase",
+  "@messageConfirmErase": {
+    "description": "hf_15_page: Confirm erase"
+  },
+  "messageThisOperationCannotBeUndone": "This operation cannot be undone!",
+  "@messageThisOperationCannotBeUndone": {
+    "description": "hf_15_page: This operation cannot be undone!"
+  },
+  "messageWriteData4ByteHex": "Write data (4-byte hex)",
+  "@messageWriteData4ByteHex": {
+    "description": "hf_15_page: Write data (4-byte hex)"
+  },
+  "messageFindAfi": "Find AFI",
+  "@messageFindAfi": {
+    "description": "hf_15_page: Find AFI"
+  },
+  "messageScanApplicationFamilyIdentifiers": "Scan application family identifiers",
+  "@messageScanApplicationFamilyIdentifiers": {
+    "description": "hf_15_page: Scan application family identifiers"
+  },
+  "messageSimulateAnIso15693Tag": "Simulate an ISO 15693 tag",
+  "@messageSimulateAnIso15693Tag": {
+    "description": "hf_15_page: Simulate an ISO 15693 tag"
+  },
+  "messageSniffCommunication": "Sniff communication",
+  "@messageSniffCommunication": {
+    "description": "hf_15_page: Sniff communication"
+  },
+  "messageCaptureReaderCommunication": "Capture reader communication",
+  "@messageCaptureReaderCommunication": {
+    "description": "hf_15_page: Capture reader communication"
+  },
+  "messageSetUid": "Set UID",
+  "@messageSetUid": {
+    "description": "hf_15_page: Set UID"
+  },
+  "messageUid8ByteHex": "UID (8-byte hex)",
+  "@messageUid8ByteHex": {
+    "description": "hf_15_page: UID (8-byte hex)"
+  },
+  "messageConfirm": "Confirm",
+  "@messageConfirm": {
+    "description": "hf_15_page: Confirm"
+  },
+  "messageSearch": "Search",
+  "@messageSearch": {
+    "description": "hf_emv_page: Search"
+  },
+  "messageSearchForEmvCards": "Search for EMV cards",
+  "@messageSearchForEmvCards": {
+    "description": "hf_emv_page: Search for EMV cards"
+  },
+  "messageSelectPpseApplication": "Select PPSE application",
+  "@messageSelectPpseApplication": {
+    "description": "hf_emv_page: Select PPSE application"
+  },
+  "messageExecuteTransaction": "Execute transaction",
+  "@messageExecuteTransaction": {
+    "description": "hf_emv_page: Execute transaction"
+  },
+  "messageSimulateTheEmvTransactionFlow": "Simulate the EMV transaction flow",
+  "@messageSimulateTheEmvTransactionFlow": {
+    "description": "hf_emv_page: Simulate the EMV transaction flow"
+  },
+  "messageTest": "Test",
+  "@messageTest": {
+    "description": "hf_emv_page: Test"
+  },
+  "messageEmvSelfTest": "EMV self-test",
+  "@messageEmvSelfTest": {
+    "description": "hf_emv_page: EMV self-test"
+  },
+  "messageReadAFelicaCard": "Read a FeliCa card",
+  "@messageReadAFelicaCard": {
+    "description": "hf_felica_page: Read a FeliCa card"
+  },
+  "messageGetFelicaDetails": "Get FeliCa details",
+  "@messageGetFelicaDetails": {
+    "description": "hf_felica_page: Get FeliCa details"
+  },
+  "messageDumpCardData": "Dump card data",
+  "@messageDumpCardData": {
+    "description": "hf_felica_page: Dump card data"
+  },
+  "messageLiteDump": "Lite dump",
+  "@messageLiteDump": {
+    "description": "hf_felica_page: Lite dump"
+  },
+  "messageDumpFelicaLite": "Dump FeliCa Lite",
+  "@messageDumpFelicaLite": {
+    "description": "hf_felica_page: Dump FeliCa Lite"
+  },
+  "messageCaptureFelicaCommunication": "Capture FeliCa communication",
+  "@messageCaptureFelicaCommunication": {
+    "description": "hf_felica_page: Capture FeliCa communication"
+  },
+  "messageScServiceCode": "SC (service code)",
+  "@messageScServiceCode": {
+    "description": "hf_felica_page: SC (service code)"
+  },
+  "messageBlBlockNumber": "BL (block number)",
+  "@messageBlBlockNumber": {
+    "description": "hf_felica_page: BL (block number)"
+  },
+  "messageReadFidoInformation": "Read FIDO information",
+  "@messageReadFidoInformation": {
+    "description": "hf_fido_page: Read FIDO information"
+  },
+  "messageRegister": "Register",
+  "@messageRegister": {
+    "description": "hf_fido_page: Register"
+  },
+  "messageFido2Registration": "FIDO2 registration",
+  "@messageFido2Registration": {
+    "description": "hf_fido_page: FIDO2 registration"
+  },
+  "messageAuthenticate": "Authenticate",
+  "@messageAuthenticate": {
+    "description": "hf_fido_page: Authenticate"
+  },
+  "messageFido2Authentication": "FIDO2 authentication",
+  "@messageFido2Authentication": {
+    "description": "hf_fido_page: FIDO2 authentication"
+  },
+  "messageList": "List",
+  "@messageList": {
+    "description": "hf_fido_page: List"
+  },
+  "messageListFidoCommunication": "List FIDO communication",
+  "@messageListFidoCommunication": {
+    "description": "hf_fido_page: List FIDO communication"
+  },
+  "messageKeyRecovery": "Key recovery",
+  "@messageKeyRecovery": {
+    "description": "hf_iclass_page: Key recovery"
+  },
+  "messageEmulator": "Emulator",
+  "@messageEmulator": {
+    "description": "hf_iclass_page: Emulator"
+  },
+  "messageGetInformation": "Get information",
+  "@messageGetInformation": {
+    "description": "hf_iclass_page: Get information"
+  },
+  "messageReadAnIclassTag": "Read an iCLASS tag",
+  "@messageReadAnIclassTag": {
+    "description": "hf_iclass_page: Read an iCLASS tag"
+  },
+  "messageReadCard": "Read card",
+  "@messageReadCard": {
+    "description": "hf_iclass_page: Read card"
+  },
+  "messageReaderMode": "Reader mode",
+  "@messageReaderMode": {
+    "description": "hf_iclass_page: Reader mode"
+  },
+  "messageDumpAllBlocksToAFile": "Dump all blocks to a file",
+  "@messageDumpAllBlocksToAFile": {
+    "description": "hf_iclass_page: Dump all blocks to a file"
+  },
+  "messageKey8ByteHex": "Key (8-byte hex)",
+  "@messageKey8ByteHex": {
+    "description": "hf_iclass_page: Key (8-byte hex)"
+  },
+  "messageWriteData8ByteHex": "Write data (8-byte hex)",
+  "@messageWriteData8ByteHex": {
+    "description": "hf_iclass_page: Write data (8-byte hex)"
+  },
+  "messageCheckKeys": "Check keys",
+  "@messageCheckKeys": {
+    "description": "hf_iclass_page: Check keys"
+  },
+  "messageCheckCommonDefaultKeys": "Check common default keys",
+  "@messageCheckCommonDefaultKeys": {
+    "description": "hf_iclass_page: Check common default keys"
+  },
+  "messageLoclassAttack": "Loclass attack",
+  "@messageLoclassAttack": {
+    "description": "hf_iclass_page: Loclass attack"
+  },
+  "messageRecoverIclassKeysOffline": "Recover iCLASS keys offline",
+  "@messageRecoverIclassKeysOffline": {
+    "description": "hf_iclass_page: Recover iCLASS keys offline"
+  },
+  "messageCaptureCardReaderCommunication": "Capture card / reader communication",
+  "@messageCaptureCardReaderCommunication": {
+    "description": "hf_iclass_page: Capture card / reader communication"
+  },
+  "messageEmulatorOperations": "Emulator operations",
+  "@messageEmulatorOperations": {
+    "description": "hf_iclass_page: Emulator operations"
+  },
+  "messageFilePathOptional": "File path (optional)",
+  "@messageFilePathOptional": {
+    "description": "hf_iclass_page: File path (optional)"
+  },
+  "messageLeaveBlankToUseTheDefault": "Leave blank to use the default",
+  "@messageLeaveBlankToUseTheDefault": {
+    "description": "hf_iclass_page: Leave blank to use the default"
+  },
+  "messageLoadIntoEmulator": "Load into emulator",
+  "@messageLoadIntoEmulator": {
+    "description": "hf_iclass_page: Load into emulator"
+  },
+  "messageView": "View",
+  "@messageView": {
+    "description": "hf_iclass_page: View"
+  },
+  "messageSimulate": "Simulate",
+  "@messageSimulate": {
+    "description": "hf_iclass_page: Simulate"
+  },
+  "messageReadALegicTag": "Read a Legic tag",
+  "@messageReadALegicTag": {
+    "description": "hf_legic_page: Read a Legic tag"
+  },
+  "messageDumpAllData": "Dump all data",
+  "@messageDumpAllData": {
+    "description": "hf_legic_page: Dump all data"
+  },
+  "messageErase": "Erase",
+  "@messageErase": {
+    "description": "hf_legic_page: Erase"
+  },
+  "messageSimulateALegicTag": "Simulate a Legic tag",
+  "@messageSimulateALegicTag": {
+    "description": "hf_legic_page: Simulate a Legic tag"
+  },
+  "messageReadWriteOperations": "Read / write operations",
+  "@messageReadWriteOperations": {
+    "description": "hf_legic_page: Read / write operations"
+  },
+  "messageOffset": "Offset",
+  "@messageOffset": {
+    "description": "hf_legic_page: Offset"
+  },
+  "messageLength": "Length",
+  "@messageLength": {
+    "description": "hf_legic_page: Length"
+  },
+  "messageRead": "Read",
+  "@messageRead": {
+    "description": "hf_legic_page: Read"
+  },
+  "messageWrite": "Write",
+  "@messageWrite": {
+    "description": "hf_legic_page: Write"
+  },
+  "messageApply": "Apply",
+  "@messageApply": {
+    "description": "Command card editor action that applies edits (verb)."
+  },
+  "desfireApplicationsTab": "Applications",
+  "@desfireApplicationsTab": {
+    "description": "DESFire tab for listing and selecting applications (noun), not the Apply action."
+  },
+  "messageFiles": "Files",
+  "@messageFiles": {
+    "description": "hf_mfdes_page: Files"
+  },
+  "messageManagement": "Management",
+  "@messageManagement": {
+    "description": "hf_mfdes_page: Management"
+  },
+  "messageDetect": "Detect",
+  "@messageDetect": {
+    "description": "hf_mfdes_page: Detect"
+  },
+  "messageDetectADesfireCard": "Detect a DESFire card",
+  "@messageDetectADesfireCard": {
+    "description": "hf_mfdes_page: Detect a DESFire card"
+  },
+  "messageReadBasicCardInformation": "Read basic card information",
+  "@messageReadBasicCardInformation": {
+    "description": "hf_mfdes_page: Read basic card information"
+  },
+  "messageGetUid": "Get UID",
+  "@messageGetUid": {
+    "description": "hf_mfdes_page: Get UID"
+  },
+  "messageGetCardUid": "Get card UID",
+  "@messageGetCardUid": {
+    "description": "hf_mfdes_page: Get card UID"
+  },
+  "messageFreeMemory": "Free memory",
+  "@messageFreeMemory": {
+    "description": "hf_mfdes_page: Free memory"
+  },
+  "messageViewAvailableMemory": "View available memory",
+  "@messageViewAvailableMemory": {
+    "description": "hf_mfdes_page: View available memory"
+  },
+  "messageCheckDefaultKeys": "Check default keys",
+  "@messageCheckDefaultKeys": {
+    "description": "hf_mfdes_page: Check default keys"
+  },
+  "messageViewApplicationDirectory": "View application directory",
+  "@messageViewApplicationDirectory": {
+    "description": "hf_mfdes_page: View application directory"
+  },
+  "messageListAids": "List AIDs",
+  "@messageListAids": {
+    "description": "hf_mfdes_page: List AIDs"
+  },
+  "messageListApplications": "List applications",
+  "@messageListApplications": {
+    "description": "hf_mfdes_page: List applications"
+  },
+  "messageSelectApplication": "Select application",
+  "@messageSelectApplication": {
+    "description": "hf_mfdes_page: Select application"
+  },
+  "messageAid3ByteHex": "AID (3-byte hex)",
+  "@messageAid3ByteHex": {
+    "description": "hf_mfdes_page: AID (3-byte hex)"
+  },
+  "messageSelect": "Select",
+  "@messageSelect": {
+    "description": "hf_mfdes_page: Select"
+  },
+  "messageListFiles": "List files",
+  "@messageListFiles": {
+    "description": "hf_mfdes_page: List files"
+  },
+  "messageFileDetails": "File details",
+  "@messageFileDetails": {
+    "description": "hf_mfdes_page: File details"
+  },
+  "messageDumpApplication": "Dump application",
+  "@messageDumpApplication": {
+    "description": "hf_mfdes_page: Dump application"
+  },
+  "messageFileReadWrite": "File read / write",
+  "@messageFileReadWrite": {
+    "description": "hf_mfdes_page: File read / write"
+  },
+  "messageKeyNumber": "Key number",
+  "@messageKeyNumber": {
+    "description": "hf_mfdes_page: Key number"
+  },
+  "messageAlgorithm": "Algorithm",
+  "@messageAlgorithm": {
+    "description": "hf_mfdes_page: Algorithm"
+  },
+  "messageKeyHex": "Key (hex)",
+  "@messageKeyHex": {
+    "description": "hf_mfdes_page: Key (hex)"
+  },
+  "messageKeySettings": "Key settings",
+  "@messageKeySettings": {
+    "description": "hf_mfdes_page: Key settings"
+  },
+  "messageGetKeySettings": "Get key settings",
+  "@messageGetKeySettings": {
+    "description": "hf_mfdes_page: Get key settings"
+  },
+  "messageFormatPicc": "Format PICC",
+  "@messageFormatPicc": {
+    "description": "hf_mfdes_page: Format PICC"
+  },
+  "messageDeleteAllApplicationsAndData": "Delete all applications and data",
+  "@messageDeleteAllApplicationsAndData": {
+    "description": "hf_mfdes_page: Delete all applications and data"
+  },
+  "messageConfirmFormat": "Confirm format",
+  "@messageConfirmFormat": {
+    "description": "hf_mfdes_page: Confirm format"
+  },
+  "messageThisWillDeleteAllApplicationsAndData": "This will delete all applications and data. This operation cannot be undone!",
+  "@messageThisWillDeleteAllApplicationsAndData": {
+    "description": "hf_mfdes_page: This will delete all applications and data. This operation cannot be undone!"
+  },
+  "messageReadAnMfuNtagTag": "Read an MFU / NTAG tag",
+  "@messageReadAnMfuNtagTag": {
+    "description": "hf_mfu_page: Read an MFU / NTAG tag"
+  },
+  "messageReadAllDataToAFile": "Read all data to a file",
+  "@messageReadAllDataToAFile": {
+    "description": "hf_mfu_page: Read all data to a file"
+  },
+  "messagePasswordAuthentication": "Password authentication",
+  "@messagePasswordAuthentication": {
+    "description": "hf_mfu_page: Password authentication"
+  },
+  "messagePassword4ByteHex": "Password (4-byte hex)",
+  "@messagePassword4ByteHex": {
+    "description": "hf_mfu_page: Password (4-byte hex)"
+  },
+  "messageReadNdef": "Read NDEF",
+  "@messageReadNdef": {
+    "description": "hf_mfu_page: Read NDEF"
+  },
+  "messageReadNfcDataExchangeFormat": "Read NFC Data Exchange Format",
+  "@messageReadNfcDataExchangeFormat": {
+    "description": "hf_mfu_page: Read NFC Data Exchange Format"
+  },
+  "messageSaveEmulator": "Save emulator",
+  "@messageSaveEmulator": {
+    "description": "hf_mfu_page: Save emulator"
+  },
+  "messageGenerateKeys": "Generate keys",
+  "@messageGenerateKeys": {
+    "description": "hf_mfu_page: Generate keys"
+  },
+  "messageKeygenDeriveKeysFromUid": "keygen — derive keys from UID",
+  "@messageKeygenDeriveKeysFromUid": {
+    "description": "hf_mfu_page: keygen — derive keys from UID"
+  },
+  "messageDerivePassword": "Derive password",
+  "@messageDerivePassword": {
+    "description": "hf_mfu_page: Derive password"
+  },
+  "messagePwdgenDeriveTheNtagPassword": "pwdgen — derive the NTAG password",
+  "@messagePwdgenDeriveTheNtagPassword": {
+    "description": "hf_mfu_page: pwdgen — derive the NTAG password"
+  },
+  "messageKeyCheck": "Key check",
+  "@messageKeyCheck": {
+    "description": "hf_mfu_page: Key check"
+  },
+  "messageCchkCheckCommonKeys": "cchk — check common keys",
+  "@messageCchkCheckCommonKeys": {
+    "description": "hf_mfu_page: cchk — check common keys"
+  },
+  "messageUid7ByteHex": "UID (7-byte hex)",
+  "@messageUid7ByteHex": {
+    "description": "hf_mfu_page: UID (7-byte hex)"
+  },
+  "messageReadSeosInformation": "Read SEOS information",
+  "@messageReadSeosInformation": {
+    "description": "hf_seos_page: Read SEOS information"
+  },
+  "messageReadPacsData": "Read PACS data",
+  "@messageReadPacsData": {
+    "description": "hf_seos_page: Read PACS data"
+  },
+  "messageSimulateASeosCard": "Simulate a SEOS card",
+  "@messageSimulateASeosCard": {
+    "description": "hf_seos_page: Simulate a SEOS card"
+  },
+  "messageHfSearch": "HF search",
+  "@messageHfSearch": {
+    "description": "hf_sniff_page: HF search"
+  },
+  "messageSearchForHighFrequencyTags": "Search for high-frequency tags",
+  "@messageSearchForHighFrequencyTags": {
+    "description": "hf_sniff_page: Search for high-frequency tags"
+  },
+  "messageHfSniff": "HF sniff",
+  "@messageHfSniff": {
+    "description": "hf_sniff_page: HF sniff"
+  },
+  "messageCaptureHighFrequencyCommunication": "Capture high-frequency communication",
+  "@messageCaptureHighFrequencyCommunication": {
+    "description": "hf_sniff_page: Capture high-frequency communication"
+  },
+  "messageHfTuning": "HF tuning",
+  "@messageHfTuning": {
+    "description": "hf_sniff_page: HF tuning"
+  },
+  "messageTuneTheHfAntenna": "Tune the HF antenna",
+  "@messageTuneTheHfAntenna": {
+    "description": "hf_sniff_page: Tune the HF antenna"
+  },
+  "messageProtocolList": "Protocol list",
+  "@messageProtocolList": {
+    "description": "hf_sniff_page: Protocol list"
+  },
+  "messageProtocol": "Protocol",
+  "@messageProtocol": {
+    "description": "hf_sniff_page: Protocol"
+  },
+  "messageDecodeList": "Decode list",
+  "@messageDecodeList": {
+    "description": "hf_sniff_page: Decode list"
+  },
+  "messageReadAnAwidCard": "Read an AWID card",
+  "@messageReadAnAwidCard": {
+    "description": "lf_awid_page: Read an AWID card"
+  },
+  "messageCloneSimulate": "Clone / simulate",
+  "@messageCloneSimulate": {
+    "description": "lf_awid_page: Clone / simulate"
+  },
+  "messageFcFacilityCode": "FC (facility code)",
+  "@messageFcFacilityCode": {
+    "description": "lf_awid_page: FC (facility code)"
+  },
+  "messageCnCardNumber": "CN (card number)",
+  "@messageCnCardNumber": {
+    "description": "lf_awid_page: CN (card number)"
+  },
+  "messageClone": "Clone",
+  "@messageClone": {
+    "description": "lf_awid_page: Clone"
+  },
+  "messageReadAnFdxBTag": "Read an FDX-B tag",
+  "@messageReadAnFdxBTag": {
+    "description": "lf_fdxb_page: Read an FDX-B tag"
+  },
+  "messageRawData2": "Raw data",
+  "@messageRawData2": {
+    "description": "lf_fdxb_page: Raw data"
+  },
+  "messageCloneToT55xx": "Clone to T55xx",
+  "@messageCloneToT55xx": {
+    "description": "lf_fdxb_page: Clone to T55xx"
+  },
+  "messageCloneSimulate2": "Clone / simulate",
+  "@messageCloneSimulate2": {
+    "description": "lf_hid_page: Clone / simulate"
+  },
+  "messageReadHidCard": "Read HID card",
+  "@messageReadHidCard": {
+    "description": "lf_hid_page: Read HID card"
+  },
+  "messageReadAHidProxCard": "Read a HID Prox card",
+  "@messageReadAHidProxCard": {
+    "description": "lf_hid_page: Read a HID Prox card"
+  },
+  "messageDemodulateSignal": "Demodulate signal",
+  "@messageDemodulateSignal": {
+    "description": "lf_hid_page: Demodulate signal"
+  },
+  "messageDemodulateTheHidLfSignal": "Demodulate the HID LF signal",
+  "@messageDemodulateTheHidLfSignal": {
+    "description": "lf_hid_page: Demodulate the HID LF signal"
+  },
+  "messageWiegandData": "Wiegand data",
+  "@messageWiegandData": {
+    "description": "lf_hid_page: Wiegand data"
+  },
+  "messageForExample2006ec0c86": "For example: 2006ec0c86",
+  "@messageForExample2006ec0c86": {
+    "description": "lf_hid_page: For example: 2006ec0c86"
+  },
+  "hidReaderBruteForceTab": "Reader brute-force",
+  "@hidReaderBruteForceTab": {
+    "description": "HID Prox tab for trying facility-code/card-number combinations against a reader, not recovering cryptographic keys."
+  },
+  "hidReaderBruteForceTitle": "Brute-force facility codes / card numbers",
+  "@hidReaderBruteForceTitle": {
+    "description": "HID Prox reader brute-force form heading. This enumerates credential combinations, not cryptographic keys."
+  },
+  "messageFcOptional": "FC (optional)",
+  "@messageFcOptional": {
+    "description": "lf_hid_page: FC (optional)"
+  },
+  "messageLeaveBlankToTryAllValues": "Leave blank to try all values",
+  "@messageLeaveBlankToTryAllValues": {
+    "description": "lf_hid_page: Leave blank to try all values"
+  },
+  "hidStartBruteForce": "Start brute-force",
+  "@hidStartBruteForce": {
+    "description": "Start the HID Prox reader brute-force operation (lf hid brute), not key recovery."
+  },
+  "messageReadAHitagCard": "Read a Hitag card",
+  "@messageReadAHitagCard": {
+    "description": "lf_hitag_page: Read a Hitag card"
+  },
+  "messageGetTagDetails": "Get tag details",
+  "@messageGetTagDetails": {
+    "description": "lf_hitag_page: Get tag details"
+  },
+  "messageCaptureCommunicationData": "Capture communication data",
+  "@messageCaptureCommunicationData": {
+    "description": "lf_hitag_page: Capture communication data"
+  },
+  "messageCheckCommonKeys": "Check common keys",
+  "@messageCheckCommonKeys": {
+    "description": "lf_hitag_page: Check common keys"
+  },
+  "messageKeyRecoveryAttack": "Key recovery attack",
+  "@messageKeyRecoveryAttack": {
+    "description": "lf_hitag_page: Key recovery attack"
+  },
+  "messageSimulateAHitagTag": "Simulate a Hitag tag",
+  "@messageSimulateAHitagTag": {
+    "description": "lf_hitag_page: Simulate a Hitag tag"
+  },
+  "messageReadAnIndalaCard": "Read an Indala card",
+  "@messageReadAnIndalaCard": {
+    "description": "lf_indala_page: Read an Indala card"
+  },
+  "messageReadAnIoproxCard": "Read an ioProx card",
+  "@messageReadAnIoproxCard": {
+    "description": "lf_io_page: Read an ioProx card"
+  },
+  "messageReadAKeriCard": "Read a Keri card",
+  "@messageReadAKeriCard": {
+    "description": "lf_keri_page: Read a Keri card"
+  },
+  "messageGeneral": "General",
+  "@messageGeneral": {
+    "description": "lf_page: General"
+  },
+  "messageAutomaticallyDetectLowFrequencyTags": "Automatically detect low-frequency tags",
+  "@messageAutomaticallyDetectLowFrequencyTags": {
+    "description": "lf_page: Automatically detect low-frequency tags"
+  },
+  "messageReadTheRawLowFrequencySignal": "Read the raw low-frequency signal",
+  "@messageReadTheRawLowFrequencySignal": {
+    "description": "lf_page: Read the raw low-frequency signal"
+  },
+  "messageLfSniff": "LF sniff",
+  "@messageLfSniff": {
+    "description": "lf_page: LF sniff"
+  },
+  "messageCaptureLowFrequencyCommunication": "Capture low-frequency communication",
+  "@messageCaptureLowFrequencyCommunication": {
+    "description": "lf_page: Capture low-frequency communication"
+  },
+  "messageCheckAntennaTuning": "Check antenna tuning",
+  "@messageCheckAntennaTuning": {
+    "description": "lf_page: Check antenna tuning"
+  },
+  "messageReadEm410x": "Read EM410x",
+  "@messageReadEm410x": {
+    "description": "lf_page: Read EM410x"
+  },
+  "messageReadTheEm4100TagId": "Read the EM4100 tag ID",
+  "@messageReadTheEm4100TagId": {
+    "description": "lf_page: Read the EM4100 tag ID"
+  },
+  "messageCloneEm410x": "Clone EM410x",
+  "@messageCloneEm410x": {
+    "description": "lf_page: Clone EM410x"
+  },
+  "messageTagId10HexDigits": "Tag ID (10 hex digits)",
+  "@messageTagId10HexDigits": {
+    "description": "lf_page: Tag ID (10 hex digits)"
+  },
+  "messageForExample0102030405": "For example: 0102030405",
+  "@messageForExample0102030405": {
+    "description": "lf_page: For example: 0102030405"
+  },
+  "messageIdMustContain10HexDigits": "ID must contain 10 hex digits",
+  "@messageIdMustContain10HexDigits": {
+    "description": "lf_page: ID must contain 10 hex digits"
+  },
+  "messageDetectT55xxChipConfiguration": "Detect T55xx chip configuration",
+  "@messageDetectT55xxChipConfiguration": {
+    "description": "lf_page: Detect T55xx chip configuration"
+  },
+  "messageShowT55xxConfiguration": "Show T55xx configuration",
+  "@messageShowT55xxConfiguration": {
+    "description": "lf_page: Show T55xx configuration"
+  },
+  "messageDumpAllT55xxBlocks": "Dump all T55xx blocks",
+  "@messageDumpAllT55xxBlocks": {
+    "description": "lf_page: Dump all T55xx blocks"
+  },
+  "messageReadAPyramidCard": "Read a Pyramid card",
+  "@messageReadAPyramidCard": {
+    "description": "lf_pyramid_page: Read a Pyramid card"
+  },
+  "messageCardType2": "Card type:",
+  "@messageCardType2": {
+    "description": "mifare_page: Card type:"
+  },
+  "messageQuickActions": "Quick actions",
+  "@messageQuickActions": {
+    "description": "mifare_page: Quick actions"
+  },
+  "messageKeyRecoveryAttacks": "Key recovery attacks",
+  "@messageKeyRecoveryAttacks": {
+    "description": "mifare_page: Key recovery attacks"
+  },
+  "messageReadWriteBlocks": "Read / write blocks",
+  "@messageReadWriteBlocks": {
+    "description": "mifare_page: Read / write blocks"
+  },
+  "messageMagicCards": "Magic cards",
+  "@messageMagicCards": {
+    "description": "mifare_page: Magic cards"
+  },
+  "messageDumpRestoreParametersOptional": "Dump / restore parameters (optional)",
+  "@messageDumpRestoreParametersOptional": {
+    "description": "mifare_page: Dump / restore parameters (optional)"
+  },
+  "messageKeyFileKeysOptional": "Key file --keys (optional)",
+  "@messageKeyFileKeysOptional": {
+    "description": "mifare_page: Key file --keys (optional)"
+  },
+  "messageLeaveBlankToUseThePm3Default": "Leave blank to use the PM3 default",
+  "@messageLeaveBlankToUseThePm3Default": {
+    "description": "mifare_page: Leave blank to use the PM3 default"
+  },
+  "messageDumpFileFileOptional": "Dump file --file (optional)",
+  "@messageDumpFileFileOptional": {
+    "description": "mifare_page: Dump file --file (optional)"
+  },
+  "messageDumpOutputFileRestoreInputFile": "dump: output file / restore: input file",
+  "@messageDumpOutputFileRestoreInputFile": {
+    "description": "mifare_page: dump: output file / restore: input file"
+  },
+  "messageSelectKeyFile": "Select key file",
+  "@messageSelectKeyFile": {
+    "description": "mifare_page: Select key file"
+  },
+  "messageSelectDumpFile": "Select dump file",
+  "@messageSelectDumpFile": {
+    "description": "mifare_page: Select dump file"
+  },
+  "messageClearCustomSettings": "Clear custom settings",
+  "@messageClearCustomSettings": {
+    "description": "mifare_page: Clear custom settings"
+  },
+  "messageDefaultSourcesKeyDump": "Default sources: key={value}; dump={value2}",
+  "@messageDefaultSourcesKeyDump": {
+    "description": "mifare_page: Default sources: key={value}; dump={value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageDetectCard": "Detect card",
+  "@messageDetectCard": {
+    "description": "mifare_page: Detect card"
+  },
+  "messageScanHf14aTags": "Scan HF 14A tags",
+  "@messageScanHf14aTags": {
+    "description": "mifare_page: Scan HF 14A tags"
+  },
+  "messageCardInformation": "Card information",
+  "@messageCardInformation": {
+    "description": "mifare_page: Card information"
+  },
+  "messageGetDetailedCardInformation": "Get detailed card information",
+  "@messageGetDetailedCardInformation": {
+    "description": "mifare_page: Get detailed card information"
+  },
+  "messageAutomaticKeyRecovery": "Automatic key recovery",
+  "@messageAutomaticKeyRecovery": {
+    "description": "mifare_page: Automatic key recovery"
+  },
+  "messageReadAllSectorsToAFile": "Read all sectors to a file",
+  "@messageReadAllSectorsToAFile": {
+    "description": "mifare_page: Read all sectors to a file"
+  },
+  "messageRestoreCard": "Restore card",
+  "@messageRestoreCard": {
+    "description": "mifare_page: Restore card"
+  },
+  "messageWriteTheDumpBackToTheCard": "Write the dump back to the card",
+  "@messageWriteTheDumpBackToTheCard": {
+    "description": "mifare_page: Write the dump back to the card"
+  },
+  "messageSniff2": "Sniff",
+  "@messageSniff2": {
+    "description": "mifare_page: Sniff"
+  },
+  "messageCaptureCardCommunication": "Capture card communication",
+  "@messageCaptureCardCommunication": {
+    "description": "mifare_page: Capture card communication"
+  },
+  "messageMoreCardRecoveryDiagnosticsSeeCommandReference": "More card recovery / diagnostics (see command reference)",
+  "@messageMoreCardRecoveryDiagnosticsSeeCommandReference": {
+    "description": "mifare_page: More card recovery / diagnostics (see command reference)"
+  },
+  "messageCollectCuid": "Collect CUID",
+  "@messageCollectCuid": {
+    "description": "mifare_page: Collect CUID"
+  },
+  "messagePm3ScriptNameScriptRunName": "PM3 script name (script run <name>)",
+  "@messagePm3ScriptNameScriptRunName": {
+    "description": "mifare_page: PM3 script name (script run <name>)"
+  },
+  "messageForExampleMifareMfAutopwn": "For example: mifare/mf_autopwn",
+  "@messageForExampleMifareMfAutopwn": {
+    "description": "mifare_page: For example: mifare/mf_autopwn"
+  },
+  "messageListScripts": "List scripts",
+  "@messageListScripts": {
+    "description": "mifare_page: List scripts"
+  },
+  "messageRunScript": "Run script",
+  "@messageRunScript": {
+    "description": "mifare_page: Run script"
+  },
+  "messageKnownKey": "Known key",
+  "@messageKnownKey": {
+    "description": "mifare_page: Known key"
+  },
+  "messageTryDefaultKeysOnAllSectors": "Try default keys on all sectors",
+  "@messageTryDefaultKeysOnAllSectors": {
+    "description": "mifare_page: Try default keys on all sectors"
+  },
+  "messageNestedAttack": "Nested attack",
+  "@messageNestedAttack": {
+    "description": "mifare_page: Nested attack"
+  },
+  "messageUseAKnownKeyToFindOther": "Use a known key to find other keys",
+  "@messageUseAKnownKeyToFindOther": {
+    "description": "mifare_page: Use a known key to find other keys"
+  },
+  "messageForCardsWithStaticNonces": "For cards with static nonces",
+  "@messageForCardsWithStaticNonces": {
+    "description": "mifare_page: For cards with static nonces"
+  },
+  "messageAdvancedKeyRecovery": "Advanced key recovery",
+  "@messageAdvancedKeyRecovery": {
+    "description": "mifare_page: Advanced key recovery"
+  },
+  "messageNoKnownKeyRequired": "No known key required",
+  "@messageNoKnownKeyRequired": {
+    "description": "mifare_page: No known key required"
+  },
+  "messageReadDataFromOneBlock": "Read data from one block",
+  "@messageReadDataFromOneBlock": {
+    "description": "mifare_page: Read data from one block"
+  },
+  "messageWriteData": "Write data",
+  "@messageWriteData": {
+    "description": "mifare_page: Write data"
+  },
+  "messageData32HexDigits": "Data (32 hex digits)",
+  "@messageData32HexDigits": {
+    "description": "mifare_page: Data (32 hex digits)"
+  },
+  "messageForExample00000000000000000000000000000000": "For example: 00000000000000000000000000000000",
+  "@messageForExample00000000000000000000000000000000": {
+    "description": "mifare_page: For example: 00000000000000000000000000000000"
+  },
+  "messageMagicCardOperations": "Magic card operations",
+  "@messageMagicCardOperations": {
+    "description": "mifare_page: Magic card operations"
+  },
+  "messageTheseCommandsOnlyApplyToGen1aGen2": "These commands only apply to Gen1A / Gen2 (CUID) magic cards.\nWriting block 0 may damage a non-magic card!",
+  "@messageTheseCommandsOnlyApplyToGen1aGen2": {
+    "description": "mifare_page: These commands only apply to Gen1A / Gen2 (CUID) magic cards.\nWriting block 0 may damage a non-magic card!"
+  },
+  "messageReadBlock0": "Read block 0",
+  "@messageReadBlock0": {
+    "description": "mifare_page: Read block 0"
+  },
+  "messageReadManufacturerBlock": "Read manufacturer block",
+  "@messageReadManufacturerBlock": {
+    "description": "mifare_page: Read manufacturer block"
+  },
+  "messageRestoreFactoryDefaults": "Restore factory defaults",
+  "@messageRestoreFactoryDefaults": {
+    "description": "mifare_page: Restore factory defaults"
+  },
+  "messageEraseCard2": "Erase card?",
+  "@messageEraseCard2": {
+    "description": "mifare_page: Erase card?"
+  },
+  "messageThisWillResetAllBlocksAreYou": "This will reset all blocks. Are you sure?",
+  "@messageThisWillResetAllBlocksAreYou": {
+    "description": "mifare_page: This will reset all blocks. Are you sure?"
+  },
+  "messageLoadEmulator": "Load emulator",
+  "@messageLoadEmulator": {
+    "description": "mifare_page: Load emulator"
+  },
+  "messageLoadADumpIntoTheEmulator": "Load a dump into the emulator",
+  "@messageLoadADumpIntoTheEmulator": {
+    "description": "mifare_page: Load a dump into the emulator"
+  },
+  "messageNdefDecoding": "NDEF decoding",
+  "@messageNdefDecoding": {
+    "description": "nfc_page: NDEF decoding"
+  },
+  "messageListAvailableScripts": "List available scripts",
+  "@messageListAvailableScripts": {
+    "description": "script_page: List available scripts"
+  },
+  "messageScriptName": "Script name",
+  "@messageScriptName": {
+    "description": "script_page: Script name"
+  },
+  "messageForExampleHfMfAutopwn": "For example: hf_mf_autopwn",
+  "@messageForExampleHfMfAutopwn": {
+    "description": "script_page: For example: hf_mf_autopwn"
+  },
+  "messageRun": "Run",
+  "@messageRun": {
+    "description": "script_page: Run"
+  },
+  "messageHint": "Hint: {value}",
+  "@messageHint": {
+    "description": "terminal_page: Hint: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageClearTerminal": "Clear terminal",
+  "@messageClearTerminal": {
+    "description": "terminal_page: Clear terminal"
+  },
+  "messageListDecode": "List / decode",
+  "@messageListDecode": {
+    "description": "trace_page: List / decode"
+  },
+  "messageProtocolType": "Protocol type",
+  "@messageProtocolType": {
+    "description": "trace_page: Protocol type"
+  },
+  "messageDecodeList2": "Decode list",
+  "@messageDecodeList2": {
+    "description": "trace_page: Decode list"
+  },
+  "messageExtract": "Extract",
+  "@messageExtract": {
+    "description": "trace_page: Extract"
+  },
+  "messageExtractTraceData": "Extract trace data",
+  "@messageExtractTraceData": {
+    "description": "trace_page: Extract trace data"
+  },
+  "messageSpacesAreAllowedMeansUnknownClearThe": "Spaces are allowed; ? means unknown. Clear the field to remove the entry.",
+  "@messageSpacesAreAllowedMeansUnknownClearThe": {
+    "description": "command_card_editor: Spaces are allowed; ? means unknown. Clear the field to remove the entry."
+  },
+  "messageSaved": "Saved: {value}",
+  "@messageSaved": {
+    "description": "command_card_editor: Saved: {value}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageCommandResultsAreCollectedHereAutomaticallyClick": "Command results are collected here automatically. Click a key or block to edit it. Select “New card” before changing cards; ? means unknown.",
+  "@messageCommandResultsAreCollectedHereAutomaticallyClick": {
+    "description": "command_card_editor: Command results are collected here automatically. Click a key or block to edit it. Select “New card” before changing cards; ? means unknown."
+  },
+  "messageUidBlocksKeys": "{value} · UID {value2} · Blocks: {value3} · Keys: {value4}",
+  "@messageUidBlocksKeys": {
+    "description": "command_card_editor: {value} · UID {value2} · Blocks: {value3} · Keys: {value4}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      },
+      "value3": {
+        "type": "String"
+      },
+      "value4": {
+        "type": "String"
+      }
+    }
+  },
+  "messageNotIdentified": "Not identified",
+  "@messageNotIdentified": {
+    "description": "command_card_editor: Not identified"
+  },
+  "messageNewCardSelectCapacity": "New card / select capacity",
+  "@messageNewCardSelectCapacity": {
+    "description": "command_card_editor: New card / select capacity"
+  },
+  "messageNewCardClearTheCurrentDraft": "New {value} card (clear the current draft)",
+  "@messageNewCardClearTheCurrentDraft": {
+    "description": "command_card_editor: New {value} card (clear the current draft)",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "messageNewCardCapacity": "New card / capacity",
+  "@messageNewCardCapacity": {
+    "description": "command_card_editor: New card / capacity"
+  },
+  "messageOpenDraft": "Open draft",
+  "@messageOpenDraft": {
+    "description": "command_card_editor: Open draft"
+  },
+  "messageSaveDraft": "Save draft",
+  "@messageSaveDraft": {
+    "description": "command_card_editor: Save draft"
+  },
+  "messageExportKeyDictionary": "Export key dictionary",
+  "@messageExportKeyDictionary": {
+    "description": "command_card_editor: Export key dictionary"
+  },
+  "messageExportKeyBin2": "Export key BIN",
+  "@messageExportKeyBin2": {
+    "description": "command_card_editor: Export key BIN"
+  },
+  "messageReplaceDraftWithTheOpenFile": "Replace draft with the open file",
+  "@messageReplaceDraftWithTheOpenFile": {
+    "description": "command_card_editor: Replace draft with the open file"
+  },
+  "messageExportEml2": "Export EML",
+  "@messageExportEml2": {
+    "description": "command_card_editor: Export EML"
+  },
+  "messageExportBin2": "Export BIN",
+  "@messageExportBin2": {
+    "description": "command_card_editor: Export BIN"
+  },
+  "messageDirectCommand": "Direct command",
+  "@messageDirectCommand": {
+    "description": "command_card_editor: Direct command"
+  },
+  "messageForExampleHfMfChk1k": "For example: hf mf chk --1k",
+  "@messageForExampleHfMfChk1k": {
+    "description": "command_card_editor: For example: hf mf chk --1k"
+  },
+  "messageRunning": "Running",
+  "@messageRunning": {
+    "description": "command_card_editor: Running"
+  },
+  "messageExecute": "Execute",
+  "@messageExecute": {
+    "description": "command_card_editor: Execute"
+  },
+  "messageKeysTrailers": "Keys → trailers",
+  "@messageKeysTrailers": {
+    "description": "command_card_editor: Keys → trailers"
+  },
+  "messageTrailersKeys": "Trailers → keys",
+  "@messageTrailersKeys": {
+    "description": "command_card_editor: Trailers → keys"
+  },
+  "messageNotRead": "Not read",
+  "@messageNotRead": {
+    "description": "command_card_editor: Not read"
+  },
+  "messageSectorKey2": "Sector {value} · Key {value2}",
+  "@messageSectorKey2": {
+    "description": "command_card_editor: Sector {value} · Key {value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageBlock3": "Block {value}{value2}",
+  "@messageBlock3": {
+    "description": "command_card_editor: Block {value}{value2}",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "value2": {
+        "type": "String"
+      }
+    }
+  },
+  "messageTrailer2": " · Trailer",
+  "@messageTrailer2": {
+    "description": "command_card_editor:  · Trailer"
+  }
+}

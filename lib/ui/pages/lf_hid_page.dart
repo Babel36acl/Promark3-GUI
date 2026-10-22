@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class LfHidPage extends StatefulWidget {
   const LfHidPage({super.key});
@@ -63,16 +64,16 @@ class _LfHidPageState extends State<LfHidPage>
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TabBar(controller: _tabController, tabs: const [
-        Tab(text: '读取'),
-        Tab(text: '克隆/模拟'),
-        Tab(text: '破解'),
+      TabBar(controller: _tabController, tabs: [
+        Tab(text: context.l10n.messageRead),
+        Tab(text: context.l10n.messageCloneSimulate2),
+        Tab(text: context.l10n.hidReaderBruteForceTab),
       ]),
       Expanded(
           child: TabBarView(controller: _tabController, children: [
         _buildReadTab(),
         _buildCloneSimTab(),
-        _buildCrackTab(),
+        _buildBruteForceTab(),
       ])),
     ]);
   }
@@ -83,13 +84,13 @@ class _LfHidPageState extends State<LfHidPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取 HID 卡',
-              subtitle: '读取 HID Prox 卡片',
+              title: context.l10n.messageReadHidCard,
+              subtitle: context.l10n.messageReadAHidProxCard,
               icon: Icons.nfc,
               onTap: () => _execute(LfHidCmd.reader())),
           ActionCard(
-              title: '解调信号',
-              subtitle: '解调 HID 低频信号',
+              title: context.l10n.messageDemodulateSignal,
+              subtitle: context.l10n.messageDemodulateTheHidLfSignal,
               icon: Icons.radio,
               onTap: () => _execute(LfHidCmd.demod())),
         ],
@@ -115,13 +116,13 @@ class _LfHidPageState extends State<LfHidPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('克隆 / 模拟',
+                    Text(context.l10n.messageCloneSimulate,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Wiegand 数据',
-                        hintText: '例如: 2006ec0c86',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.messageWiegandData,
+                        hintText: context.l10n.messageForExample2006ec0c86,
                         prefixIcon: Icon(Icons.credit_card, size: 18),
                       ),
                       inputFormatters: [
@@ -139,13 +140,13 @@ class _LfHidPageState extends State<LfHidPage>
                               ? () => _execute(LfHidCmd.clone(_cardData))
                               : null,
                           icon: const Icon(Icons.copy, size: 18),
-                          label: const Text('克隆到 T55xx')),
+                          label: Text(context.l10n.messageCloneToT55xx)),
                       OutlinedButton.icon(
                           onPressed: _cardData.isNotEmpty
                               ? () => _execute(LfHidCmd.sim(_cardData))
                               : null,
                           icon: const Icon(Icons.play_arrow, size: 18),
-                          label: const Text('模拟')),
+                          label: Text(context.l10n.messageSimulate)),
                     ]),
                   ],
                 ))),
@@ -161,7 +162,7 @@ class _LfHidPageState extends State<LfHidPage>
     );
   }
 
-  Widget _buildCrackTab() {
+  Widget _buildBruteForceTab() {
     return SplitPageLayout(
       sideWidth: 320,
       side: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -171,13 +172,13 @@ class _LfHidPageState extends State<LfHidPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('暴力破解',
+                    Text(context.l10n.hidReaderBruteForceTitle,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 8),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'FC（可选）',
-                        hintText: '留空则遍历所有',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.messageFcOptional,
+                        hintText: context.l10n.messageLeaveBlankToTryAllValues,
                         prefixIcon: Icon(Icons.numbers, size: 18),
                       ),
                       keyboardType: TextInputType.number,
@@ -189,7 +190,7 @@ class _LfHidPageState extends State<LfHidPage>
                         onPressed: () => _execute(
                             LfHidCmd.brute(fc: _fc.isEmpty ? null : _fc)),
                         icon: const Icon(Icons.bolt, size: 18),
-                        label: const Text('开始破解')),
+                        label: Text(context.l10n.hidStartBruteForce)),
                   ],
                 ))),
       ]),

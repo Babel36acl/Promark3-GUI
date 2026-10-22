@@ -60,6 +60,8 @@ coverage/
 *.freezed.dart
 *.mocks.dart
 lib/generated_plugin_registrant.dart
+lib/l10n/app_localizations.dart
+lib/l10n/app_localizations_*.dart
 
 # OS
 Thumbs.db

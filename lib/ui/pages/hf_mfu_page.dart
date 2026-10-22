@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfMfuPage extends StatefulWidget {
   const HfMfuPage({super.key});
@@ -72,12 +73,12 @@ class _HfMfuPageState extends State<HfMfuPage>
       children: [
         TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: '信息'),
-            Tab(text: '读写'),
+          tabs: [
+            Tab(text: context.l10n.messageInformation),
+            Tab(text: context.l10n.messageReadWrite),
             Tab(text: 'NDEF'),
-            Tab(text: '模拟器'),
-            Tab(text: '工具'),
+            Tab(text: context.l10n.messageEmulator),
+            Tab(text: context.l10n.navTools),
           ],
         ),
         Expanded(
@@ -104,21 +105,23 @@ class _HfMfuPageState extends State<HfMfuPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '获取信息',
-              subtitle: '读取 MFU/NTAG 标签',
+              title: context.l10n.messageGetInformation,
+              subtitle: context.l10n.messageReadAnMfuNtagTag,
               icon: Icons.info_outline,
               onTap: () => _execute(HfMfuCmd.info())),
           ActionCard(
-              title: '转储卡片',
-              subtitle: '读取全部数据到文件',
+              title: context.l10n.messageDumpCard,
+              subtitle: context.l10n.messageReadAllDataToAFile,
               icon: Icons.download,
               onTap: () => _execute(HfMfuCmd.dump())),
           ActionCard(
-              title: '擦除卡片',
-              subtitle: '清空卡片数据',
+              title: context.l10n.messageEraseCard,
+              subtitle: context.l10n.messageClearCardData,
               icon: Icons.delete_forever,
-              onTap: () =>
-                  _confirmThenExecute('确认擦除', '此操作不可恢复！', HfMfuCmd.wipe())),
+              onTap: () => _confirmThenExecute(
+                  context.l10n.messageConfirmErase,
+                  context.l10n.messageThisOperationCannotBeUndone,
+                  HfMfuCmd.wipe())),
         ],
       ),
       main: ResultDisplay(
@@ -146,11 +149,12 @@ class _HfMfuPageState extends State<HfMfuPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('块操作',
+                  Text(context.l10n.messageBlockOperations,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   TextFormField(
-                    decoration: const InputDecoration(labelText: '块号'),
+                    decoration: InputDecoration(
+                        labelText: context.l10n.messageBlockNumber),
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (v) => _blockNumber = int.tryParse(v) ?? 0,
@@ -161,12 +165,12 @@ class _HfMfuPageState extends State<HfMfuPage>
                     child: ElevatedButton.icon(
                       onPressed: () => _execute(HfMfuCmd.rdbl(_blockNumber)),
                       icon: const Icon(Icons.visibility, size: 18),
-                      label: const Text('读取块'),
+                      label: Text(context.l10n.messageReadBlock),
                     ),
                   ),
                   const SizedBox(height: 12),
                   HexInputField(
-                    label: '写入数据 (hex)',
+                    label: context.l10n.messageWriteDataHex,
                     byteLength: 4,
                     onChanged: (v) => _blockData = v,
                   ),
@@ -177,7 +181,7 @@ class _HfMfuPageState extends State<HfMfuPage>
                             _execute(HfMfuCmd.wrbl(_blockNumber, _blockData))
                         : null,
                     icon: const Icon(Icons.edit, size: 18),
-                    label: const Text('写入块'),
+                    label: Text(context.l10n.messageWriteBlock),
                   ),
                 ],
               ),
@@ -190,11 +194,11 @@ class _HfMfuPageState extends State<HfMfuPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('密码认证',
+                  Text(context.l10n.messagePasswordAuthentication,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   HexInputField(
-                    label: '密码 (4 字节 hex)',
+                    label: context.l10n.messagePassword4ByteHex,
                     byteLength: 4,
                     onChanged: (v) => _password = v,
                     prefixIcon: Icons.vpn_key,
@@ -205,7 +209,7 @@ class _HfMfuPageState extends State<HfMfuPage>
                         ? () => _execute(HfMfuCmd.cauth(_password))
                         : null,
                     icon: const Icon(Icons.lock_open, size: 18),
-                    label: const Text('认证'),
+                    label: Text(context.l10n.messageAuthenticate),
                   ),
                 ],
               ),
@@ -233,8 +237,8 @@ class _HfMfuPageState extends State<HfMfuPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '读取 NDEF',
-              subtitle: '读取 NFC 数据交换格式',
+              title: context.l10n.messageReadNdef,
+              subtitle: context.l10n.messageReadNfcDataExchangeFormat,
               icon: Icons.article,
               onTap: () => _execute(HfMfuCmd.ndefRead())),
         ],
@@ -264,13 +268,13 @@ class _HfMfuPageState extends State<HfMfuPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('模拟器操作',
+                  Text(context.l10n.messageEmulatorOperations,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: '文件路径（可选）',
-                      hintText: '留空使用默认',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.messageFilePathOptional,
+                      hintText: context.l10n.messageLeaveBlankToUseTheDefault,
                       prefixIcon: Icon(Icons.file_open, size: 18),
                     ),
                     style:
@@ -286,23 +290,23 @@ class _HfMfuPageState extends State<HfMfuPage>
                         onPressed: () => _execute(HfMfuCmd.eload(
                             _emuFile.isEmpty ? 'dump' : _emuFile)),
                         icon: const Icon(Icons.upload, size: 18),
-                        label: const Text('加载到模拟器'),
+                        label: Text(context.l10n.messageLoadIntoEmulator),
                       ),
                       OutlinedButton.icon(
                         onPressed: () => _execute(HfMfuCmd.esave(
                             file: _emuFile.isEmpty ? null : _emuFile)),
                         icon: const Icon(Icons.save, size: 18),
-                        label: const Text('保存模拟器'),
+                        label: Text(context.l10n.messageSaveEmulator),
                       ),
                       OutlinedButton.icon(
                         onPressed: () => _execute(HfMfuCmd.eview()),
                         icon: const Icon(Icons.visibility, size: 18),
-                        label: const Text('查看'),
+                        label: Text(context.l10n.messageView),
                       ),
                       ElevatedButton.icon(
                         onPressed: () => _execute(HfMfuCmd.sim()),
                         icon: const Icon(Icons.play_arrow, size: 18),
-                        label: const Text('模拟'),
+                        label: Text(context.l10n.messageSimulate),
                       ),
                     ],
                   ),
@@ -332,18 +336,18 @@ class _HfMfuPageState extends State<HfMfuPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '生成密钥',
-              subtitle: 'keygen — 根据 UID 推导密钥',
+              title: context.l10n.messageGenerateKeys,
+              subtitle: context.l10n.messageKeygenDeriveKeysFromUid,
               icon: Icons.vpn_key,
               onTap: () => _execute(HfMfuCmd.keygen())),
           ActionCard(
-              title: '密码推导',
-              subtitle: 'pwdgen — 推导 NTAG 密码',
+              title: context.l10n.messageDerivePassword,
+              subtitle: context.l10n.messagePwdgenDeriveTheNtagPassword,
               icon: Icons.password,
               onTap: () => _execute(HfMfuCmd.pwdgen())),
           ActionCard(
-              title: '密钥检查',
-              subtitle: 'cchk — 检查常用密钥',
+              title: context.l10n.messageKeyCheck,
+              subtitle: context.l10n.messageCchkCheckCommonKeys,
               icon: Icons.security,
               onTap: () => _execute(HfMfuCmd.cchk())),
           const Divider(),
@@ -353,11 +357,11 @@ class _HfMfuPageState extends State<HfMfuPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('设置 UID',
+                  Text(context.l10n.messageSetUid,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   HexInputField(
-                    label: 'UID (7 字节 hex)',
+                    label: context.l10n.messageUid7ByteHex,
                     byteLength: 7,
                     onChanged: (v) => _uid = v,
                     prefixIcon: Icons.credit_card,
@@ -368,7 +372,7 @@ class _HfMfuPageState extends State<HfMfuPage>
                         ? () => _execute(HfMfuCmd.setuid(_uid))
                         : null,
                     icon: const Icon(Icons.edit, size: 18),
-                    label: const Text('设置 UID'),
+                    label: Text(context.l10n.messageSetUid),
                   ),
                 ],
               ),
@@ -397,13 +401,14 @@ class _HfMfuPageState extends State<HfMfuPage>
         content: Text(msg),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context), child: const Text('取消')),
+              onPressed: () => Navigator.pop(context),
+              child: Text(context.l10n.messageCancel)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
                 _execute(cmd);
               },
-              child: const Text('确认')),
+              child: Text(context.l10n.messageConfirm)),
         ],
       ),
     );

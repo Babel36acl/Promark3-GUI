@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pm3gui/state/app_state.dart';
 import 'package:pm3gui/services/pm3_commands.dart';
 import 'package:pm3gui/ui/components/components.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 
 class HfFidoPage extends StatefulWidget {
   const HfFidoPage({super.key});
@@ -53,23 +54,23 @@ class _HfFidoPageState extends State<HfFidoPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ActionCard(
-              title: '信息',
-              subtitle: '读取 FIDO 信息',
+              title: context.l10n.messageInformation,
+              subtitle: context.l10n.messageReadFidoInformation,
               icon: Icons.fingerprint,
               onTap: () => _execute(HfFidoCmd.info())),
           ActionCard(
-              title: '注册',
-              subtitle: 'FIDO2 注册',
+              title: context.l10n.messageRegister,
+              subtitle: context.l10n.messageFido2Registration,
               icon: Icons.app_registration,
               onTap: () => _execute(HfFidoCmd.reg())),
           ActionCard(
-              title: '认证',
-              subtitle: 'FIDO2 认证',
+              title: context.l10n.messageAuthenticate,
+              subtitle: context.l10n.messageFido2Authentication,
               icon: Icons.verified_user,
               onTap: () => _execute(HfFidoCmd.auth())),
           ActionCard(
-              title: '列表',
-              subtitle: '列出 FIDO 通信',
+              title: context.l10n.messageList,
+              subtitle: context.l10n.messageListFidoCommunication,
               icon: Icons.list_alt,
               onTap: () => _execute('hf fido list')),
         ],

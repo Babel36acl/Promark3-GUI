@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pm3gui/core/pm3/pm3_connection.dart';
 import 'package:pm3gui/state/app_state.dart';
+import 'package:pm3gui/l10n/l10n.dart';
 import 'package:pm3gui/ui/pages/connection_page.dart';
 import 'package:pm3gui/ui/pages/terminal_page.dart';
 import 'package:pm3gui/ui/pages/dump_viewer_page.dart';
@@ -86,47 +87,49 @@ class _HomePageState extends State<HomePage> {
     SettingsPage(), // 29 settings
   ];
 
-  static const _generalItems = [
-    _NavItem(Icons.usb, '连接', AppPage.connection),
-    _NavItem(Icons.terminal, '终端', AppPage.terminal),
-    _NavItem(Icons.file_open, 'Dump 查看', AppPage.dumpViewer),
-    _NavItem(Icons.compare_arrows, 'Dump 对比', AppPage.dumpCompare),
-  ];
+  List<_NavItem> get _generalItems => [
+        _NavItem(Icons.usb, context.l10n.navConnection, AppPage.connection),
+        _NavItem(Icons.terminal, context.l10n.navTerminal, AppPage.terminal),
+        _NavItem(
+            Icons.file_open, context.l10n.navDumpViewer, AppPage.dumpViewer),
+        _NavItem(Icons.compare_arrows, context.l10n.navDumpCompare,
+            AppPage.dumpCompare),
+      ];
 
-  static const _hfItems = [
-    _NavItem(Icons.nfc, 'Mifare Classic', AppPage.mifare),
-    _NavItem(Icons.nfc, 'Ultralight/NTAG', AppPage.mifareUltralight),
-    _NavItem(Icons.nfc, 'DESFire', AppPage.desfire),
-    _NavItem(Icons.nfc, 'iCLASS', AppPage.iclass),
-    _NavItem(Icons.nfc, 'ISO 15693', AppPage.iso15693),
-    _NavItem(Icons.nfc, 'ISO 14443-B', AppPage.iso14443b),
-    _NavItem(Icons.nfc, 'FeliCa', AppPage.felica),
-    _NavItem(Icons.nfc, 'Legic', AppPage.legic),
-    _NavItem(Icons.payment, 'EMV', AppPage.emv),
-    _NavItem(Icons.badge, 'SEOS', AppPage.seos),
-    _NavItem(Icons.fingerprint, 'FIDO', AppPage.fido),
-    _NavItem(Icons.hearing, 'HF 嗅探/调谐', AppPage.hfSniff),
-  ];
+  List<_NavItem> get _hfItems => [
+        _NavItem(Icons.nfc, 'Mifare Classic', AppPage.mifare),
+        _NavItem(Icons.nfc, 'Ultralight/NTAG', AppPage.mifareUltralight),
+        _NavItem(Icons.nfc, 'DESFire', AppPage.desfire),
+        _NavItem(Icons.nfc, 'iCLASS', AppPage.iclass),
+        _NavItem(Icons.nfc, 'ISO 15693', AppPage.iso15693),
+        _NavItem(Icons.nfc, 'ISO 14443-B', AppPage.iso14443b),
+        _NavItem(Icons.nfc, 'FeliCa', AppPage.felica),
+        _NavItem(Icons.nfc, 'Legic', AppPage.legic),
+        _NavItem(Icons.payment, 'EMV', AppPage.emv),
+        _NavItem(Icons.badge, 'SEOS', AppPage.seos),
+        _NavItem(Icons.fingerprint, 'FIDO', AppPage.fido),
+        _NavItem(Icons.hearing, context.l10n.navHfSniff, AppPage.hfSniff),
+      ];
 
-  static const _lfItems = [
-    _NavItem(Icons.radio, 'LF 通用/EM/T55', AppPage.lf),
-    _NavItem(Icons.credit_card, 'HID Prox', AppPage.lfHid),
-    _NavItem(Icons.security, 'Hitag', AppPage.lfHitag),
-    _NavItem(Icons.credit_card, 'AWID', AppPage.lfAwid),
-    _NavItem(Icons.credit_card, 'Indala', AppPage.lfIndala),
-    _NavItem(Icons.credit_card, 'ioProx', AppPage.lfIo),
-    _NavItem(Icons.credit_card, 'Pyramid', AppPage.lfPyramid),
-    _NavItem(Icons.credit_card, 'Keri', AppPage.lfKeri),
-    _NavItem(Icons.pets, 'FDX-B', AppPage.lfFdxb),
-  ];
+  List<_NavItem> get _lfItems => [
+        _NavItem(Icons.radio, context.l10n.navLfGeneral, AppPage.lf),
+        _NavItem(Icons.credit_card, 'HID Prox', AppPage.lfHid),
+        _NavItem(Icons.security, 'Hitag', AppPage.lfHitag),
+        _NavItem(Icons.credit_card, 'AWID', AppPage.lfAwid),
+        _NavItem(Icons.credit_card, 'Indala', AppPage.lfIndala),
+        _NavItem(Icons.credit_card, 'ioProx', AppPage.lfIo),
+        _NavItem(Icons.credit_card, 'Pyramid', AppPage.lfPyramid),
+        _NavItem(Icons.credit_card, 'Keri', AppPage.lfKeri),
+        _NavItem(Icons.pets, 'FDX-B', AppPage.lfFdxb),
+      ];
 
-  static const _toolItems = [
-    _NavItem(Icons.show_chart, '数据处理', AppPage.data),
-    _NavItem(Icons.timeline, 'Trace', AppPage.trace),
-    _NavItem(Icons.nfc, 'NFC', AppPage.nfc),
-    _NavItem(Icons.code, '脚本', AppPage.script),
-    _NavItem(Icons.settings, '设置', AppPage.settings),
-  ];
+  List<_NavItem> get _toolItems => [
+        _NavItem(Icons.show_chart, context.l10n.navData, AppPage.data),
+        _NavItem(Icons.timeline, 'Trace', AppPage.trace),
+        _NavItem(Icons.nfc, 'NFC', AppPage.nfc),
+        _NavItem(Icons.code, context.l10n.navScripts, AppPage.script),
+        _NavItem(Icons.settings, context.l10n.navSettings, AppPage.settings),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +214,9 @@ class _HomePageState extends State<HomePage> {
                           if (_sidebarExpanded) ...[
                             const SizedBox(width: 8),
                             Text(
-                              isConnected ? '已连接' : '未连接',
+                              isConnected
+                                  ? context.l10n.connected
+                                  : context.l10n.disconnected,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -251,8 +256,11 @@ class _HomePageState extends State<HomePage> {
                             ),
                             if (_sidebarExpanded) ...[
                               const SizedBox(width: 12),
-                              const Text('收起菜单',
-                                  style: TextStyle(fontSize: 13)),
+                              Flexible(
+                                child: Text(context.l10n.navCollapse,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 13)),
+                              ),
                             ],
                           ],
                         ),
@@ -284,9 +292,12 @@ class _HomePageState extends State<HomePage> {
       children: [
         ..._generalItems
             .map((n) => _navTile(n, appState, theme, currentPageIndex)),
-        _groupTile('📡 高频 HF', _hfItems, appState, theme, currentPageIndex),
-        _groupTile('📻 低频 LF', _lfItems, appState, theme, currentPageIndex),
-        _groupTile('🛠 工具', _toolItems, appState, theme, currentPageIndex),
+        _groupTile(context.l10n.navHighFrequency, _hfItems, appState, theme,
+            currentPageIndex),
+        _groupTile(context.l10n.navLowFrequency, _lfItems, appState, theme,
+            currentPageIndex),
+        _groupTile(context.l10n.navTools, _toolItems, appState, theme,
+            currentPageIndex),
       ],
     );
   }

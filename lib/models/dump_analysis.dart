@@ -7,6 +7,7 @@ library;
 import 'dart:typed_data';
 import 'mifare_card.dart';
 import 'access_bits.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
 // ==========================================================================
 //  常量
@@ -36,56 +37,61 @@ const List<String> knownDefaultKeys = [
 ];
 
 /// MAD AID 描述 (功能代码 → 说明)
-const Map<int, String> madAidDescriptions = {
-  0x0000: '空/未分配',
-  0x0001: '缺陷管理',
-  0x0002: '备用',
-  0x0003: '额外的目录条目',
-  0x0004: '卡持有者信息',
-  0x0005: '未分配',
-  0x0008: '航空服务',
-  0x0010: '城市交通',
-  0x0011: '城市交通 (2)',
-  0x0012: '铁路交通',
-  0x0014: '运输 (通用)',
-  0x0015: '安防方案',
-  0x0018: '城市交通 (3)',
-  0x0020: '事件票务',
-  0x0028: '忠诚方案',
-  0x0030: '停车场',
-  0x0038: '门禁控制',
-  0x0040: '电子钱包 / 小额支付',
-  0x0047: '电子票务 (通用)',
-  0x0048: '移动办公',
-  0x0049: '身份识别',
-  0x004A: '手机支付',
-  0x004B: 'FeliCa集成',
-  0x0060: '加油',
-  0x0068: '信息处理',
-  0x0070: 'NFC Forum NDEF',
-};
+Map<int, String> get madAidDescriptions =>
+    madAidDescriptionsFor(defaultLocalizations);
+
+Map<int, String> madAidDescriptionsFor(AppLocalizations l10n) => {
+      0x0000: l10n.messageEmptyUnallocated,
+      0x0001: l10n.messageDefectManagement,
+      0x0002: l10n.messageReserved,
+      0x0003: l10n.messageAdditionalDirectoryEntries,
+      0x0004: l10n.messageCardholderInformation,
+      0x0005: l10n.messageUnallocated,
+      0x0008: l10n.messageAirlineServices,
+      0x0010: l10n.messageUrbanTransport,
+      0x0011: l10n.messageUrbanTransport2,
+      0x0012: l10n.messageRailTransport,
+      0x0014: l10n.messageTransportGeneral,
+      0x0015: l10n.messageSecurityServices,
+      0x0018: l10n.messageUrbanTransport3,
+      0x0020: l10n.messageEventTicketing,
+      0x0028: l10n.messageLoyaltySchemes,
+      0x0030: l10n.messageParking,
+      0x0038: l10n.messageAccessControl,
+      0x0040: l10n.messageElectronicPurseMicropayments,
+      0x0047: l10n.messageElectronicTicketingGeneral,
+      0x0048: l10n.messageMobileOffice,
+      0x0049: l10n.messageIdentification,
+      0x004A: l10n.messageMobilePayments,
+      0x004B: l10n.messageFelicaIntegration,
+      0x0060: l10n.messageFuelServices,
+      0x0068: l10n.messageInformationProcessing,
+      0x0070: 'NFC Forum NDEF',
+    };
 
 /// NXP 芯片类型 (根据SAK/ATQA)
-const Map<String, String> nxpChipTypes = {
-  '04_0044': 'MIFARE Ultralight',
-  '44_0044': 'MIFARE Ultralight C',
-  '04_0344': 'MIFARE Ultralight EV1 (640bit)',
-  '44_0344': 'MIFARE Ultralight EV1 (1312bit)',
-  '08_0004': 'MIFARE Classic 1K',
-  '18_0002': 'MIFARE Classic 4K',
-  '09_0004': 'MIFARE Mini',
-  '10_0004': 'MIFARE Plus 2K SL2',
-  '11_0004': 'MIFARE Plus 4K SL2',
-  '20_0344': 'MIFARE DESFire',
-  '20_0444': 'MIFARE DESFire EV1',
-  '60_0004': 'MIFARE Classic 1K (Infineon)',
-  '00_0004': 'MIFARE Classic 1K (兼容)',
-  '28_0004': 'MIFARE Classic 1K (Emulated)',
-  '38_0002': 'MIFARE Classic 4K (SmartMX)',
-  '88_0004': 'MIFARE Classic 1K (Infineon SLE 66R35)',
-  '08_0044': 'MIFARE Classic 1K (兼容2)',
-  '02_0004': 'MIFARE Classic 1K (NXP)',
-};
+Map<String, String> get nxpChipTypes => nxpChipTypesFor(defaultLocalizations);
+
+Map<String, String> nxpChipTypesFor(AppLocalizations l10n) => {
+      '04_0044': 'MIFARE Ultralight',
+      '44_0044': 'MIFARE Ultralight C',
+      '04_0344': 'MIFARE Ultralight EV1 (640bit)',
+      '44_0344': 'MIFARE Ultralight EV1 (1312bit)',
+      '08_0004': 'MIFARE Classic 1K',
+      '18_0002': 'MIFARE Classic 4K',
+      '09_0004': 'MIFARE Mini',
+      '10_0004': 'MIFARE Plus 2K SL2',
+      '11_0004': 'MIFARE Plus 4K SL2',
+      '20_0344': 'MIFARE DESFire',
+      '20_0444': 'MIFARE DESFire EV1',
+      '60_0004': 'MIFARE Classic 1K (Infineon)',
+      '00_0004': l10n.messageMifareClassic1kCompatible,
+      '28_0004': 'MIFARE Classic 1K (Emulated)',
+      '38_0002': 'MIFARE Classic 4K (SmartMX)',
+      '88_0004': 'MIFARE Classic 1K (Infineon SLE 66R35)',
+      '08_0044': l10n.messageMifareClassic1kCompatible2,
+      '02_0004': 'MIFARE Classic 1K (NXP)',
+    };
 
 // ==========================================================================
 //  分析结果类
@@ -270,10 +276,12 @@ class DumpAnalysis {
 // ==========================================================================
 class DumpAnalyzer {
   /// 执行完整 dump 分析
-  static DumpAnalysis analyze(MifareCard card) {
-    final mfr = _decodeManufacturerBlock(card);
-    final mad = _parseMad(card);
-    final keys = _analyzeKeys(card);
+  static DumpAnalysis analyze(MifareCard card,
+      {AppLocalizations? localizations}) {
+    final l10n = localizations ?? defaultLocalizations;
+    final mfr = _decodeManufacturerBlock(card, l10n);
+    final mad = _parseMad(card, l10n);
+    final keys = _analyzeKeys(card, l10n);
     final sectors = <SectorAnalysis>[];
     final values = <ValueBlockInfo>[];
     int emptyCount = 0;
@@ -349,7 +357,8 @@ class DumpAnalyzer {
   }
 
   // --- 制造商块解码 ---
-  static ManufacturerBlockInfo? _decodeManufacturerBlock(MifareCard card) {
+  static ManufacturerBlockInfo? _decodeManufacturerBlock(
+      MifareCard card, AppLocalizations l10n) {
     if (card.blocks.isEmpty || card.blocks[0].length < 32) return null;
     final hex = card.blocks[0].toUpperCase();
     final bytes = _hexToBytes(hex);
@@ -383,10 +392,11 @@ class DumpAnalyzer {
 
     // 芯片类型
     final chipLookup = '${sak}_${_reverseEndian16(atqa)}';
-    final chipType = nxpChipTypes[chipLookup] ?? _guessChipType(sak);
+    final chipType =
+        nxpChipTypesFor(l10n)[chipLookup] ?? _guessChipType(sak, l10n);
 
     // 制造商
-    final mfr = _getManufacturer(bytes[0]);
+    final mfr = _getManufacturer(bytes[0], l10n);
 
     return ManufacturerBlockInfo(
       uid: uid,
@@ -405,7 +415,7 @@ class DumpAnalyzer {
     return '${hex4.substring(2, 4)}${hex4.substring(0, 2)}';
   }
 
-  static String _guessChipType(String sak) {
+  static String _guessChipType(String sak, AppLocalizations l10n) {
     switch (sak.toUpperCase()) {
       case '08':
         return 'MIFARE Classic 1K';
@@ -428,11 +438,11 @@ class DumpAnalyzer {
       case '01':
         return 'TNP3xxx (NXP)';
       default:
-        return '未知 (SAK=$sak)';
+        return l10n.messageUnknownSak((sak).toString());
     }
   }
 
-  static String _getManufacturer(int byte0) {
+  static String _getManufacturer(int byte0, AppLocalizations l10n) {
     switch (byte0) {
       case 0x01:
         return 'Motorola';
@@ -481,12 +491,13 @@ class DumpAnalyzer {
       case 0x97:
         return 'Qualcomm';
       default:
-        return '未知 (0x${byte0.toRadixString(16).padLeft(2, '0')})';
+        return l10n.messageUnknown0x(
+            (byte0.toRadixString(16).padLeft(2, '0')).toString());
     }
   }
 
   // --- MAD 解析 ---
-  static MadInfo? _parseMad(MifareCard card) {
+  static MadInfo? _parseMad(MifareCard card, AppLocalizations l10n) {
     // MAD 位于扇区0的 block 1-2 (MADv1) 或 + 扇区16 block 0-2 (MADv2)
     if (card.blocks.length < 4) return null;
     final b1 = card.blocks[1];
@@ -523,8 +534,9 @@ class DumpAnalyzer {
       final aid = (hi << 8) | lo;
       if (aid != 0) hasNonZero = true;
 
-      final desc = madAidDescriptions[aid] ??
-          '应用 0x${aid.toRadixString(16).padLeft(4, '0')}';
+      final desc = madAidDescriptionsFor(l10n)[aid] ??
+          l10n.messageApplication0x(
+              (aid.toRadixString(16).padLeft(4, '0')).toString());
       entries.add(MadEntry(sector: i + 1, aid: aid, description: desc));
     }
 
@@ -549,7 +561,7 @@ class DumpAnalyzer {
   }
 
   // --- 密钥分析 ---
-  static KeyAnalysis _analyzeKeys(MifareCard card) {
+  static KeyAnalysis _analyzeKeys(MifareCard card, AppLocalizations l10n) {
     final keyAGroups = <String, List<int>>{};
     final keyBGroups = <String, List<int>>{};
     final defaults = <DefaultKeyMatch>[];
@@ -564,7 +576,7 @@ class DumpAnalyzer {
       if (ka.isNotEmpty && ka != '000000000000') {
         foundA++;
         keyAGroups.putIfAbsent(ka, () => []).add(s);
-        final defName = _findDefaultKeyName(ka);
+        final defName = _findDefaultKeyName(ka, l10n);
         if (defName != null) {
           defaults.add(DefaultKeyMatch(
               keyHex: ka, keyType: 'A', sector: s, keyName: defName));
@@ -576,7 +588,7 @@ class DumpAnalyzer {
       if (kb.isNotEmpty && kb != '000000000000') {
         foundB++;
         keyBGroups.putIfAbsent(kb, () => []).add(s);
-        final defName = _findDefaultKeyName(kb);
+        final defName = _findDefaultKeyName(kb, l10n);
         if (defName != null) {
           defaults.add(DefaultKeyMatch(
               keyHex: kb, keyType: 'B', sector: s, keyName: defName));
@@ -600,11 +612,11 @@ class DumpAnalyzer {
     );
   }
 
-  static String? _findDefaultKeyName(String hex) {
+  static String? _findDefaultKeyName(String hex, AppLocalizations l10n) {
     final upper = hex.toUpperCase();
-    const names = {
-      'FFFFFFFFFFFF': 'NXP 出厂默认',
-      '000000000000': '全零',
+    final names = {
+      'FFFFFFFFFFFF': l10n.messageNxpFactoryDefault,
+      '000000000000': l10n.messageAllZeros,
       'A0A1A2A3A4A5': 'MAD KeyA',
       'B0B1B2B3B4B5': 'MAD KeyB',
       'D3F7D3F7D3F7': 'NDEF',

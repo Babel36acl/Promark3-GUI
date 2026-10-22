@@ -5,8 +5,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:pm3gui/services/file_collector.dart';
+import 'package:pm3gui/l10n/localized_messages.dart';
 
-class FileState extends ChangeNotifier {
+class FileState extends ChangeNotifier with LocalizedMessages {
   List<CollectedFile> collectedFiles = [];
   List<CardGroup> cardGroups = [];
   bool isScanning = false;
@@ -42,7 +43,7 @@ class FileState extends ChangeNotifier {
       final errors = result['errors'] as List<String>;
       scanError = errors.isEmpty ? null : errors.join('\n');
     } catch (e) {
-      scanError = '文件扫描失败: $e';
+      scanError = l10n.messageFileScanFailed((e).toString());
     }
 
     isScanning = false;
